@@ -1,0 +1,20 @@
+// CodeRun - Programming Trainer Database Schema
+// This schema defines the database structure for the CodeRun programming trainer platform
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/app/generated/prisma"
+}
+
+// Prisma seed configuration
+// This tells Prisma how to run the seed script
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Ping {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+}
