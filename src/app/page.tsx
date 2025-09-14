@@ -1,34 +1,29 @@
-"use client"
+"use client";
 // убери
 import HelloRunAnimate from "@/components/animate/HelloRunAnimate";
 import { FixedMenu } from "@/components/main/header/FixedMenu/FixedMenu";
-import { Canvas } from '@react-three/fiber'
-import HolographicGrid from '@/components/threejs/HolographicGrid'
+import { Canvas } from "@react-three/fiber";
+import { Scene } from "@/components/threejs/Scene"; // Добавьте фигурные скобки
 
 export default function Home() {
-    return (
-        <>
-            <HelloRunAnimate />
-            <FixedMenu />
-            <div style={{ 
-                width: '100vw', 
-                height: '100vh',
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                zIndex: -1
-            }}>
-                <Canvas 
-                    camera={{ 
-                        position: [-0.97, 5.91, -5.77], 
-                        fov: 60,
-                        near: 0.1,
-                        far: 500
-                    }}
-                >
-                    <HolographicGrid />
-                </Canvas>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <HelloRunAnimate />
+      <FixedMenu />
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          zIndex: -1,
+        }}
+      >
+        <Canvas>
+          <Scene />
+        </Canvas>
+      </div>
+    </>
+  );
 }
