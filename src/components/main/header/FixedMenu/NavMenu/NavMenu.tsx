@@ -1,3 +1,4 @@
+"use client"
 import { useGSAP } from "@gsap/react";
 import useAnimationStore from "@/store/AnimationCenter";
 
@@ -8,12 +9,13 @@ export default function NavMenu() {
 
   return (
     <>
-      <div className="fixed top-0 left-[50%] ">
-        <nav className="flex flex-nowrap gap-2.5">
-          {RoureHref.map((N) => (
-            <div>
+      <div className="fixed top-0 left-[50%] transform -translate-x-1/2 ">
+        <nav className="flex flex-nowrap gap-10.5 mt-2 ">
+          {RoureHref.map((N, index) => (
+            <div key={index}>
               <a className="" href="">
-                ${N}
+                {N}
+                 {/*копонент   */}
               </a>
             </div>
           ))}
