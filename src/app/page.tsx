@@ -20,12 +20,11 @@ export default function Home() {
             }}>
                 <Canvas 
                     camera={{ 
-                        position: [20, 15, 20], 
+                        position: [-0.97, 5.91, -5.77], 
                         fov: 60,
                         near: 0.1,
-                        far: 1000
+                        far: 500
                     }}
-                    shadows
                 >
                     <HolographicGrid />
                 </Canvas>
