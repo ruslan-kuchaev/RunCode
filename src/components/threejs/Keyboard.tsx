@@ -308,7 +308,7 @@ export const Keyboard = forwardRef<KeyboardRefs, KeyboardProps>(
       container: containerRef,
     }));
 
-    const keycapTexture = useTexture("goodwell_uv.png");
+    const keycapTexture = useTexture("cherrynavy_uv.png");
     keycapTexture.flipY = false;
     keycapTexture.colorSpace = THREE.SRGBColorSpace;
 
