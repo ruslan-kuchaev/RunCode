@@ -14,7 +14,84 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Ping {
-  id        Int      @id @default(autoincrement())
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  avatar    String?
+  rating    Int      @default(0)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  solvedTasks UserTask[]
+  comments    Comment[]
+
+  @@map("users")
+}
+
+model Task {
+  id               String         @id @default(cuid())
+  title            String
+  shortDescription String
+  fullDescription  String
+  difficulty       TaskDifficulty
+  price            Int // Points awarded for solving
+  preview          String? // Code preview or example
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  // Relations
+  solutions UserTask[]
+  comments  Comment[]
+
+  @@map("tasks")
+}
+
+model UserTask {
+  id        String     @id @default(cuid())
+  userId    String
+  taskId    String
+  status    TaskStatus @default(STARTED)
+  startedAt DateTime   @default(now())
+  solvedAt  DateTime?
+  code      String?
+  rating    Int? // User's rating of the task (1-5)
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, taskId])
+  @@map("user_tasks")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  userId String
+  taskId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
+}
+
+// Enums
+enum TaskDifficulty {
+  EASY
+  MEDIUM
+  HARD
+  EXPERT
+}
+
+enum TaskStatus {
+  STARTED
+  SOLVED
+  ABANDONED
 }

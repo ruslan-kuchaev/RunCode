@@ -1,15 +1,19 @@
+// store/animationStore.ts
 import { create } from "zustand";
 
-interface AnimateStore {
-    isHelloComplete: boolean,
-    completeHello: () => void,
+interface AnimationStore {
+  isHelloComplete: boolean;
+  completeHello: () => void;
+  isScrolled: boolean;
+  completeScroll: () => void;
 }
 
-const useAnimationStore = create<AnimateStore>((set) => ({
-    isHelloComplete: false,
-    
-    completeHello: () => set({ isHelloComplete: true }),
-    
-  }));
+export const useAnimationStore = create<AnimationStore>((set) => ({
+  isHelloComplete: false,
+  completeHello: () => set({ isHelloComplete: true }),
+  isScrolled: false,
+  completeScroll: () => set({ isScrolled: true }),
+  
+}));
 
 export default useAnimationStore;

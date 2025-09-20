@@ -120,9 +120,47 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.PingScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  createdAt: 'createdAt'
+  email: 'email',
+  username: 'username',
+  password: 'password',
+  avatar: 'avatar',
+  rating: 'rating',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TaskScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  shortDescription: 'shortDescription',
+  fullDescription: 'fullDescription',
+  difficulty: 'difficulty',
+  price: 'price',
+  preview: 'preview',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserTaskScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  taskId: 'taskId',
+  status: 'status',
+  startedAt: 'startedAt',
+  solvedAt: 'solvedAt',
+  code: 'code',
+  rating: 'rating'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  taskId: 'taskId'
 };
 
 exports.Prisma.SortOrder = {
@@ -130,9 +168,33 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.TaskDifficulty = exports.$Enums.TaskDifficulty = {
+  EASY: 'EASY',
+  MEDIUM: 'MEDIUM',
+  HARD: 'HARD',
+  EXPERT: 'EXPERT'
+};
+
+exports.TaskStatus = exports.$Enums.TaskStatus = {
+  STARTED: 'STARTED',
+  SOLVED: 'SOLVED',
+  ABANDONED: 'ABANDONED'
+};
 
 exports.Prisma.ModelName = {
-  Ping: 'Ping'
+  User: 'User',
+  Task: 'Task',
+  UserTask: 'UserTask',
+  Comment: 'Comment'
 };
 
 /**
