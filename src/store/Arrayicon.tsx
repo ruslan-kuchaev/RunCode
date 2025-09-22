@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 export interface Arrayicon {
     id: string;
-    icon: ReactNode;
+    icon: ReactNode; 
 }
 
 export const Arrayicon: Arrayicon[] = [
