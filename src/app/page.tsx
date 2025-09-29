@@ -1,6 +1,7 @@
 "use client";
 // убери
 import HelloRunAnimate from "@/components/animate/HelloRunAnimate";
+import ActionBar from "@/components/main/ActionBar/ActionBar";
 import { FixedMenu } from "@/components/main/header/FixedMenu/FixedMenu";
 import LightRays from "@/components/shadcn/LightRays";
 import TerminalInterface from "@/components/terminal/Terminalinterface";
@@ -56,37 +57,10 @@ export default function Home() {
           </div>
 
           {/* Дополнительная информация */}
-          <div className=" grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="p-6">
-              <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-green-400 text-xl">$</span>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Command Line Interface</h3>
-              <p className="text-gray-400">
-                Navigate through RunCode using familiar terminal commands
-              </p>
-            </div>
-            
-            <div className="p-6">
-              <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-blue-400 text-xl">👤</span>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2">User Authentication</h3>
-              <p className="text-gray-400">
-                Login or register directly through the terminal interface
-              </p>
-            </div>
-            
-            <div className="p-6">
-              <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-purple-400 text-xl">🚀</span>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Interactive Experience</h3>
-              <p className="text-gray-400">
-                Real-time feedback and typewriter effects for immersive coding
-              </p>
-            </div>
-          </div>
+
+          <ActionBar/>
+
+        
         </div>
 
         {/* Footer */}
