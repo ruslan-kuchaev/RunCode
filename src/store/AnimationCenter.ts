@@ -16,7 +16,7 @@ interface AnimationStore {
 }
 
 export const useAnimationStore = create<AnimationStore>()(
-  subscribeWithSelector((set, get) => ({
+  subscribeWithSelector((set) => ({
     // State
     isHelloComplete: false,
     isScrolled: false,

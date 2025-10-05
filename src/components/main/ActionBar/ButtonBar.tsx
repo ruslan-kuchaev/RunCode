@@ -75,7 +75,7 @@ export const ButtonBar = memo(({
   return (
     <div 
       ref={containerRef}
-      className={`p-5 h-60 rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300`}
+      className={`p-5 h-60 rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 will-change-auto`}
     >
       {/* Заголовок */}
       <div 

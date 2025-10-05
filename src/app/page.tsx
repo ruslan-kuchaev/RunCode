@@ -1,14 +1,15 @@
 "use client";
-// убери
 import HelloRunAnimate from "@/components/animate/HelloRunAnimate";
 import ActionBar from "@/components/main/ActionBar/ActionBar";
 import { FixedMenu } from "@/components/main/header/FixedMenu/FixedMenu";
 import LightRays from "@/components/shadcn/LightRays";
 import TerminalInterface from "@/components/terminal/Terminalinterface";
+import FpsCounter from "@/components/debug/FpsCounter";
 
 export default function Home() {
   return (
     <>
+      <FpsCounter />
       <HelloRunAnimate />
       <div style={{ width: '100%', height: '1200px', position: 'absolute', }}>
 
