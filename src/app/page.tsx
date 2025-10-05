@@ -56,10 +56,29 @@ export default function Home() {
             />
           </div>
 
-          {/* Дополнительная информация */}
 
           <ActionBar/>
 
+          {/* Дополнительный контент для тестирования скролла */}
+          <div className="mt-20 mb-16">
+            <h3 className="text-3xl font-bold text-white text-center mb-8">
+              Начните программировать уже сегодня
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <div className="bg-gray-800/50 p-6 rounded-lg">
+                <h4 className="text-xl font-semibold text-white mb-3">Быстрый старт</h4>
+                <p className="text-gray-400">Начните программировать за считанные минуты без установки дополнительного ПО</p>
+              </div>
+              <div className="bg-gray-800/50 p-6 rounded-lg">
+                <h4 className="text-xl font-semibold text-white mb-3">Обучение</h4>
+                <p className="text-gray-400">Интерактивные уроки и практические задания для всех уровней</p>
+              </div>
+              <div className="bg-gray-800/50 p-6 rounded-lg">
+                <h4 className="text-xl font-semibold text-white mb-3">Сообщество</h4>
+                <p className="text-gray-400">Присоединяйтесь к сообществу разработчиков и делитесь опытом</p>
+              </div>
+            </div>
+          </div>
         
         </div>
 
