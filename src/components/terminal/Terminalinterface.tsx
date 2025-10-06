@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import { TerminalLine } from '@/store/terminalStore';
+import React from 'react';
 
 export default function TerminalInterface() {
   

@@ -76,7 +76,7 @@ export const InformationBar = memo(({ icon, title, description, color, index }: 
   return (
     <div
       ref={containerRef}
-      className="p-6 rounded-2xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-gray-600/50 transition-all duration-300 cursor-pointer group"
+      className="p-6 rounded-2xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-gray-600/50 transition-all duration-300 cursor-pointer group will-change-auto"
     >
       <div
         ref={iconRef}

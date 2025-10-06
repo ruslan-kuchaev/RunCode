@@ -1,7 +1,7 @@
 // Утилиты для оптимизации производительности
 
 // Debounce функция для оптимизации событий
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {
@@ -14,7 +14,7 @@ export const debounce = <T extends (...args: any[]) => any>(
 };
 
 // Throttle функция для ограничения частоты вызовов
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): ((...args: Parameters<T>) => void) => {
@@ -44,7 +44,7 @@ export const isMobile = (): boolean => {
 // Проверка производительности устройства
 export const getDevicePerformance = (): 'high' | 'medium' | 'low' => {
   const hardwareConcurrency = navigator.hardwareConcurrency || 1;
-  const memory = (navigator as any).deviceMemory || 1;
+  const memory = (navigator as { deviceMemory?: number }).deviceMemory || 1;
   
   if (hardwareConcurrency >= 8 && memory >= 4) return 'high';
   if (hardwareConcurrency >= 4 && memory >= 2) return 'medium';

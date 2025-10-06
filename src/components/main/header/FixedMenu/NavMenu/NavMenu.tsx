@@ -106,7 +106,7 @@ export default function NavMenu() {
   return (
     <div
       ref={navRef}
-      className="fixed top-0 left-[50%] transform -translate-x-1/2 z-50 opacity-0"
+      className="fixed top-0 left-[50%] transform -translate-x-1/2 z-50 opacity-0 will-change-auto"
     >
       <nav className="flex flex-nowrap gap-8 mt-4 px-6 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10">
 
