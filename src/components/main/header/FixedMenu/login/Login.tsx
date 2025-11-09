@@ -1,8 +1,11 @@
+"use client";
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Ghost } from "lucide-react";
+
 import useAnimationStore from "@/store/AnimationCenter";
+import Link from "next/link";
 
 export const Login = () => {
   const loginRef = useRef(null);
@@ -41,9 +44,11 @@ export const Login = () => {
       ref={loginRef}
       className="fixed top-5 left-[2%] z-55 will-change-auto opacity-0"
     >
-      <div className="rounded-full bg-amber-500 w-12 h-12 shadow-md shadow-amber-500/50 flex transform origin-center">
-        <Ghost size={35} className="m-auto transform origin-center" />
-      </div>
+      <Link href="/login">
+        <div className="rounded-full bg-amber-500 w-12 h-12 shadow-md shadow-amber-500/50 flex transform origin-center">
+          <Ghost size={35} className="m-auto transform origin-center" />
+        </div>
+      </Link>
     </div>
   );
 };

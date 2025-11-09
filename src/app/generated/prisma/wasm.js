@@ -114,9 +114,6 @@ Prisma.NullTypes = {
  */
 
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
-  ReadUncommitted: 'ReadUncommitted',
-  ReadCommitted: 'ReadCommitted',
-  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -128,7 +125,8 @@ exports.Prisma.UserScalarFieldEnum = {
   avatar: 'avatar',
   rating: 'rating',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  role: 'role'
 };
 
 exports.Prisma.TaskScalarFieldEnum = {
@@ -139,6 +137,8 @@ exports.Prisma.TaskScalarFieldEnum = {
   difficulty: 'difficulty',
   price: 'price',
   preview: 'preview',
+  languageId: 'languageId',
+  startCode: 'startCode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -150,8 +150,7 @@ exports.Prisma.UserTaskScalarFieldEnum = {
   status: 'status',
   startedAt: 'startedAt',
   solvedAt: 'solvedAt',
-  code: 'code',
-  rating: 'rating'
+  code: 'code'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -163,20 +162,32 @@ exports.Prisma.CommentScalarFieldEnum = {
   taskId: 'taskId'
 };
 
+exports.Prisma.SolutinScalarFieldEnum = {
+  id: 'id',
+  solutinCode: 'solutinCode',
+  taskId: 'taskId'
+};
+
+exports.Prisma.LanguageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  icon: 'icon'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
-};
-
-exports.Prisma.QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
 };
 
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Role = exports.$Enums.Role = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
+};
+
 exports.TaskDifficulty = exports.$Enums.TaskDifficulty = {
   EASY: 'EASY',
   MEDIUM: 'MEDIUM',
@@ -187,14 +198,16 @@ exports.TaskDifficulty = exports.$Enums.TaskDifficulty = {
 exports.TaskStatus = exports.$Enums.TaskStatus = {
   STARTED: 'STARTED',
   SOLVED: 'SOLVED',
-  ABANDONED: 'ABANDONED'
+  UNFINISHED: 'UNFINISHED'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
   Task: 'Task',
   UserTask: 'UserTask',
-  Comment: 'Comment'
+  Comment: 'Comment',
+  Solutin: 'Solutin',
+  Language: 'Language'
 };
 
 /**

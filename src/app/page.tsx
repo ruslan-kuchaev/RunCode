@@ -3,7 +3,7 @@ import HelloRunAnimate from "@/components/animate/HelloRunAnimate";
 import FpsCounter from "@/components/debug/FpsCounter";
 import ActionBar from "@/components/main/ActionBar/ActionBar";
 import { FixedMenu } from "@/components/main/header/FixedMenu/FixedMenu";
-import LightRays from "@/components/shadcn/LightRays";
+import LightRays from "@/components/shared/LightRays";
 import TerminalInterface from "@/components/terminal/Terminalinterface";
 
 export default function Home() {
@@ -26,7 +26,6 @@ export default function Home() {
         />
       </div>
 
-      <FixedMenu />
       <section
         id="terminal-section"
         className="w-full min-h-screen bg-gray-950 "

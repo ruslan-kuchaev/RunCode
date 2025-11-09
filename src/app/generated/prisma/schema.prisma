@@ -1,21 +1,15 @@
-// CodeRun - Programming Trainer Database Schema
-// This schema defines the database structure for the CodeRun programming trainer platform
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/app/generated/prisma"
 }
 
-// Prisma seed configuration
-// This tells Prisma how to run the seed script
-
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./db.sqlite"
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   email     String   @unique
   username  String   @unique
   password  String
@@ -23,8 +17,8 @@ model User {
   rating    Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  role      Role     @default(USER)
 
-  // Relations
   solvedTasks UserTask[]
   comments    Comment[]
 
@@ -32,34 +26,35 @@ model User {
 }
 
 model Task {
-  id               String         @id @default(cuid())
+  id               Int            @id @default(autoincrement())
   title            String
   shortDescription String
   fullDescription  String
   difficulty       TaskDifficulty
-  price            Int // Points awarded for solving
-  preview          String? // Code preview or example
+  price            Int
+  preview          String?
+  languageId       Int
+  startCode        String
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 
-  // Relations
+  language  Language   @relation(fields: [languageId], references: [id])
   solutions UserTask[]
   comments  Comment[]
+  Solutin   Solutin[]
 
   @@map("tasks")
 }
 
 model UserTask {
-  id        String     @id @default(cuid())
-  userId    String
-  taskId    String
+  id        Int        @id @default(autoincrement())
+  userId    Int
+  taskId    Int
   status    TaskStatus @default(STARTED)
   startedAt DateTime   @default(now())
   solvedAt  DateTime?
   code      String?
-  rating    Int? // User's rating of the task (1-5)
 
-  // Relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
 
@@ -68,21 +63,36 @@ model UserTask {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
-  userId String
-  taskId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId Int
+  taskId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task   Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
 
   @@map("comments")
 }
 
-// Enums
+model Solutin {
+  id          Int    @id @default(autoincrement())
+  solutinCode String
+
+  taskId Int
+  task   Task @relation(fields: [taskId], references: [id])
+}
+
+model Language {
+  id   Int    @id @default(autoincrement())
+  name String
+  icon String
+  Task Task[]
+
+  @@map("languages")
+}
+
 enum TaskDifficulty {
   EASY
   MEDIUM
@@ -93,5 +103,10 @@ enum TaskDifficulty {
 enum TaskStatus {
   STARTED
   SOLVED
-  ABANDONED
+  UNFINISHED
+}
+
+enum Role {
+  ADMIN
+  USER
 }

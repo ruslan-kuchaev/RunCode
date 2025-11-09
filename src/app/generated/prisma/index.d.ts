@@ -33,6 +33,16 @@ export type UserTask = $Result.DefaultSelection<Prisma.$UserTaskPayload>
  * 
  */
 export type Comment = $Result.DefaultSelection<Prisma.$CommentPayload>
+/**
+ * Model Solutin
+ * 
+ */
+export type Solutin = $Result.DefaultSelection<Prisma.$SolutinPayload>
+/**
+ * Model Language
+ * 
+ */
+export type Language = $Result.DefaultSelection<Prisma.$LanguagePayload>
 
 /**
  * Enums
@@ -51,10 +61,18 @@ export type TaskDifficulty = (typeof TaskDifficulty)[keyof typeof TaskDifficulty
 export const TaskStatus: {
   STARTED: 'STARTED',
   SOLVED: 'SOLVED',
-  ABANDONED: 'ABANDONED'
+  UNFINISHED: 'UNFINISHED'
 };
 
 export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
+
+
+export const Role: {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
 
 }
 
@@ -65,6 +83,10 @@ export const TaskDifficulty: typeof $Enums.TaskDifficulty
 export type TaskStatus = $Enums.TaskStatus
 
 export const TaskStatus: typeof $Enums.TaskStatus
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
 
 /**
  * ##  Prisma Client ʲˢ
@@ -223,6 +245,26 @@ export class PrismaClient<
     * ```
     */
   get comment(): Prisma.CommentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.solutin`: Exposes CRUD operations for the **Solutin** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Solutins
+    * const solutins = await prisma.solutin.findMany()
+    * ```
+    */
+  get solutin(): Prisma.SolutinDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.language`: Exposes CRUD operations for the **Language** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Languages
+    * const languages = await prisma.language.findMany()
+    * ```
+    */
+  get language(): Prisma.LanguageDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -666,7 +708,9 @@ export namespace Prisma {
     User: 'User',
     Task: 'Task',
     UserTask: 'UserTask',
-    Comment: 'Comment'
+    Comment: 'Comment',
+    Solutin: 'Solutin',
+    Language: 'Language'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -685,7 +729,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "task" | "userTask" | "comment"
+      modelProps: "user" | "task" | "userTask" | "comment" | "solutin" | "language"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -985,6 +1029,154 @@ export namespace Prisma {
           }
         }
       }
+      Solutin: {
+        payload: Prisma.$SolutinPayload<ExtArgs>
+        fields: Prisma.SolutinFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SolutinFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SolutinFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload>
+          }
+          findFirst: {
+            args: Prisma.SolutinFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SolutinFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload>
+          }
+          findMany: {
+            args: Prisma.SolutinFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload>[]
+          }
+          create: {
+            args: Prisma.SolutinCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload>
+          }
+          createMany: {
+            args: Prisma.SolutinCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SolutinCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload>[]
+          }
+          delete: {
+            args: Prisma.SolutinDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload>
+          }
+          update: {
+            args: Prisma.SolutinUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload>
+          }
+          deleteMany: {
+            args: Prisma.SolutinDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SolutinUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SolutinUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload>[]
+          }
+          upsert: {
+            args: Prisma.SolutinUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SolutinPayload>
+          }
+          aggregate: {
+            args: Prisma.SolutinAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSolutin>
+          }
+          groupBy: {
+            args: Prisma.SolutinGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SolutinGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SolutinCountArgs<ExtArgs>
+            result: $Utils.Optional<SolutinCountAggregateOutputType> | number
+          }
+        }
+      }
+      Language: {
+        payload: Prisma.$LanguagePayload<ExtArgs>
+        fields: Prisma.LanguageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LanguageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LanguageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload>
+          }
+          findFirst: {
+            args: Prisma.LanguageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LanguageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload>
+          }
+          findMany: {
+            args: Prisma.LanguageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload>[]
+          }
+          create: {
+            args: Prisma.LanguageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload>
+          }
+          createMany: {
+            args: Prisma.LanguageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LanguageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload>[]
+          }
+          delete: {
+            args: Prisma.LanguageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload>
+          }
+          update: {
+            args: Prisma.LanguageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload>
+          }
+          deleteMany: {
+            args: Prisma.LanguageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LanguageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LanguageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload>[]
+          }
+          upsert: {
+            args: Prisma.LanguageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguagePayload>
+          }
+          aggregate: {
+            args: Prisma.LanguageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLanguage>
+          }
+          groupBy: {
+            args: Prisma.LanguageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LanguageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LanguageCountArgs<ExtArgs>
+            result: $Utils.Optional<LanguageCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1081,6 +1273,8 @@ export namespace Prisma {
     task?: TaskOmit
     userTask?: UserTaskOmit
     comment?: CommentOmit
+    solutin?: SolutinOmit
+    language?: LanguageOmit
   }
 
   /* Types for Logging */
@@ -1203,11 +1397,13 @@ export namespace Prisma {
   export type TaskCountOutputType = {
     solutions: number
     comments: number
+    Solutin: number
   }
 
   export type TaskCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     solutions?: boolean | TaskCountOutputTypeCountSolutionsArgs
     comments?: boolean | TaskCountOutputTypeCountCommentsArgs
+    Solutin?: boolean | TaskCountOutputTypeCountSolutinArgs
   }
 
   // Custom InputTypes
@@ -1235,6 +1431,44 @@ export namespace Prisma {
     where?: CommentWhereInput
   }
 
+  /**
+   * TaskCountOutputType without action
+   */
+  export type TaskCountOutputTypeCountSolutinArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SolutinWhereInput
+  }
+
+
+  /**
+   * Count Type LanguageCountOutputType
+   */
+
+  export type LanguageCountOutputType = {
+    Task: number
+  }
+
+  export type LanguageCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Task?: boolean | LanguageCountOutputTypeCountTaskArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LanguageCountOutputType without action
+   */
+  export type LanguageCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageCountOutputType
+     */
+    select?: LanguageCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LanguageCountOutputType without action
+   */
+  export type LanguageCountOutputTypeCountTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
+  }
+
 
   /**
    * Models
@@ -1253,15 +1487,17 @@ export namespace Prisma {
   }
 
   export type UserAvgAggregateOutputType = {
+    id: number | null
     rating: number | null
   }
 
   export type UserSumAggregateOutputType = {
+    id: number | null
     rating: number | null
   }
 
   export type UserMinAggregateOutputType = {
-    id: string | null
+    id: number | null
     email: string | null
     username: string | null
     password: string | null
@@ -1269,10 +1505,11 @@ export namespace Prisma {
     rating: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    role: $Enums.Role | null
   }
 
   export type UserMaxAggregateOutputType = {
-    id: string | null
+    id: number | null
     email: string | null
     username: string | null
     password: string | null
@@ -1280,6 +1517,7 @@ export namespace Prisma {
     rating: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    role: $Enums.Role | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1291,15 +1529,18 @@ export namespace Prisma {
     rating: number
     createdAt: number
     updatedAt: number
+    role: number
     _all: number
   }
 
 
   export type UserAvgAggregateInputType = {
+    id?: true
     rating?: true
   }
 
   export type UserSumAggregateInputType = {
+    id?: true
     rating?: true
   }
 
@@ -1312,6 +1553,7 @@ export namespace Prisma {
     rating?: true
     createdAt?: true
     updatedAt?: true
+    role?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1323,6 +1565,7 @@ export namespace Prisma {
     rating?: true
     createdAt?: true
     updatedAt?: true
+    role?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1334,6 +1577,7 @@ export namespace Prisma {
     rating?: true
     createdAt?: true
     updatedAt?: true
+    role?: true
     _all?: true
   }
 
@@ -1424,7 +1668,7 @@ export namespace Prisma {
   }
 
   export type UserGroupByOutputType = {
-    id: string
+    id: number
     email: string
     username: string
     password: string
@@ -1432,6 +1676,7 @@ export namespace Prisma {
     rating: number
     createdAt: Date
     updatedAt: Date
+    role: $Enums.Role
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1462,6 +1707,7 @@ export namespace Prisma {
     rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    role?: boolean
     solvedTasks?: boolean | User$solvedTasksArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1476,6 +1722,7 @@ export namespace Prisma {
     rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    role?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1487,6 +1734,7 @@ export namespace Prisma {
     rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    role?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1498,9 +1746,10 @@ export namespace Prisma {
     rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "avatar" | "rating" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "avatar" | "rating" | "createdAt" | "updatedAt" | "role", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     solvedTasks?: boolean | User$solvedTasksArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
@@ -1516,7 +1765,7 @@ export namespace Prisma {
       comments: Prisma.$CommentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
+      id: number
       email: string
       username: string
       password: string
@@ -1524,6 +1773,7 @@ export namespace Prisma {
       rating: number
       createdAt: Date
       updatedAt: Date
+      role: $Enums.Role
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1949,7 +2199,7 @@ export namespace Prisma {
    * Fields of the User model
    */
   interface UserFieldRefs {
-    readonly id: FieldRef<"User", 'String'>
+    readonly id: FieldRef<"User", 'Int'>
     readonly email: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
@@ -1957,6 +2207,7 @@ export namespace Prisma {
     readonly rating: FieldRef<"User", 'Int'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly role: FieldRef<"User", 'Role'>
   }
     
 
@@ -2186,7 +2437,6 @@ export namespace Prisma {
      * The data used to create many Users.
      */
     data: UserCreateManyInput | UserCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -2205,7 +2455,6 @@ export namespace Prisma {
      * The data used to create many Users.
      */
     data: UserCreateManyInput | UserCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -2424,33 +2673,41 @@ export namespace Prisma {
   }
 
   export type TaskAvgAggregateOutputType = {
+    id: number | null
     price: number | null
+    languageId: number | null
   }
 
   export type TaskSumAggregateOutputType = {
+    id: number | null
     price: number | null
+    languageId: number | null
   }
 
   export type TaskMinAggregateOutputType = {
-    id: string | null
+    id: number | null
     title: string | null
     shortDescription: string | null
     fullDescription: string | null
     difficulty: $Enums.TaskDifficulty | null
     price: number | null
     preview: string | null
+    languageId: number | null
+    startCode: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type TaskMaxAggregateOutputType = {
-    id: string | null
+    id: number | null
     title: string | null
     shortDescription: string | null
     fullDescription: string | null
     difficulty: $Enums.TaskDifficulty | null
     price: number | null
     preview: string | null
+    languageId: number | null
+    startCode: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2463,6 +2720,8 @@ export namespace Prisma {
     difficulty: number
     price: number
     preview: number
+    languageId: number
+    startCode: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2470,11 +2729,15 @@ export namespace Prisma {
 
 
   export type TaskAvgAggregateInputType = {
+    id?: true
     price?: true
+    languageId?: true
   }
 
   export type TaskSumAggregateInputType = {
+    id?: true
     price?: true
+    languageId?: true
   }
 
   export type TaskMinAggregateInputType = {
@@ -2485,6 +2748,8 @@ export namespace Prisma {
     difficulty?: true
     price?: true
     preview?: true
+    languageId?: true
+    startCode?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2497,6 +2762,8 @@ export namespace Prisma {
     difficulty?: true
     price?: true
     preview?: true
+    languageId?: true
+    startCode?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2509,6 +2776,8 @@ export namespace Prisma {
     difficulty?: true
     price?: true
     preview?: true
+    languageId?: true
+    startCode?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2601,13 +2870,15 @@ export namespace Prisma {
   }
 
   export type TaskGroupByOutputType = {
-    id: string
+    id: number
     title: string
     shortDescription: string
     fullDescription: string
     difficulty: $Enums.TaskDifficulty
     price: number
     preview: string | null
+    languageId: number
+    startCode: string
     createdAt: Date
     updatedAt: Date
     _count: TaskCountAggregateOutputType | null
@@ -2639,10 +2910,14 @@ export namespace Prisma {
     difficulty?: boolean
     price?: boolean
     preview?: boolean
+    languageId?: boolean
+    startCode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    language?: boolean | LanguageDefaultArgs<ExtArgs>
     solutions?: boolean | Task$solutionsArgs<ExtArgs>
     comments?: boolean | Task$commentsArgs<ExtArgs>
+    Solutin?: boolean | Task$SolutinArgs<ExtArgs>
     _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
@@ -2654,8 +2929,11 @@ export namespace Prisma {
     difficulty?: boolean
     price?: boolean
     preview?: boolean
+    languageId?: boolean
+    startCode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    language?: boolean | LanguageDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2666,8 +2944,11 @@ export namespace Prisma {
     difficulty?: boolean
     price?: boolean
     preview?: boolean
+    languageId?: boolean
+    startCode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    language?: boolean | LanguageDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectScalar = {
@@ -2678,33 +2959,45 @@ export namespace Prisma {
     difficulty?: boolean
     price?: boolean
     preview?: boolean
+    languageId?: boolean
+    startCode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "shortDescription" | "fullDescription" | "difficulty" | "price" | "preview" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "shortDescription" | "fullDescription" | "difficulty" | "price" | "preview" | "languageId" | "startCode" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    language?: boolean | LanguageDefaultArgs<ExtArgs>
     solutions?: boolean | Task$solutionsArgs<ExtArgs>
     comments?: boolean | Task$commentsArgs<ExtArgs>
+    Solutin?: boolean | Task$SolutinArgs<ExtArgs>
     _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type TaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    language?: boolean | LanguageDefaultArgs<ExtArgs>
+  }
+  export type TaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    language?: boolean | LanguageDefaultArgs<ExtArgs>
+  }
 
   export type $TaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Task"
     objects: {
+      language: Prisma.$LanguagePayload<ExtArgs>
       solutions: Prisma.$UserTaskPayload<ExtArgs>[]
       comments: Prisma.$CommentPayload<ExtArgs>[]
+      Solutin: Prisma.$SolutinPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
+      id: number
       title: string
       shortDescription: string
       fullDescription: string
       difficulty: $Enums.TaskDifficulty
       price: number
       preview: string | null
+      languageId: number
+      startCode: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["task"]>
@@ -3101,8 +3394,10 @@ export namespace Prisma {
    */
   export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    language<T extends LanguageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LanguageDefaultArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     solutions<T extends Task$solutionsArgs<ExtArgs> = {}>(args?: Subset<T, Task$solutionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends Task$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Task$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Solutin<T extends Task$SolutinArgs<ExtArgs> = {}>(args?: Subset<T, Task$SolutinArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3132,13 +3427,15 @@ export namespace Prisma {
    * Fields of the Task model
    */
   interface TaskFieldRefs {
-    readonly id: FieldRef<"Task", 'String'>
+    readonly id: FieldRef<"Task", 'Int'>
     readonly title: FieldRef<"Task", 'String'>
     readonly shortDescription: FieldRef<"Task", 'String'>
     readonly fullDescription: FieldRef<"Task", 'String'>
     readonly difficulty: FieldRef<"Task", 'TaskDifficulty'>
     readonly price: FieldRef<"Task", 'Int'>
     readonly preview: FieldRef<"Task", 'String'>
+    readonly languageId: FieldRef<"Task", 'Int'>
+    readonly startCode: FieldRef<"Task", 'String'>
     readonly createdAt: FieldRef<"Task", 'DateTime'>
     readonly updatedAt: FieldRef<"Task", 'DateTime'>
   }
@@ -3370,7 +3667,6 @@ export namespace Prisma {
      * The data used to create many Tasks.
      */
     data: TaskCreateManyInput | TaskCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -3389,7 +3685,10 @@ export namespace Prisma {
      * The data used to create many Tasks.
      */
     data: TaskCreateManyInput | TaskCreateManyInput[]
-    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3460,6 +3759,10 @@ export namespace Prisma {
      * Limit how many Tasks to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3577,6 +3880,30 @@ export namespace Prisma {
   }
 
   /**
+   * Task.Solutin
+   */
+  export type Task$SolutinArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    where?: SolutinWhereInput
+    orderBy?: SolutinOrderByWithRelationInput | SolutinOrderByWithRelationInput[]
+    cursor?: SolutinWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SolutinScalarFieldEnum | SolutinScalarFieldEnum[]
+  }
+
+  /**
    * Task without action
    */
   export type TaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3608,33 +3935,35 @@ export namespace Prisma {
   }
 
   export type UserTaskAvgAggregateOutputType = {
-    rating: number | null
+    id: number | null
+    userId: number | null
+    taskId: number | null
   }
 
   export type UserTaskSumAggregateOutputType = {
-    rating: number | null
+    id: number | null
+    userId: number | null
+    taskId: number | null
   }
 
   export type UserTaskMinAggregateOutputType = {
-    id: string | null
-    userId: string | null
-    taskId: string | null
+    id: number | null
+    userId: number | null
+    taskId: number | null
     status: $Enums.TaskStatus | null
     startedAt: Date | null
     solvedAt: Date | null
     code: string | null
-    rating: number | null
   }
 
   export type UserTaskMaxAggregateOutputType = {
-    id: string | null
-    userId: string | null
-    taskId: string | null
+    id: number | null
+    userId: number | null
+    taskId: number | null
     status: $Enums.TaskStatus | null
     startedAt: Date | null
     solvedAt: Date | null
     code: string | null
-    rating: number | null
   }
 
   export type UserTaskCountAggregateOutputType = {
@@ -3645,17 +3974,20 @@ export namespace Prisma {
     startedAt: number
     solvedAt: number
     code: number
-    rating: number
     _all: number
   }
 
 
   export type UserTaskAvgAggregateInputType = {
-    rating?: true
+    id?: true
+    userId?: true
+    taskId?: true
   }
 
   export type UserTaskSumAggregateInputType = {
-    rating?: true
+    id?: true
+    userId?: true
+    taskId?: true
   }
 
   export type UserTaskMinAggregateInputType = {
@@ -3666,7 +3998,6 @@ export namespace Prisma {
     startedAt?: true
     solvedAt?: true
     code?: true
-    rating?: true
   }
 
   export type UserTaskMaxAggregateInputType = {
@@ -3677,7 +4008,6 @@ export namespace Prisma {
     startedAt?: true
     solvedAt?: true
     code?: true
-    rating?: true
   }
 
   export type UserTaskCountAggregateInputType = {
@@ -3688,7 +4018,6 @@ export namespace Prisma {
     startedAt?: true
     solvedAt?: true
     code?: true
-    rating?: true
     _all?: true
   }
 
@@ -3779,14 +4108,13 @@ export namespace Prisma {
   }
 
   export type UserTaskGroupByOutputType = {
-    id: string
-    userId: string
-    taskId: string
+    id: number
+    userId: number
+    taskId: number
     status: $Enums.TaskStatus
     startedAt: Date
     solvedAt: Date | null
     code: string | null
-    rating: number | null
     _count: UserTaskCountAggregateOutputType | null
     _avg: UserTaskAvgAggregateOutputType | null
     _sum: UserTaskSumAggregateOutputType | null
@@ -3816,7 +4144,6 @@ export namespace Prisma {
     startedAt?: boolean
     solvedAt?: boolean
     code?: boolean
-    rating?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | TaskDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userTask"]>
@@ -3829,7 +4156,6 @@ export namespace Prisma {
     startedAt?: boolean
     solvedAt?: boolean
     code?: boolean
-    rating?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | TaskDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userTask"]>
@@ -3842,7 +4168,6 @@ export namespace Prisma {
     startedAt?: boolean
     solvedAt?: boolean
     code?: boolean
-    rating?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | TaskDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userTask"]>
@@ -3855,10 +4180,9 @@ export namespace Prisma {
     startedAt?: boolean
     solvedAt?: boolean
     code?: boolean
-    rating?: boolean
   }
 
-  export type UserTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "taskId" | "status" | "startedAt" | "solvedAt" | "code" | "rating", ExtArgs["result"]["userTask"]>
+  export type UserTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "taskId" | "status" | "startedAt" | "solvedAt" | "code", ExtArgs["result"]["userTask"]>
   export type UserTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | TaskDefaultArgs<ExtArgs>
@@ -3879,14 +4203,13 @@ export namespace Prisma {
       task: Prisma.$TaskPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
-      userId: string
-      taskId: string
+      id: number
+      userId: number
+      taskId: number
       status: $Enums.TaskStatus
       startedAt: Date
       solvedAt: Date | null
       code: string | null
-      rating: number | null
     }, ExtArgs["result"]["userTask"]>
     composites: {}
   }
@@ -4312,14 +4635,13 @@ export namespace Prisma {
    * Fields of the UserTask model
    */
   interface UserTaskFieldRefs {
-    readonly id: FieldRef<"UserTask", 'String'>
-    readonly userId: FieldRef<"UserTask", 'String'>
-    readonly taskId: FieldRef<"UserTask", 'String'>
+    readonly id: FieldRef<"UserTask", 'Int'>
+    readonly userId: FieldRef<"UserTask", 'Int'>
+    readonly taskId: FieldRef<"UserTask", 'Int'>
     readonly status: FieldRef<"UserTask", 'TaskStatus'>
     readonly startedAt: FieldRef<"UserTask", 'DateTime'>
     readonly solvedAt: FieldRef<"UserTask", 'DateTime'>
     readonly code: FieldRef<"UserTask", 'String'>
-    readonly rating: FieldRef<"UserTask", 'Int'>
   }
     
 
@@ -4549,7 +4871,6 @@ export namespace Prisma {
      * The data used to create many UserTasks.
      */
     data: UserTaskCreateManyInput | UserTaskCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -4568,7 +4889,6 @@ export namespace Prisma {
      * The data used to create many UserTasks.
      */
     data: UserTaskCreateManyInput | UserTaskCreateManyInput[]
-    skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -4740,26 +5060,40 @@ export namespace Prisma {
 
   export type AggregateComment = {
     _count: CommentCountAggregateOutputType | null
+    _avg: CommentAvgAggregateOutputType | null
+    _sum: CommentSumAggregateOutputType | null
     _min: CommentMinAggregateOutputType | null
     _max: CommentMaxAggregateOutputType | null
   }
 
+  export type CommentAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    taskId: number | null
+  }
+
+  export type CommentSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    taskId: number | null
+  }
+
   export type CommentMinAggregateOutputType = {
-    id: string | null
+    id: number | null
     content: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    userId: string | null
-    taskId: string | null
+    userId: number | null
+    taskId: number | null
   }
 
   export type CommentMaxAggregateOutputType = {
-    id: string | null
+    id: number | null
     content: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    userId: string | null
-    taskId: string | null
+    userId: number | null
+    taskId: number | null
   }
 
   export type CommentCountAggregateOutputType = {
@@ -4772,6 +5106,18 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type CommentAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    taskId?: true
+  }
+
+  export type CommentSumAggregateInputType = {
+    id?: true
+    userId?: true
+    taskId?: true
+  }
 
   export type CommentMinAggregateInputType = {
     id?: true
@@ -4839,6 +5185,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: CommentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CommentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: CommentMinAggregateInputType
@@ -4869,18 +5227,22 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: CommentCountAggregateInputType | true
+    _avg?: CommentAvgAggregateInputType
+    _sum?: CommentSumAggregateInputType
     _min?: CommentMinAggregateInputType
     _max?: CommentMaxAggregateInputType
   }
 
   export type CommentGroupByOutputType = {
-    id: string
+    id: number
     content: string
     createdAt: Date
     updatedAt: Date
-    userId: string
-    taskId: string
+    userId: number
+    taskId: number
     _count: CommentCountAggregateOutputType | null
+    _avg: CommentAvgAggregateOutputType | null
+    _sum: CommentSumAggregateOutputType | null
     _min: CommentMinAggregateOutputType | null
     _max: CommentMaxAggregateOutputType | null
   }
@@ -4962,12 +5324,12 @@ export namespace Prisma {
       task: Prisma.$TaskPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
+      id: number
       content: string
       createdAt: Date
       updatedAt: Date
-      userId: string
-      taskId: string
+      userId: number
+      taskId: number
     }, ExtArgs["result"]["comment"]>
     composites: {}
   }
@@ -5393,12 +5755,12 @@ export namespace Prisma {
    * Fields of the Comment model
    */
   interface CommentFieldRefs {
-    readonly id: FieldRef<"Comment", 'String'>
+    readonly id: FieldRef<"Comment", 'Int'>
     readonly content: FieldRef<"Comment", 'String'>
     readonly createdAt: FieldRef<"Comment", 'DateTime'>
     readonly updatedAt: FieldRef<"Comment", 'DateTime'>
-    readonly userId: FieldRef<"Comment", 'String'>
-    readonly taskId: FieldRef<"Comment", 'String'>
+    readonly userId: FieldRef<"Comment", 'Int'>
+    readonly taskId: FieldRef<"Comment", 'Int'>
   }
     
 
@@ -5628,7 +5990,6 @@ export namespace Prisma {
      * The data used to create many Comments.
      */
     data: CommentCreateManyInput | CommentCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -5647,7 +6008,6 @@ export namespace Prisma {
      * The data used to create many Comments.
      */
     data: CommentCreateManyInput | CommentCreateManyInput[]
-    skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -5814,13 +6174,2154 @@ export namespace Prisma {
 
 
   /**
+   * Model Solutin
+   */
+
+  export type AggregateSolutin = {
+    _count: SolutinCountAggregateOutputType | null
+    _avg: SolutinAvgAggregateOutputType | null
+    _sum: SolutinSumAggregateOutputType | null
+    _min: SolutinMinAggregateOutputType | null
+    _max: SolutinMaxAggregateOutputType | null
+  }
+
+  export type SolutinAvgAggregateOutputType = {
+    id: number | null
+    taskId: number | null
+  }
+
+  export type SolutinSumAggregateOutputType = {
+    id: number | null
+    taskId: number | null
+  }
+
+  export type SolutinMinAggregateOutputType = {
+    id: number | null
+    solutinCode: string | null
+    taskId: number | null
+  }
+
+  export type SolutinMaxAggregateOutputType = {
+    id: number | null
+    solutinCode: string | null
+    taskId: number | null
+  }
+
+  export type SolutinCountAggregateOutputType = {
+    id: number
+    solutinCode: number
+    taskId: number
+    _all: number
+  }
+
+
+  export type SolutinAvgAggregateInputType = {
+    id?: true
+    taskId?: true
+  }
+
+  export type SolutinSumAggregateInputType = {
+    id?: true
+    taskId?: true
+  }
+
+  export type SolutinMinAggregateInputType = {
+    id?: true
+    solutinCode?: true
+    taskId?: true
+  }
+
+  export type SolutinMaxAggregateInputType = {
+    id?: true
+    solutinCode?: true
+    taskId?: true
+  }
+
+  export type SolutinCountAggregateInputType = {
+    id?: true
+    solutinCode?: true
+    taskId?: true
+    _all?: true
+  }
+
+  export type SolutinAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Solutin to aggregate.
+     */
+    where?: SolutinWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Solutins to fetch.
+     */
+    orderBy?: SolutinOrderByWithRelationInput | SolutinOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SolutinWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Solutins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Solutins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Solutins
+    **/
+    _count?: true | SolutinCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SolutinAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SolutinSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SolutinMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SolutinMaxAggregateInputType
+  }
+
+  export type GetSolutinAggregateType<T extends SolutinAggregateArgs> = {
+        [P in keyof T & keyof AggregateSolutin]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSolutin[P]>
+      : GetScalarType<T[P], AggregateSolutin[P]>
+  }
+
+
+
+
+  export type SolutinGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SolutinWhereInput
+    orderBy?: SolutinOrderByWithAggregationInput | SolutinOrderByWithAggregationInput[]
+    by: SolutinScalarFieldEnum[] | SolutinScalarFieldEnum
+    having?: SolutinScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SolutinCountAggregateInputType | true
+    _avg?: SolutinAvgAggregateInputType
+    _sum?: SolutinSumAggregateInputType
+    _min?: SolutinMinAggregateInputType
+    _max?: SolutinMaxAggregateInputType
+  }
+
+  export type SolutinGroupByOutputType = {
+    id: number
+    solutinCode: string
+    taskId: number
+    _count: SolutinCountAggregateOutputType | null
+    _avg: SolutinAvgAggregateOutputType | null
+    _sum: SolutinSumAggregateOutputType | null
+    _min: SolutinMinAggregateOutputType | null
+    _max: SolutinMaxAggregateOutputType | null
+  }
+
+  type GetSolutinGroupByPayload<T extends SolutinGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SolutinGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SolutinGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SolutinGroupByOutputType[P]>
+            : GetScalarType<T[P], SolutinGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SolutinSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    solutinCode?: boolean
+    taskId?: boolean
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["solutin"]>
+
+  export type SolutinSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    solutinCode?: boolean
+    taskId?: boolean
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["solutin"]>
+
+  export type SolutinSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    solutinCode?: boolean
+    taskId?: boolean
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["solutin"]>
+
+  export type SolutinSelectScalar = {
+    id?: boolean
+    solutinCode?: boolean
+    taskId?: boolean
+  }
+
+  export type SolutinOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "solutinCode" | "taskId", ExtArgs["result"]["solutin"]>
+  export type SolutinInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+  }
+  export type SolutinIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+  }
+  export type SolutinIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+  }
+
+  export type $SolutinPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Solutin"
+    objects: {
+      task: Prisma.$TaskPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      solutinCode: string
+      taskId: number
+    }, ExtArgs["result"]["solutin"]>
+    composites: {}
+  }
+
+  type SolutinGetPayload<S extends boolean | null | undefined | SolutinDefaultArgs> = $Result.GetResult<Prisma.$SolutinPayload, S>
+
+  type SolutinCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SolutinFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SolutinCountAggregateInputType | true
+    }
+
+  export interface SolutinDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Solutin'], meta: { name: 'Solutin' } }
+    /**
+     * Find zero or one Solutin that matches the filter.
+     * @param {SolutinFindUniqueArgs} args - Arguments to find a Solutin
+     * @example
+     * // Get one Solutin
+     * const solutin = await prisma.solutin.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SolutinFindUniqueArgs>(args: SelectSubset<T, SolutinFindUniqueArgs<ExtArgs>>): Prisma__SolutinClient<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Solutin that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SolutinFindUniqueOrThrowArgs} args - Arguments to find a Solutin
+     * @example
+     * // Get one Solutin
+     * const solutin = await prisma.solutin.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SolutinFindUniqueOrThrowArgs>(args: SelectSubset<T, SolutinFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SolutinClient<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Solutin that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SolutinFindFirstArgs} args - Arguments to find a Solutin
+     * @example
+     * // Get one Solutin
+     * const solutin = await prisma.solutin.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SolutinFindFirstArgs>(args?: SelectSubset<T, SolutinFindFirstArgs<ExtArgs>>): Prisma__SolutinClient<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Solutin that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SolutinFindFirstOrThrowArgs} args - Arguments to find a Solutin
+     * @example
+     * // Get one Solutin
+     * const solutin = await prisma.solutin.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SolutinFindFirstOrThrowArgs>(args?: SelectSubset<T, SolutinFindFirstOrThrowArgs<ExtArgs>>): Prisma__SolutinClient<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Solutins that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SolutinFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Solutins
+     * const solutins = await prisma.solutin.findMany()
+     * 
+     * // Get first 10 Solutins
+     * const solutins = await prisma.solutin.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const solutinWithIdOnly = await prisma.solutin.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SolutinFindManyArgs>(args?: SelectSubset<T, SolutinFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Solutin.
+     * @param {SolutinCreateArgs} args - Arguments to create a Solutin.
+     * @example
+     * // Create one Solutin
+     * const Solutin = await prisma.solutin.create({
+     *   data: {
+     *     // ... data to create a Solutin
+     *   }
+     * })
+     * 
+     */
+    create<T extends SolutinCreateArgs>(args: SelectSubset<T, SolutinCreateArgs<ExtArgs>>): Prisma__SolutinClient<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Solutins.
+     * @param {SolutinCreateManyArgs} args - Arguments to create many Solutins.
+     * @example
+     * // Create many Solutins
+     * const solutin = await prisma.solutin.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SolutinCreateManyArgs>(args?: SelectSubset<T, SolutinCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Solutins and returns the data saved in the database.
+     * @param {SolutinCreateManyAndReturnArgs} args - Arguments to create many Solutins.
+     * @example
+     * // Create many Solutins
+     * const solutin = await prisma.solutin.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Solutins and only return the `id`
+     * const solutinWithIdOnly = await prisma.solutin.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SolutinCreateManyAndReturnArgs>(args?: SelectSubset<T, SolutinCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Solutin.
+     * @param {SolutinDeleteArgs} args - Arguments to delete one Solutin.
+     * @example
+     * // Delete one Solutin
+     * const Solutin = await prisma.solutin.delete({
+     *   where: {
+     *     // ... filter to delete one Solutin
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SolutinDeleteArgs>(args: SelectSubset<T, SolutinDeleteArgs<ExtArgs>>): Prisma__SolutinClient<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Solutin.
+     * @param {SolutinUpdateArgs} args - Arguments to update one Solutin.
+     * @example
+     * // Update one Solutin
+     * const solutin = await prisma.solutin.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SolutinUpdateArgs>(args: SelectSubset<T, SolutinUpdateArgs<ExtArgs>>): Prisma__SolutinClient<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Solutins.
+     * @param {SolutinDeleteManyArgs} args - Arguments to filter Solutins to delete.
+     * @example
+     * // Delete a few Solutins
+     * const { count } = await prisma.solutin.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SolutinDeleteManyArgs>(args?: SelectSubset<T, SolutinDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Solutins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SolutinUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Solutins
+     * const solutin = await prisma.solutin.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SolutinUpdateManyArgs>(args: SelectSubset<T, SolutinUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Solutins and returns the data updated in the database.
+     * @param {SolutinUpdateManyAndReturnArgs} args - Arguments to update many Solutins.
+     * @example
+     * // Update many Solutins
+     * const solutin = await prisma.solutin.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Solutins and only return the `id`
+     * const solutinWithIdOnly = await prisma.solutin.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SolutinUpdateManyAndReturnArgs>(args: SelectSubset<T, SolutinUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Solutin.
+     * @param {SolutinUpsertArgs} args - Arguments to update or create a Solutin.
+     * @example
+     * // Update or create a Solutin
+     * const solutin = await prisma.solutin.upsert({
+     *   create: {
+     *     // ... data to create a Solutin
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Solutin we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SolutinUpsertArgs>(args: SelectSubset<T, SolutinUpsertArgs<ExtArgs>>): Prisma__SolutinClient<$Result.GetResult<Prisma.$SolutinPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Solutins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SolutinCountArgs} args - Arguments to filter Solutins to count.
+     * @example
+     * // Count the number of Solutins
+     * const count = await prisma.solutin.count({
+     *   where: {
+     *     // ... the filter for the Solutins we want to count
+     *   }
+     * })
+    **/
+    count<T extends SolutinCountArgs>(
+      args?: Subset<T, SolutinCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SolutinCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Solutin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SolutinAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SolutinAggregateArgs>(args: Subset<T, SolutinAggregateArgs>): Prisma.PrismaPromise<GetSolutinAggregateType<T>>
+
+    /**
+     * Group by Solutin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SolutinGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SolutinGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SolutinGroupByArgs['orderBy'] }
+        : { orderBy?: SolutinGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SolutinGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSolutinGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Solutin model
+   */
+  readonly fields: SolutinFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Solutin.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SolutinClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    task<T extends TaskDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TaskDefaultArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Solutin model
+   */
+  interface SolutinFieldRefs {
+    readonly id: FieldRef<"Solutin", 'Int'>
+    readonly solutinCode: FieldRef<"Solutin", 'String'>
+    readonly taskId: FieldRef<"Solutin", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Solutin findUnique
+   */
+  export type SolutinFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    /**
+     * Filter, which Solutin to fetch.
+     */
+    where: SolutinWhereUniqueInput
+  }
+
+  /**
+   * Solutin findUniqueOrThrow
+   */
+  export type SolutinFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    /**
+     * Filter, which Solutin to fetch.
+     */
+    where: SolutinWhereUniqueInput
+  }
+
+  /**
+   * Solutin findFirst
+   */
+  export type SolutinFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    /**
+     * Filter, which Solutin to fetch.
+     */
+    where?: SolutinWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Solutins to fetch.
+     */
+    orderBy?: SolutinOrderByWithRelationInput | SolutinOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Solutins.
+     */
+    cursor?: SolutinWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Solutins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Solutins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Solutins.
+     */
+    distinct?: SolutinScalarFieldEnum | SolutinScalarFieldEnum[]
+  }
+
+  /**
+   * Solutin findFirstOrThrow
+   */
+  export type SolutinFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    /**
+     * Filter, which Solutin to fetch.
+     */
+    where?: SolutinWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Solutins to fetch.
+     */
+    orderBy?: SolutinOrderByWithRelationInput | SolutinOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Solutins.
+     */
+    cursor?: SolutinWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Solutins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Solutins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Solutins.
+     */
+    distinct?: SolutinScalarFieldEnum | SolutinScalarFieldEnum[]
+  }
+
+  /**
+   * Solutin findMany
+   */
+  export type SolutinFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    /**
+     * Filter, which Solutins to fetch.
+     */
+    where?: SolutinWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Solutins to fetch.
+     */
+    orderBy?: SolutinOrderByWithRelationInput | SolutinOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Solutins.
+     */
+    cursor?: SolutinWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Solutins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Solutins.
+     */
+    skip?: number
+    distinct?: SolutinScalarFieldEnum | SolutinScalarFieldEnum[]
+  }
+
+  /**
+   * Solutin create
+   */
+  export type SolutinCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Solutin.
+     */
+    data: XOR<SolutinCreateInput, SolutinUncheckedCreateInput>
+  }
+
+  /**
+   * Solutin createMany
+   */
+  export type SolutinCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Solutins.
+     */
+    data: SolutinCreateManyInput | SolutinCreateManyInput[]
+  }
+
+  /**
+   * Solutin createManyAndReturn
+   */
+  export type SolutinCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * The data used to create many Solutins.
+     */
+    data: SolutinCreateManyInput | SolutinCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Solutin update
+   */
+  export type SolutinUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Solutin.
+     */
+    data: XOR<SolutinUpdateInput, SolutinUncheckedUpdateInput>
+    /**
+     * Choose, which Solutin to update.
+     */
+    where: SolutinWhereUniqueInput
+  }
+
+  /**
+   * Solutin updateMany
+   */
+  export type SolutinUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Solutins.
+     */
+    data: XOR<SolutinUpdateManyMutationInput, SolutinUncheckedUpdateManyInput>
+    /**
+     * Filter which Solutins to update
+     */
+    where?: SolutinWhereInput
+    /**
+     * Limit how many Solutins to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Solutin updateManyAndReturn
+   */
+  export type SolutinUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * The data used to update Solutins.
+     */
+    data: XOR<SolutinUpdateManyMutationInput, SolutinUncheckedUpdateManyInput>
+    /**
+     * Filter which Solutins to update
+     */
+    where?: SolutinWhereInput
+    /**
+     * Limit how many Solutins to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Solutin upsert
+   */
+  export type SolutinUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Solutin to update in case it exists.
+     */
+    where: SolutinWhereUniqueInput
+    /**
+     * In case the Solutin found by the `where` argument doesn't exist, create a new Solutin with this data.
+     */
+    create: XOR<SolutinCreateInput, SolutinUncheckedCreateInput>
+    /**
+     * In case the Solutin was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SolutinUpdateInput, SolutinUncheckedUpdateInput>
+  }
+
+  /**
+   * Solutin delete
+   */
+  export type SolutinDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+    /**
+     * Filter which Solutin to delete.
+     */
+    where: SolutinWhereUniqueInput
+  }
+
+  /**
+   * Solutin deleteMany
+   */
+  export type SolutinDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Solutins to delete
+     */
+    where?: SolutinWhereInput
+    /**
+     * Limit how many Solutins to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Solutin without action
+   */
+  export type SolutinDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Solutin
+     */
+    select?: SolutinSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Solutin
+     */
+    omit?: SolutinOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SolutinInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Language
+   */
+
+  export type AggregateLanguage = {
+    _count: LanguageCountAggregateOutputType | null
+    _avg: LanguageAvgAggregateOutputType | null
+    _sum: LanguageSumAggregateOutputType | null
+    _min: LanguageMinAggregateOutputType | null
+    _max: LanguageMaxAggregateOutputType | null
+  }
+
+  export type LanguageAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type LanguageSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type LanguageMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    icon: string | null
+  }
+
+  export type LanguageMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    icon: string | null
+  }
+
+  export type LanguageCountAggregateOutputType = {
+    id: number
+    name: number
+    icon: number
+    _all: number
+  }
+
+
+  export type LanguageAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type LanguageSumAggregateInputType = {
+    id?: true
+  }
+
+  export type LanguageMinAggregateInputType = {
+    id?: true
+    name?: true
+    icon?: true
+  }
+
+  export type LanguageMaxAggregateInputType = {
+    id?: true
+    name?: true
+    icon?: true
+  }
+
+  export type LanguageCountAggregateInputType = {
+    id?: true
+    name?: true
+    icon?: true
+    _all?: true
+  }
+
+  export type LanguageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Language to aggregate.
+     */
+    where?: LanguageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Languages to fetch.
+     */
+    orderBy?: LanguageOrderByWithRelationInput | LanguageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LanguageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Languages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Languages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Languages
+    **/
+    _count?: true | LanguageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LanguageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LanguageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LanguageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LanguageMaxAggregateInputType
+  }
+
+  export type GetLanguageAggregateType<T extends LanguageAggregateArgs> = {
+        [P in keyof T & keyof AggregateLanguage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLanguage[P]>
+      : GetScalarType<T[P], AggregateLanguage[P]>
+  }
+
+
+
+
+  export type LanguageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LanguageWhereInput
+    orderBy?: LanguageOrderByWithAggregationInput | LanguageOrderByWithAggregationInput[]
+    by: LanguageScalarFieldEnum[] | LanguageScalarFieldEnum
+    having?: LanguageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LanguageCountAggregateInputType | true
+    _avg?: LanguageAvgAggregateInputType
+    _sum?: LanguageSumAggregateInputType
+    _min?: LanguageMinAggregateInputType
+    _max?: LanguageMaxAggregateInputType
+  }
+
+  export type LanguageGroupByOutputType = {
+    id: number
+    name: string
+    icon: string
+    _count: LanguageCountAggregateOutputType | null
+    _avg: LanguageAvgAggregateOutputType | null
+    _sum: LanguageSumAggregateOutputType | null
+    _min: LanguageMinAggregateOutputType | null
+    _max: LanguageMaxAggregateOutputType | null
+  }
+
+  type GetLanguageGroupByPayload<T extends LanguageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LanguageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LanguageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LanguageGroupByOutputType[P]>
+            : GetScalarType<T[P], LanguageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LanguageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    icon?: boolean
+    Task?: boolean | Language$TaskArgs<ExtArgs>
+    _count?: boolean | LanguageCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["language"]>
+
+  export type LanguageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    icon?: boolean
+  }, ExtArgs["result"]["language"]>
+
+  export type LanguageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    icon?: boolean
+  }, ExtArgs["result"]["language"]>
+
+  export type LanguageSelectScalar = {
+    id?: boolean
+    name?: boolean
+    icon?: boolean
+  }
+
+  export type LanguageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "icon", ExtArgs["result"]["language"]>
+  export type LanguageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Task?: boolean | Language$TaskArgs<ExtArgs>
+    _count?: boolean | LanguageCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LanguageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type LanguageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $LanguagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Language"
+    objects: {
+      Task: Prisma.$TaskPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      icon: string
+    }, ExtArgs["result"]["language"]>
+    composites: {}
+  }
+
+  type LanguageGetPayload<S extends boolean | null | undefined | LanguageDefaultArgs> = $Result.GetResult<Prisma.$LanguagePayload, S>
+
+  type LanguageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LanguageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LanguageCountAggregateInputType | true
+    }
+
+  export interface LanguageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Language'], meta: { name: 'Language' } }
+    /**
+     * Find zero or one Language that matches the filter.
+     * @param {LanguageFindUniqueArgs} args - Arguments to find a Language
+     * @example
+     * // Get one Language
+     * const language = await prisma.language.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LanguageFindUniqueArgs>(args: SelectSubset<T, LanguageFindUniqueArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Language that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LanguageFindUniqueOrThrowArgs} args - Arguments to find a Language
+     * @example
+     * // Get one Language
+     * const language = await prisma.language.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LanguageFindUniqueOrThrowArgs>(args: SelectSubset<T, LanguageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Language that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageFindFirstArgs} args - Arguments to find a Language
+     * @example
+     * // Get one Language
+     * const language = await prisma.language.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LanguageFindFirstArgs>(args?: SelectSubset<T, LanguageFindFirstArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Language that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageFindFirstOrThrowArgs} args - Arguments to find a Language
+     * @example
+     * // Get one Language
+     * const language = await prisma.language.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LanguageFindFirstOrThrowArgs>(args?: SelectSubset<T, LanguageFindFirstOrThrowArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Languages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Languages
+     * const languages = await prisma.language.findMany()
+     * 
+     * // Get first 10 Languages
+     * const languages = await prisma.language.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const languageWithIdOnly = await prisma.language.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LanguageFindManyArgs>(args?: SelectSubset<T, LanguageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Language.
+     * @param {LanguageCreateArgs} args - Arguments to create a Language.
+     * @example
+     * // Create one Language
+     * const Language = await prisma.language.create({
+     *   data: {
+     *     // ... data to create a Language
+     *   }
+     * })
+     * 
+     */
+    create<T extends LanguageCreateArgs>(args: SelectSubset<T, LanguageCreateArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Languages.
+     * @param {LanguageCreateManyArgs} args - Arguments to create many Languages.
+     * @example
+     * // Create many Languages
+     * const language = await prisma.language.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LanguageCreateManyArgs>(args?: SelectSubset<T, LanguageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Languages and returns the data saved in the database.
+     * @param {LanguageCreateManyAndReturnArgs} args - Arguments to create many Languages.
+     * @example
+     * // Create many Languages
+     * const language = await prisma.language.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Languages and only return the `id`
+     * const languageWithIdOnly = await prisma.language.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LanguageCreateManyAndReturnArgs>(args?: SelectSubset<T, LanguageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Language.
+     * @param {LanguageDeleteArgs} args - Arguments to delete one Language.
+     * @example
+     * // Delete one Language
+     * const Language = await prisma.language.delete({
+     *   where: {
+     *     // ... filter to delete one Language
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LanguageDeleteArgs>(args: SelectSubset<T, LanguageDeleteArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Language.
+     * @param {LanguageUpdateArgs} args - Arguments to update one Language.
+     * @example
+     * // Update one Language
+     * const language = await prisma.language.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LanguageUpdateArgs>(args: SelectSubset<T, LanguageUpdateArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Languages.
+     * @param {LanguageDeleteManyArgs} args - Arguments to filter Languages to delete.
+     * @example
+     * // Delete a few Languages
+     * const { count } = await prisma.language.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LanguageDeleteManyArgs>(args?: SelectSubset<T, LanguageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Languages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Languages
+     * const language = await prisma.language.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LanguageUpdateManyArgs>(args: SelectSubset<T, LanguageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Languages and returns the data updated in the database.
+     * @param {LanguageUpdateManyAndReturnArgs} args - Arguments to update many Languages.
+     * @example
+     * // Update many Languages
+     * const language = await prisma.language.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Languages and only return the `id`
+     * const languageWithIdOnly = await prisma.language.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LanguageUpdateManyAndReturnArgs>(args: SelectSubset<T, LanguageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Language.
+     * @param {LanguageUpsertArgs} args - Arguments to update or create a Language.
+     * @example
+     * // Update or create a Language
+     * const language = await prisma.language.upsert({
+     *   create: {
+     *     // ... data to create a Language
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Language we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LanguageUpsertArgs>(args: SelectSubset<T, LanguageUpsertArgs<ExtArgs>>): Prisma__LanguageClient<$Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Languages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageCountArgs} args - Arguments to filter Languages to count.
+     * @example
+     * // Count the number of Languages
+     * const count = await prisma.language.count({
+     *   where: {
+     *     // ... the filter for the Languages we want to count
+     *   }
+     * })
+    **/
+    count<T extends LanguageCountArgs>(
+      args?: Subset<T, LanguageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LanguageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Language.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LanguageAggregateArgs>(args: Subset<T, LanguageAggregateArgs>): Prisma.PrismaPromise<GetLanguageAggregateType<T>>
+
+    /**
+     * Group by Language.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LanguageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LanguageGroupByArgs['orderBy'] }
+        : { orderBy?: LanguageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LanguageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLanguageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Language model
+   */
+  readonly fields: LanguageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Language.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LanguageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Task<T extends Language$TaskArgs<ExtArgs> = {}>(args?: Subset<T, Language$TaskArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Language model
+   */
+  interface LanguageFieldRefs {
+    readonly id: FieldRef<"Language", 'Int'>
+    readonly name: FieldRef<"Language", 'String'>
+    readonly icon: FieldRef<"Language", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Language findUnique
+   */
+  export type LanguageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
+     * Filter, which Language to fetch.
+     */
+    where: LanguageWhereUniqueInput
+  }
+
+  /**
+   * Language findUniqueOrThrow
+   */
+  export type LanguageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
+     * Filter, which Language to fetch.
+     */
+    where: LanguageWhereUniqueInput
+  }
+
+  /**
+   * Language findFirst
+   */
+  export type LanguageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
+     * Filter, which Language to fetch.
+     */
+    where?: LanguageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Languages to fetch.
+     */
+    orderBy?: LanguageOrderByWithRelationInput | LanguageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Languages.
+     */
+    cursor?: LanguageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Languages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Languages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Languages.
+     */
+    distinct?: LanguageScalarFieldEnum | LanguageScalarFieldEnum[]
+  }
+
+  /**
+   * Language findFirstOrThrow
+   */
+  export type LanguageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
+     * Filter, which Language to fetch.
+     */
+    where?: LanguageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Languages to fetch.
+     */
+    orderBy?: LanguageOrderByWithRelationInput | LanguageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Languages.
+     */
+    cursor?: LanguageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Languages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Languages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Languages.
+     */
+    distinct?: LanguageScalarFieldEnum | LanguageScalarFieldEnum[]
+  }
+
+  /**
+   * Language findMany
+   */
+  export type LanguageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
+     * Filter, which Languages to fetch.
+     */
+    where?: LanguageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Languages to fetch.
+     */
+    orderBy?: LanguageOrderByWithRelationInput | LanguageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Languages.
+     */
+    cursor?: LanguageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Languages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Languages.
+     */
+    skip?: number
+    distinct?: LanguageScalarFieldEnum | LanguageScalarFieldEnum[]
+  }
+
+  /**
+   * Language create
+   */
+  export type LanguageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Language.
+     */
+    data: XOR<LanguageCreateInput, LanguageUncheckedCreateInput>
+  }
+
+  /**
+   * Language createMany
+   */
+  export type LanguageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Languages.
+     */
+    data: LanguageCreateManyInput | LanguageCreateManyInput[]
+  }
+
+  /**
+   * Language createManyAndReturn
+   */
+  export type LanguageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * The data used to create many Languages.
+     */
+    data: LanguageCreateManyInput | LanguageCreateManyInput[]
+  }
+
+  /**
+   * Language update
+   */
+  export type LanguageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Language.
+     */
+    data: XOR<LanguageUpdateInput, LanguageUncheckedUpdateInput>
+    /**
+     * Choose, which Language to update.
+     */
+    where: LanguageWhereUniqueInput
+  }
+
+  /**
+   * Language updateMany
+   */
+  export type LanguageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Languages.
+     */
+    data: XOR<LanguageUpdateManyMutationInput, LanguageUncheckedUpdateManyInput>
+    /**
+     * Filter which Languages to update
+     */
+    where?: LanguageWhereInput
+    /**
+     * Limit how many Languages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Language updateManyAndReturn
+   */
+  export type LanguageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * The data used to update Languages.
+     */
+    data: XOR<LanguageUpdateManyMutationInput, LanguageUncheckedUpdateManyInput>
+    /**
+     * Filter which Languages to update
+     */
+    where?: LanguageWhereInput
+    /**
+     * Limit how many Languages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Language upsert
+   */
+  export type LanguageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Language to update in case it exists.
+     */
+    where: LanguageWhereUniqueInput
+    /**
+     * In case the Language found by the `where` argument doesn't exist, create a new Language with this data.
+     */
+    create: XOR<LanguageCreateInput, LanguageUncheckedCreateInput>
+    /**
+     * In case the Language was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LanguageUpdateInput, LanguageUncheckedUpdateInput>
+  }
+
+  /**
+   * Language delete
+   */
+  export type LanguageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+    /**
+     * Filter which Language to delete.
+     */
+    where: LanguageWhereUniqueInput
+  }
+
+  /**
+   * Language deleteMany
+   */
+  export type LanguageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Languages to delete
+     */
+    where?: LanguageWhereInput
+    /**
+     * Limit how many Languages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Language.Task
+   */
+  export type Language$TaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * Language without action
+   */
+  export type LanguageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Language
+     */
+    select?: LanguageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Language
+     */
+    omit?: LanguageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
   export const TransactionIsolationLevel: {
-    ReadUncommitted: 'ReadUncommitted',
-    ReadCommitted: 'ReadCommitted',
-    RepeatableRead: 'RepeatableRead',
     Serializable: 'Serializable'
   };
 
@@ -5835,7 +8336,8 @@ export namespace Prisma {
     avatar: 'avatar',
     rating: 'rating',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    role: 'role'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -5849,6 +8351,8 @@ export namespace Prisma {
     difficulty: 'difficulty',
     price: 'price',
     preview: 'preview',
+    languageId: 'languageId',
+    startCode: 'startCode',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -5863,8 +8367,7 @@ export namespace Prisma {
     status: 'status',
     startedAt: 'startedAt',
     solvedAt: 'solvedAt',
-    code: 'code',
-    rating: 'rating'
+    code: 'code'
   };
 
   export type UserTaskScalarFieldEnum = (typeof UserTaskScalarFieldEnum)[keyof typeof UserTaskScalarFieldEnum]
@@ -5882,20 +8385,30 @@ export namespace Prisma {
   export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
 
 
+  export const SolutinScalarFieldEnum: {
+    id: 'id',
+    solutinCode: 'solutinCode',
+    taskId: 'taskId'
+  };
+
+  export type SolutinScalarFieldEnum = (typeof SolutinScalarFieldEnum)[keyof typeof SolutinScalarFieldEnum]
+
+
+  export const LanguageScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    icon: 'icon'
+  };
+
+  export type LanguageScalarFieldEnum = (typeof LanguageScalarFieldEnum)[keyof typeof LanguageScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-  export const QueryMode: {
-    default: 'default',
-    insensitive: 'insensitive'
-  };
-
-  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
   export const NullsOrder: {
@@ -5912,20 +8425,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'String'
-   */
-  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-    
-
-
-  /**
-   * Reference to a field of type 'String[]'
-   */
-  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -5933,9 +8432,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int[]'
+   * Reference to a field of type 'String'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
     
 
 
@@ -5947,9 +8446,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime[]'
+   * Reference to a field of type 'Role'
    */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
     
 
 
@@ -5961,13 +8460,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'TaskDifficulty[]'
-   */
-  export type ListEnumTaskDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskDifficulty[]'>
-    
-
-
-  /**
    * Reference to a field of type 'TaskStatus'
    */
   export type EnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus'>
@@ -5975,23 +8467,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'TaskStatus[]'
-   */
-  export type ListEnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -6002,7 +8480,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    id?: StringFilter<"User"> | string
+    id?: IntFilter<"User"> | number
     email?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
@@ -6010,6 +8488,7 @@ export namespace Prisma {
     rating?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     solvedTasks?: UserTaskListRelationFilter
     comments?: CommentListRelationFilter
   }
@@ -6023,12 +8502,13 @@ export namespace Prisma {
     rating?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    role?: SortOrder
     solvedTasks?: UserTaskOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: number
     email?: string
     username?: string
     AND?: UserWhereInput | UserWhereInput[]
@@ -6039,6 +8519,7 @@ export namespace Prisma {
     rating?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     solvedTasks?: UserTaskListRelationFilter
     comments?: CommentListRelationFilter
   }, "id" | "email" | "username">
@@ -6052,6 +8533,7 @@ export namespace Prisma {
     rating?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -6063,7 +8545,7 @@ export namespace Prisma {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"User"> | string
+    id?: IntWithAggregatesFilter<"User"> | number
     email?: StringWithAggregatesFilter<"User"> | string
     username?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
@@ -6071,23 +8553,28 @@ export namespace Prisma {
     rating?: IntWithAggregatesFilter<"User"> | number
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   }
 
   export type TaskWhereInput = {
     AND?: TaskWhereInput | TaskWhereInput[]
     OR?: TaskWhereInput[]
     NOT?: TaskWhereInput | TaskWhereInput[]
-    id?: StringFilter<"Task"> | string
+    id?: IntFilter<"Task"> | number
     title?: StringFilter<"Task"> | string
     shortDescription?: StringFilter<"Task"> | string
     fullDescription?: StringFilter<"Task"> | string
     difficulty?: EnumTaskDifficultyFilter<"Task"> | $Enums.TaskDifficulty
     price?: IntFilter<"Task"> | number
     preview?: StringNullableFilter<"Task"> | string | null
+    languageId?: IntFilter<"Task"> | number
+    startCode?: StringFilter<"Task"> | string
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
+    language?: XOR<LanguageScalarRelationFilter, LanguageWhereInput>
     solutions?: UserTaskListRelationFilter
     comments?: CommentListRelationFilter
+    Solutin?: SolutinListRelationFilter
   }
 
   export type TaskOrderByWithRelationInput = {
@@ -6098,14 +8585,18 @@ export namespace Prisma {
     difficulty?: SortOrder
     price?: SortOrder
     preview?: SortOrderInput | SortOrder
+    languageId?: SortOrder
+    startCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    language?: LanguageOrderByWithRelationInput
     solutions?: UserTaskOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
+    Solutin?: SolutinOrderByRelationAggregateInput
   }
 
   export type TaskWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: number
     AND?: TaskWhereInput | TaskWhereInput[]
     OR?: TaskWhereInput[]
     NOT?: TaskWhereInput | TaskWhereInput[]
@@ -6115,10 +8606,14 @@ export namespace Prisma {
     difficulty?: EnumTaskDifficultyFilter<"Task"> | $Enums.TaskDifficulty
     price?: IntFilter<"Task"> | number
     preview?: StringNullableFilter<"Task"> | string | null
+    languageId?: IntFilter<"Task"> | number
+    startCode?: StringFilter<"Task"> | string
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
+    language?: XOR<LanguageScalarRelationFilter, LanguageWhereInput>
     solutions?: UserTaskListRelationFilter
     comments?: CommentListRelationFilter
+    Solutin?: SolutinListRelationFilter
   }, "id">
 
   export type TaskOrderByWithAggregationInput = {
@@ -6129,6 +8624,8 @@ export namespace Prisma {
     difficulty?: SortOrder
     price?: SortOrder
     preview?: SortOrderInput | SortOrder
+    languageId?: SortOrder
+    startCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TaskCountOrderByAggregateInput
@@ -6142,13 +8639,15 @@ export namespace Prisma {
     AND?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
     OR?: TaskScalarWhereWithAggregatesInput[]
     NOT?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Task"> | string
+    id?: IntWithAggregatesFilter<"Task"> | number
     title?: StringWithAggregatesFilter<"Task"> | string
     shortDescription?: StringWithAggregatesFilter<"Task"> | string
     fullDescription?: StringWithAggregatesFilter<"Task"> | string
     difficulty?: EnumTaskDifficultyWithAggregatesFilter<"Task"> | $Enums.TaskDifficulty
     price?: IntWithAggregatesFilter<"Task"> | number
     preview?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    languageId?: IntWithAggregatesFilter<"Task"> | number
+    startCode?: StringWithAggregatesFilter<"Task"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
   }
@@ -6157,14 +8656,13 @@ export namespace Prisma {
     AND?: UserTaskWhereInput | UserTaskWhereInput[]
     OR?: UserTaskWhereInput[]
     NOT?: UserTaskWhereInput | UserTaskWhereInput[]
-    id?: StringFilter<"UserTask"> | string
-    userId?: StringFilter<"UserTask"> | string
-    taskId?: StringFilter<"UserTask"> | string
+    id?: IntFilter<"UserTask"> | number
+    userId?: IntFilter<"UserTask"> | number
+    taskId?: IntFilter<"UserTask"> | number
     status?: EnumTaskStatusFilter<"UserTask"> | $Enums.TaskStatus
     startedAt?: DateTimeFilter<"UserTask"> | Date | string
     solvedAt?: DateTimeNullableFilter<"UserTask"> | Date | string | null
     code?: StringNullableFilter<"UserTask"> | string | null
-    rating?: IntNullableFilter<"UserTask"> | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
   }
@@ -6177,24 +8675,22 @@ export namespace Prisma {
     startedAt?: SortOrder
     solvedAt?: SortOrderInput | SortOrder
     code?: SortOrderInput | SortOrder
-    rating?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     task?: TaskOrderByWithRelationInput
   }
 
   export type UserTaskWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: number
     userId_taskId?: UserTaskUserIdTaskIdCompoundUniqueInput
     AND?: UserTaskWhereInput | UserTaskWhereInput[]
     OR?: UserTaskWhereInput[]
     NOT?: UserTaskWhereInput | UserTaskWhereInput[]
-    userId?: StringFilter<"UserTask"> | string
-    taskId?: StringFilter<"UserTask"> | string
+    userId?: IntFilter<"UserTask"> | number
+    taskId?: IntFilter<"UserTask"> | number
     status?: EnumTaskStatusFilter<"UserTask"> | $Enums.TaskStatus
     startedAt?: DateTimeFilter<"UserTask"> | Date | string
     solvedAt?: DateTimeNullableFilter<"UserTask"> | Date | string | null
     code?: StringNullableFilter<"UserTask"> | string | null
-    rating?: IntNullableFilter<"UserTask"> | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
   }, "id" | "userId_taskId">
@@ -6207,7 +8703,6 @@ export namespace Prisma {
     startedAt?: SortOrder
     solvedAt?: SortOrderInput | SortOrder
     code?: SortOrderInput | SortOrder
-    rating?: SortOrderInput | SortOrder
     _count?: UserTaskCountOrderByAggregateInput
     _avg?: UserTaskAvgOrderByAggregateInput
     _max?: UserTaskMaxOrderByAggregateInput
@@ -6219,26 +8714,25 @@ export namespace Prisma {
     AND?: UserTaskScalarWhereWithAggregatesInput | UserTaskScalarWhereWithAggregatesInput[]
     OR?: UserTaskScalarWhereWithAggregatesInput[]
     NOT?: UserTaskScalarWhereWithAggregatesInput | UserTaskScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"UserTask"> | string
-    userId?: StringWithAggregatesFilter<"UserTask"> | string
-    taskId?: StringWithAggregatesFilter<"UserTask"> | string
+    id?: IntWithAggregatesFilter<"UserTask"> | number
+    userId?: IntWithAggregatesFilter<"UserTask"> | number
+    taskId?: IntWithAggregatesFilter<"UserTask"> | number
     status?: EnumTaskStatusWithAggregatesFilter<"UserTask"> | $Enums.TaskStatus
     startedAt?: DateTimeWithAggregatesFilter<"UserTask"> | Date | string
     solvedAt?: DateTimeNullableWithAggregatesFilter<"UserTask"> | Date | string | null
     code?: StringNullableWithAggregatesFilter<"UserTask"> | string | null
-    rating?: IntNullableWithAggregatesFilter<"UserTask"> | number | null
   }
 
   export type CommentWhereInput = {
     AND?: CommentWhereInput | CommentWhereInput[]
     OR?: CommentWhereInput[]
     NOT?: CommentWhereInput | CommentWhereInput[]
-    id?: StringFilter<"Comment"> | string
+    id?: IntFilter<"Comment"> | number
     content?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     updatedAt?: DateTimeFilter<"Comment"> | Date | string
-    userId?: StringFilter<"Comment"> | string
-    taskId?: StringFilter<"Comment"> | string
+    userId?: IntFilter<"Comment"> | number
+    taskId?: IntFilter<"Comment"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
   }
@@ -6255,15 +8749,15 @@ export namespace Prisma {
   }
 
   export type CommentWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: number
     AND?: CommentWhereInput | CommentWhereInput[]
     OR?: CommentWhereInput[]
     NOT?: CommentWhereInput | CommentWhereInput[]
     content?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     updatedAt?: DateTimeFilter<"Comment"> | Date | string
-    userId?: StringFilter<"Comment"> | string
-    taskId?: StringFilter<"Comment"> | string
+    userId?: IntFilter<"Comment"> | number
+    taskId?: IntFilter<"Comment"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
   }, "id">
@@ -6276,24 +8770,119 @@ export namespace Prisma {
     userId?: SortOrder
     taskId?: SortOrder
     _count?: CommentCountOrderByAggregateInput
+    _avg?: CommentAvgOrderByAggregateInput
     _max?: CommentMaxOrderByAggregateInput
     _min?: CommentMinOrderByAggregateInput
+    _sum?: CommentSumOrderByAggregateInput
   }
 
   export type CommentScalarWhereWithAggregatesInput = {
     AND?: CommentScalarWhereWithAggregatesInput | CommentScalarWhereWithAggregatesInput[]
     OR?: CommentScalarWhereWithAggregatesInput[]
     NOT?: CommentScalarWhereWithAggregatesInput | CommentScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Comment"> | string
+    id?: IntWithAggregatesFilter<"Comment"> | number
     content?: StringWithAggregatesFilter<"Comment"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
-    userId?: StringWithAggregatesFilter<"Comment"> | string
-    taskId?: StringWithAggregatesFilter<"Comment"> | string
+    userId?: IntWithAggregatesFilter<"Comment"> | number
+    taskId?: IntWithAggregatesFilter<"Comment"> | number
+  }
+
+  export type SolutinWhereInput = {
+    AND?: SolutinWhereInput | SolutinWhereInput[]
+    OR?: SolutinWhereInput[]
+    NOT?: SolutinWhereInput | SolutinWhereInput[]
+    id?: IntFilter<"Solutin"> | number
+    solutinCode?: StringFilter<"Solutin"> | string
+    taskId?: IntFilter<"Solutin"> | number
+    task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
+  }
+
+  export type SolutinOrderByWithRelationInput = {
+    id?: SortOrder
+    solutinCode?: SortOrder
+    taskId?: SortOrder
+    task?: TaskOrderByWithRelationInput
+  }
+
+  export type SolutinWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: SolutinWhereInput | SolutinWhereInput[]
+    OR?: SolutinWhereInput[]
+    NOT?: SolutinWhereInput | SolutinWhereInput[]
+    solutinCode?: StringFilter<"Solutin"> | string
+    taskId?: IntFilter<"Solutin"> | number
+    task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
+  }, "id">
+
+  export type SolutinOrderByWithAggregationInput = {
+    id?: SortOrder
+    solutinCode?: SortOrder
+    taskId?: SortOrder
+    _count?: SolutinCountOrderByAggregateInput
+    _avg?: SolutinAvgOrderByAggregateInput
+    _max?: SolutinMaxOrderByAggregateInput
+    _min?: SolutinMinOrderByAggregateInput
+    _sum?: SolutinSumOrderByAggregateInput
+  }
+
+  export type SolutinScalarWhereWithAggregatesInput = {
+    AND?: SolutinScalarWhereWithAggregatesInput | SolutinScalarWhereWithAggregatesInput[]
+    OR?: SolutinScalarWhereWithAggregatesInput[]
+    NOT?: SolutinScalarWhereWithAggregatesInput | SolutinScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Solutin"> | number
+    solutinCode?: StringWithAggregatesFilter<"Solutin"> | string
+    taskId?: IntWithAggregatesFilter<"Solutin"> | number
+  }
+
+  export type LanguageWhereInput = {
+    AND?: LanguageWhereInput | LanguageWhereInput[]
+    OR?: LanguageWhereInput[]
+    NOT?: LanguageWhereInput | LanguageWhereInput[]
+    id?: IntFilter<"Language"> | number
+    name?: StringFilter<"Language"> | string
+    icon?: StringFilter<"Language"> | string
+    Task?: TaskListRelationFilter
+  }
+
+  export type LanguageOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    icon?: SortOrder
+    Task?: TaskOrderByRelationAggregateInput
+  }
+
+  export type LanguageWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: LanguageWhereInput | LanguageWhereInput[]
+    OR?: LanguageWhereInput[]
+    NOT?: LanguageWhereInput | LanguageWhereInput[]
+    name?: StringFilter<"Language"> | string
+    icon?: StringFilter<"Language"> | string
+    Task?: TaskListRelationFilter
+  }, "id">
+
+  export type LanguageOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    icon?: SortOrder
+    _count?: LanguageCountOrderByAggregateInput
+    _avg?: LanguageAvgOrderByAggregateInput
+    _max?: LanguageMaxOrderByAggregateInput
+    _min?: LanguageMinOrderByAggregateInput
+    _sum?: LanguageSumOrderByAggregateInput
+  }
+
+  export type LanguageScalarWhereWithAggregatesInput = {
+    AND?: LanguageScalarWhereWithAggregatesInput | LanguageScalarWhereWithAggregatesInput[]
+    OR?: LanguageScalarWhereWithAggregatesInput[]
+    NOT?: LanguageScalarWhereWithAggregatesInput | LanguageScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Language"> | number
+    name?: StringWithAggregatesFilter<"Language"> | string
+    icon?: StringWithAggregatesFilter<"Language"> | string
   }
 
   export type UserCreateInput = {
-    id?: string
     email: string
     username: string
     password: string
@@ -6301,12 +8890,13 @@ export namespace Prisma {
     rating?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: $Enums.Role
     solvedTasks?: UserTaskCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
-    id?: string
+    id?: number
     email: string
     username: string
     password: string
@@ -6314,12 +8904,12 @@ export namespace Prisma {
     rating?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: $Enums.Role
     solvedTasks?: UserTaskUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -6327,12 +8917,13 @@ export namespace Prisma {
     rating?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solvedTasks?: UserTaskUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -6340,12 +8931,13 @@ export namespace Prisma {
     rating?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solvedTasks?: UserTaskUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
-    id?: string
+    id?: number
     email: string
     username: string
     password: string
@@ -6353,10 +8945,10 @@ export namespace Prisma {
     rating?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: $Enums.Role
   }
 
   export type UserUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -6364,10 +8956,11 @@ export namespace Prisma {
     rating?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
   export type UserUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -6375,177 +8968,181 @@ export namespace Prisma {
     rating?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
   export type TaskCreateInput = {
-    id?: string
     title: string
     shortDescription: string
     fullDescription: string
     difficulty: $Enums.TaskDifficulty
     price: number
     preview?: string | null
+    startCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    language: LanguageCreateNestedOneWithoutTaskInput
     solutions?: UserTaskCreateNestedManyWithoutTaskInput
     comments?: CommentCreateNestedManyWithoutTaskInput
+    Solutin?: SolutinCreateNestedManyWithoutTaskInput
   }
 
   export type TaskUncheckedCreateInput = {
-    id?: string
+    id?: number
     title: string
     shortDescription: string
     fullDescription: string
     difficulty: $Enums.TaskDifficulty
     price: number
     preview?: string | null
+    languageId: number
+    startCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
     solutions?: UserTaskUncheckedCreateNestedManyWithoutTaskInput
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
+    Solutin?: SolutinUncheckedCreateNestedManyWithoutTaskInput
   }
 
   export type TaskUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     shortDescription?: StringFieldUpdateOperationsInput | string
     fullDescription?: StringFieldUpdateOperationsInput | string
     difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
     price?: IntFieldUpdateOperationsInput | number
     preview?: NullableStringFieldUpdateOperationsInput | string | null
+    startCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: LanguageUpdateOneRequiredWithoutTaskNestedInput
     solutions?: UserTaskUpdateManyWithoutTaskNestedInput
     comments?: CommentUpdateManyWithoutTaskNestedInput
+    Solutin?: SolutinUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     shortDescription?: StringFieldUpdateOperationsInput | string
     fullDescription?: StringFieldUpdateOperationsInput | string
     difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
     price?: IntFieldUpdateOperationsInput | number
     preview?: NullableStringFieldUpdateOperationsInput | string | null
+    languageId?: IntFieldUpdateOperationsInput | number
+    startCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solutions?: UserTaskUncheckedUpdateManyWithoutTaskNestedInput
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
+    Solutin?: SolutinUncheckedUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskCreateManyInput = {
-    id?: string
+    id?: number
     title: string
     shortDescription: string
     fullDescription: string
     difficulty: $Enums.TaskDifficulty
     price: number
     preview?: string | null
+    languageId: number
+    startCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TaskUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     shortDescription?: StringFieldUpdateOperationsInput | string
     fullDescription?: StringFieldUpdateOperationsInput | string
     difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
     price?: IntFieldUpdateOperationsInput | number
     preview?: NullableStringFieldUpdateOperationsInput | string | null
+    startCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TaskUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     shortDescription?: StringFieldUpdateOperationsInput | string
     fullDescription?: StringFieldUpdateOperationsInput | string
     difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
     price?: IntFieldUpdateOperationsInput | number
     preview?: NullableStringFieldUpdateOperationsInput | string | null
+    languageId?: IntFieldUpdateOperationsInput | number
+    startCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserTaskCreateInput = {
-    id?: string
     status?: $Enums.TaskStatus
     startedAt?: Date | string
     solvedAt?: Date | string | null
     code?: string | null
-    rating?: number | null
     user: UserCreateNestedOneWithoutSolvedTasksInput
     task: TaskCreateNestedOneWithoutSolutionsInput
   }
 
   export type UserTaskUncheckedCreateInput = {
-    id?: string
-    userId: string
-    taskId: string
+    id?: number
+    userId: number
+    taskId: number
     status?: $Enums.TaskStatus
     startedAt?: Date | string
     solvedAt?: Date | string | null
     code?: string | null
-    rating?: number | null
   }
 
   export type UserTaskUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
     user?: UserUpdateOneRequiredWithoutSolvedTasksNestedInput
     task?: TaskUpdateOneRequiredWithoutSolutionsNestedInput
   }
 
   export type UserTaskUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    taskId?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    taskId?: IntFieldUpdateOperationsInput | number
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserTaskCreateManyInput = {
-    id?: string
-    userId: string
-    taskId: string
+    id?: number
+    userId: number
+    taskId: number
     status?: $Enums.TaskStatus
     startedAt?: Date | string
     solvedAt?: Date | string | null
     code?: string | null
-    rating?: number | null
   }
 
   export type UserTaskUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserTaskUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    taskId?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    taskId?: IntFieldUpdateOperationsInput | number
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CommentCreateInput = {
-    id?: string
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6554,16 +9151,15 @@ export namespace Prisma {
   }
 
   export type CommentUncheckedCreateInput = {
-    id?: string
+    id?: number
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId: string
-    taskId: string
+    userId: number
+    taskId: number
   }
 
   export type CommentUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6572,73 +9168,123 @@ export namespace Prisma {
   }
 
   export type CommentUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    taskId?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    taskId?: IntFieldUpdateOperationsInput | number
   }
 
   export type CommentCreateManyInput = {
-    id?: string
+    id?: number
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId: string
-    taskId: string
+    userId: number
+    taskId: number
   }
 
   export type CommentUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    taskId?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    taskId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type StringFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringFilter<$PrismaModel> | string
+  export type SolutinCreateInput = {
+    solutinCode: string
+    task: TaskCreateNestedOneWithoutSolutinInput
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type SolutinUncheckedCreateInput = {
+    id?: number
+    solutinCode: string
+    taskId: number
+  }
+
+  export type SolutinUpdateInput = {
+    solutinCode?: StringFieldUpdateOperationsInput | string
+    task?: TaskUpdateOneRequiredWithoutSolutinNestedInput
+  }
+
+  export type SolutinUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    solutinCode?: StringFieldUpdateOperationsInput | string
+    taskId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SolutinCreateManyInput = {
+    id?: number
+    solutinCode: string
+    taskId: number
+  }
+
+  export type SolutinUpdateManyMutationInput = {
+    solutinCode?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SolutinUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    solutinCode?: StringFieldUpdateOperationsInput | string
+    taskId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type LanguageCreateInput = {
+    name: string
+    icon: string
+    Task?: TaskCreateNestedManyWithoutLanguageInput
+  }
+
+  export type LanguageUncheckedCreateInput = {
+    id?: number
+    name: string
+    icon: string
+    Task?: TaskUncheckedCreateNestedManyWithoutLanguageInput
+  }
+
+  export type LanguageUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    Task?: TaskUpdateManyWithoutLanguageNestedInput
+  }
+
+  export type LanguageUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    Task?: TaskUncheckedUpdateManyWithoutLanguageNestedInput
+  }
+
+  export type LanguageCreateManyInput = {
+    id?: number
+    name: string
+    icon: string
+  }
+
+  export type LanguageUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LanguageUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -6646,15 +9292,50 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type UserTaskListRelationFilter = {
@@ -6691,9 +9372,11 @@ export namespace Prisma {
     rating?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    role?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
     rating?: SortOrder
   }
 
@@ -6706,6 +9389,7 @@ export namespace Prisma {
     rating?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    role?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -6717,52 +9401,18 @@ export namespace Prisma {
     rating?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    role?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
     rating?: SortOrder
-  }
-
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -6775,10 +9425,44 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -6789,11 +9473,36 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
   export type EnumTaskDifficultyFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskDifficulty | EnumTaskDifficultyFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskDifficulty[] | ListEnumTaskDifficultyFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskDifficulty[] | ListEnumTaskDifficultyFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskDifficulty[]
+    notIn?: $Enums.TaskDifficulty[]
     not?: NestedEnumTaskDifficultyFilter<$PrismaModel> | $Enums.TaskDifficulty
+  }
+
+  export type LanguageScalarRelationFilter = {
+    is?: LanguageWhereInput
+    isNot?: LanguageWhereInput
+  }
+
+  export type SolutinListRelationFilter = {
+    every?: SolutinWhereInput
+    some?: SolutinWhereInput
+    none?: SolutinWhereInput
+  }
+
+  export type SolutinOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type TaskCountOrderByAggregateInput = {
@@ -6804,12 +9513,16 @@ export namespace Prisma {
     difficulty?: SortOrder
     price?: SortOrder
     preview?: SortOrder
+    languageId?: SortOrder
+    startCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TaskAvgOrderByAggregateInput = {
+    id?: SortOrder
     price?: SortOrder
+    languageId?: SortOrder
   }
 
   export type TaskMaxOrderByAggregateInput = {
@@ -6820,6 +9533,8 @@ export namespace Prisma {
     difficulty?: SortOrder
     price?: SortOrder
     preview?: SortOrder
+    languageId?: SortOrder
+    startCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6832,18 +9547,22 @@ export namespace Prisma {
     difficulty?: SortOrder
     price?: SortOrder
     preview?: SortOrder
+    languageId?: SortOrder
+    startCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TaskSumOrderByAggregateInput = {
+    id?: SortOrder
     price?: SortOrder
+    languageId?: SortOrder
   }
 
   export type EnumTaskDifficultyWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskDifficulty | EnumTaskDifficultyFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskDifficulty[] | ListEnumTaskDifficultyFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskDifficulty[] | ListEnumTaskDifficultyFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskDifficulty[]
+    notIn?: $Enums.TaskDifficulty[]
     not?: NestedEnumTaskDifficultyWithAggregatesFilter<$PrismaModel> | $Enums.TaskDifficulty
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTaskDifficultyFilter<$PrismaModel>
@@ -6852,31 +9571,20 @@ export namespace Prisma {
 
   export type EnumTaskStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskStatus[]
+    notIn?: $Enums.TaskStatus[]
     not?: NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type UserScalarRelationFilter = {
@@ -6890,8 +9598,8 @@ export namespace Prisma {
   }
 
   export type UserTaskUserIdTaskIdCompoundUniqueInput = {
-    userId: string
-    taskId: string
+    userId: number
+    taskId: number
   }
 
   export type UserTaskCountOrderByAggregateInput = {
@@ -6902,11 +9610,12 @@ export namespace Prisma {
     startedAt?: SortOrder
     solvedAt?: SortOrder
     code?: SortOrder
-    rating?: SortOrder
   }
 
   export type UserTaskAvgOrderByAggregateInput = {
-    rating?: SortOrder
+    id?: SortOrder
+    userId?: SortOrder
+    taskId?: SortOrder
   }
 
   export type UserTaskMaxOrderByAggregateInput = {
@@ -6917,7 +9626,6 @@ export namespace Prisma {
     startedAt?: SortOrder
     solvedAt?: SortOrder
     code?: SortOrder
-    rating?: SortOrder
   }
 
   export type UserTaskMinOrderByAggregateInput = {
@@ -6928,17 +9636,18 @@ export namespace Prisma {
     startedAt?: SortOrder
     solvedAt?: SortOrder
     code?: SortOrder
-    rating?: SortOrder
   }
 
   export type UserTaskSumOrderByAggregateInput = {
-    rating?: SortOrder
+    id?: SortOrder
+    userId?: SortOrder
+    taskId?: SortOrder
   }
 
   export type EnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskStatus[]
+    notIn?: $Enums.TaskStatus[]
     not?: NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTaskStatusFilter<$PrismaModel>
@@ -6947,8 +9656,8 @@ export namespace Prisma {
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -6959,27 +9668,17 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
   export type CommentCountOrderByAggregateInput = {
     id?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userId?: SortOrder
+    taskId?: SortOrder
+  }
+
+  export type CommentAvgOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     taskId?: SortOrder
   }
@@ -7000,6 +9699,76 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     taskId?: SortOrder
+  }
+
+  export type CommentSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    taskId?: SortOrder
+  }
+
+  export type SolutinCountOrderByAggregateInput = {
+    id?: SortOrder
+    solutinCode?: SortOrder
+    taskId?: SortOrder
+  }
+
+  export type SolutinAvgOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+  }
+
+  export type SolutinMaxOrderByAggregateInput = {
+    id?: SortOrder
+    solutinCode?: SortOrder
+    taskId?: SortOrder
+  }
+
+  export type SolutinMinOrderByAggregateInput = {
+    id?: SortOrder
+    solutinCode?: SortOrder
+    taskId?: SortOrder
+  }
+
+  export type SolutinSumOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+  }
+
+  export type TaskListRelationFilter = {
+    every?: TaskWhereInput
+    some?: TaskWhereInput
+    none?: TaskWhereInput
+  }
+
+  export type TaskOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LanguageCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    icon?: SortOrder
+  }
+
+  export type LanguageAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type LanguageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    icon?: SortOrder
+  }
+
+  export type LanguageMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    icon?: SortOrder
+  }
+
+  export type LanguageSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type UserTaskCreateNestedManyWithoutUserInput = {
@@ -7048,6 +9817,10 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role
   }
 
   export type UserTaskUpdateManyWithoutUserNestedInput = {
@@ -7106,6 +9879,12 @@ export namespace Prisma {
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
+  export type LanguageCreateNestedOneWithoutTaskInput = {
+    create?: XOR<LanguageCreateWithoutTaskInput, LanguageUncheckedCreateWithoutTaskInput>
+    connectOrCreate?: LanguageCreateOrConnectWithoutTaskInput
+    connect?: LanguageWhereUniqueInput
+  }
+
   export type UserTaskCreateNestedManyWithoutTaskInput = {
     create?: XOR<UserTaskCreateWithoutTaskInput, UserTaskUncheckedCreateWithoutTaskInput> | UserTaskCreateWithoutTaskInput[] | UserTaskUncheckedCreateWithoutTaskInput[]
     connectOrCreate?: UserTaskCreateOrConnectWithoutTaskInput | UserTaskCreateOrConnectWithoutTaskInput[]
@@ -7118,6 +9897,13 @@ export namespace Prisma {
     connectOrCreate?: CommentCreateOrConnectWithoutTaskInput | CommentCreateOrConnectWithoutTaskInput[]
     createMany?: CommentCreateManyTaskInputEnvelope
     connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type SolutinCreateNestedManyWithoutTaskInput = {
+    create?: XOR<SolutinCreateWithoutTaskInput, SolutinUncheckedCreateWithoutTaskInput> | SolutinCreateWithoutTaskInput[] | SolutinUncheckedCreateWithoutTaskInput[]
+    connectOrCreate?: SolutinCreateOrConnectWithoutTaskInput | SolutinCreateOrConnectWithoutTaskInput[]
+    createMany?: SolutinCreateManyTaskInputEnvelope
+    connect?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
   }
 
   export type UserTaskUncheckedCreateNestedManyWithoutTaskInput = {
@@ -7134,8 +9920,23 @@ export namespace Prisma {
     connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
+  export type SolutinUncheckedCreateNestedManyWithoutTaskInput = {
+    create?: XOR<SolutinCreateWithoutTaskInput, SolutinUncheckedCreateWithoutTaskInput> | SolutinCreateWithoutTaskInput[] | SolutinUncheckedCreateWithoutTaskInput[]
+    connectOrCreate?: SolutinCreateOrConnectWithoutTaskInput | SolutinCreateOrConnectWithoutTaskInput[]
+    createMany?: SolutinCreateManyTaskInputEnvelope
+    connect?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
+  }
+
   export type EnumTaskDifficultyFieldUpdateOperationsInput = {
     set?: $Enums.TaskDifficulty
+  }
+
+  export type LanguageUpdateOneRequiredWithoutTaskNestedInput = {
+    create?: XOR<LanguageCreateWithoutTaskInput, LanguageUncheckedCreateWithoutTaskInput>
+    connectOrCreate?: LanguageCreateOrConnectWithoutTaskInput
+    upsert?: LanguageUpsertWithoutTaskInput
+    connect?: LanguageWhereUniqueInput
+    update?: XOR<XOR<LanguageUpdateToOneWithWhereWithoutTaskInput, LanguageUpdateWithoutTaskInput>, LanguageUncheckedUpdateWithoutTaskInput>
   }
 
   export type UserTaskUpdateManyWithoutTaskNestedInput = {
@@ -7166,6 +9967,20 @@ export namespace Prisma {
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
+  export type SolutinUpdateManyWithoutTaskNestedInput = {
+    create?: XOR<SolutinCreateWithoutTaskInput, SolutinUncheckedCreateWithoutTaskInput> | SolutinCreateWithoutTaskInput[] | SolutinUncheckedCreateWithoutTaskInput[]
+    connectOrCreate?: SolutinCreateOrConnectWithoutTaskInput | SolutinCreateOrConnectWithoutTaskInput[]
+    upsert?: SolutinUpsertWithWhereUniqueWithoutTaskInput | SolutinUpsertWithWhereUniqueWithoutTaskInput[]
+    createMany?: SolutinCreateManyTaskInputEnvelope
+    set?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
+    disconnect?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
+    delete?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
+    connect?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
+    update?: SolutinUpdateWithWhereUniqueWithoutTaskInput | SolutinUpdateWithWhereUniqueWithoutTaskInput[]
+    updateMany?: SolutinUpdateManyWithWhereWithoutTaskInput | SolutinUpdateManyWithWhereWithoutTaskInput[]
+    deleteMany?: SolutinScalarWhereInput | SolutinScalarWhereInput[]
+  }
+
   export type UserTaskUncheckedUpdateManyWithoutTaskNestedInput = {
     create?: XOR<UserTaskCreateWithoutTaskInput, UserTaskUncheckedCreateWithoutTaskInput> | UserTaskCreateWithoutTaskInput[] | UserTaskUncheckedCreateWithoutTaskInput[]
     connectOrCreate?: UserTaskCreateOrConnectWithoutTaskInput | UserTaskCreateOrConnectWithoutTaskInput[]
@@ -7194,6 +10009,20 @@ export namespace Prisma {
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
+  export type SolutinUncheckedUpdateManyWithoutTaskNestedInput = {
+    create?: XOR<SolutinCreateWithoutTaskInput, SolutinUncheckedCreateWithoutTaskInput> | SolutinCreateWithoutTaskInput[] | SolutinUncheckedCreateWithoutTaskInput[]
+    connectOrCreate?: SolutinCreateOrConnectWithoutTaskInput | SolutinCreateOrConnectWithoutTaskInput[]
+    upsert?: SolutinUpsertWithWhereUniqueWithoutTaskInput | SolutinUpsertWithWhereUniqueWithoutTaskInput[]
+    createMany?: SolutinCreateManyTaskInputEnvelope
+    set?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
+    disconnect?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
+    delete?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
+    connect?: SolutinWhereUniqueInput | SolutinWhereUniqueInput[]
+    update?: SolutinUpdateWithWhereUniqueWithoutTaskInput | SolutinUpdateWithWhereUniqueWithoutTaskInput[]
+    updateMany?: SolutinUpdateManyWithWhereWithoutTaskInput | SolutinUpdateManyWithWhereWithoutTaskInput[]
+    deleteMany?: SolutinScalarWhereInput | SolutinScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutSolvedTasksInput = {
     create?: XOR<UserCreateWithoutSolvedTasksInput, UserUncheckedCreateWithoutSolvedTasksInput>
     connectOrCreate?: UserCreateOrConnectWithoutSolvedTasksInput
@@ -7212,14 +10041,6 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutSolvedTasksNestedInput = {
@@ -7266,10 +10087,77 @@ export namespace Prisma {
     update?: XOR<XOR<TaskUpdateToOneWithWhereWithoutCommentsInput, TaskUpdateWithoutCommentsInput>, TaskUncheckedUpdateWithoutCommentsInput>
   }
 
+  export type TaskCreateNestedOneWithoutSolutinInput = {
+    create?: XOR<TaskCreateWithoutSolutinInput, TaskUncheckedCreateWithoutSolutinInput>
+    connectOrCreate?: TaskCreateOrConnectWithoutSolutinInput
+    connect?: TaskWhereUniqueInput
+  }
+
+  export type TaskUpdateOneRequiredWithoutSolutinNestedInput = {
+    create?: XOR<TaskCreateWithoutSolutinInput, TaskUncheckedCreateWithoutSolutinInput>
+    connectOrCreate?: TaskCreateOrConnectWithoutSolutinInput
+    upsert?: TaskUpsertWithoutSolutinInput
+    connect?: TaskWhereUniqueInput
+    update?: XOR<XOR<TaskUpdateToOneWithWhereWithoutSolutinInput, TaskUpdateWithoutSolutinInput>, TaskUncheckedUpdateWithoutSolutinInput>
+  }
+
+  export type TaskCreateNestedManyWithoutLanguageInput = {
+    create?: XOR<TaskCreateWithoutLanguageInput, TaskUncheckedCreateWithoutLanguageInput> | TaskCreateWithoutLanguageInput[] | TaskUncheckedCreateWithoutLanguageInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutLanguageInput | TaskCreateOrConnectWithoutLanguageInput[]
+    createMany?: TaskCreateManyLanguageInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type TaskUncheckedCreateNestedManyWithoutLanguageInput = {
+    create?: XOR<TaskCreateWithoutLanguageInput, TaskUncheckedCreateWithoutLanguageInput> | TaskCreateWithoutLanguageInput[] | TaskUncheckedCreateWithoutLanguageInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutLanguageInput | TaskCreateOrConnectWithoutLanguageInput[]
+    createMany?: TaskCreateManyLanguageInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type TaskUpdateManyWithoutLanguageNestedInput = {
+    create?: XOR<TaskCreateWithoutLanguageInput, TaskUncheckedCreateWithoutLanguageInput> | TaskCreateWithoutLanguageInput[] | TaskUncheckedCreateWithoutLanguageInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutLanguageInput | TaskCreateOrConnectWithoutLanguageInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutLanguageInput | TaskUpsertWithWhereUniqueWithoutLanguageInput[]
+    createMany?: TaskCreateManyLanguageInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutLanguageInput | TaskUpdateWithWhereUniqueWithoutLanguageInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutLanguageInput | TaskUpdateManyWithWhereWithoutLanguageInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type TaskUncheckedUpdateManyWithoutLanguageNestedInput = {
+    create?: XOR<TaskCreateWithoutLanguageInput, TaskUncheckedCreateWithoutLanguageInput> | TaskCreateWithoutLanguageInput[] | TaskUncheckedCreateWithoutLanguageInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutLanguageInput | TaskCreateOrConnectWithoutLanguageInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutLanguageInput | TaskUpsertWithWhereUniqueWithoutLanguageInput[]
+    createMany?: TaskCreateManyLanguageInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutLanguageInput | TaskUpdateWithWhereUniqueWithoutLanguageInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutLanguageInput | TaskUpdateManyWithWhereWithoutLanguageInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -7282,8 +10170,8 @@ export namespace Prisma {
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -7294,21 +10182,10 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -7316,10 +10193,44 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -7335,8 +10246,8 @@ export namespace Prisma {
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -7352,8 +10263,8 @@ export namespace Prisma {
 
   export type NestedIntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -7361,37 +10272,10 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -7402,17 +10286,27 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
   export type NestedEnumTaskDifficultyFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskDifficulty | EnumTaskDifficultyFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskDifficulty[] | ListEnumTaskDifficultyFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskDifficulty[] | ListEnumTaskDifficultyFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskDifficulty[]
+    notIn?: $Enums.TaskDifficulty[]
     not?: NestedEnumTaskDifficultyFilter<$PrismaModel> | $Enums.TaskDifficulty
   }
 
   export type NestedEnumTaskDifficultyWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskDifficulty | EnumTaskDifficultyFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskDifficulty[] | ListEnumTaskDifficultyFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskDifficulty[] | ListEnumTaskDifficultyFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskDifficulty[]
+    notIn?: $Enums.TaskDifficulty[]
     not?: NestedEnumTaskDifficultyWithAggregatesFilter<$PrismaModel> | $Enums.TaskDifficulty
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTaskDifficultyFilter<$PrismaModel>
@@ -7421,15 +10315,15 @@ export namespace Prisma {
 
   export type NestedEnumTaskStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskStatus[]
+    notIn?: $Enums.TaskStatus[]
     not?: NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -7439,8 +10333,8 @@ export namespace Prisma {
 
   export type NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskStatus[]
+    notIn?: $Enums.TaskStatus[]
     not?: NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTaskStatusFilter<$PrismaModel>
@@ -7449,8 +10343,8 @@ export namespace Prisma {
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -7461,51 +10355,21 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type UserTaskCreateWithoutUserInput = {
-    id?: string
     status?: $Enums.TaskStatus
     startedAt?: Date | string
     solvedAt?: Date | string | null
     code?: string | null
-    rating?: number | null
     task: TaskCreateNestedOneWithoutSolutionsInput
   }
 
   export type UserTaskUncheckedCreateWithoutUserInput = {
-    id?: string
-    taskId: string
+    id?: number
+    taskId: number
     status?: $Enums.TaskStatus
     startedAt?: Date | string
     solvedAt?: Date | string | null
     code?: string | null
-    rating?: number | null
   }
 
   export type UserTaskCreateOrConnectWithoutUserInput = {
@@ -7515,11 +10379,9 @@ export namespace Prisma {
 
   export type UserTaskCreateManyUserInputEnvelope = {
     data: UserTaskCreateManyUserInput | UserTaskCreateManyUserInput[]
-    skipDuplicates?: boolean
   }
 
   export type CommentCreateWithoutUserInput = {
-    id?: string
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7527,11 +10389,11 @@ export namespace Prisma {
   }
 
   export type CommentUncheckedCreateWithoutUserInput = {
-    id?: string
+    id?: number
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    taskId: string
+    taskId: number
   }
 
   export type CommentCreateOrConnectWithoutUserInput = {
@@ -7541,7 +10403,6 @@ export namespace Prisma {
 
   export type CommentCreateManyUserInputEnvelope = {
     data: CommentCreateManyUserInput | CommentCreateManyUserInput[]
-    skipDuplicates?: boolean
   }
 
   export type UserTaskUpsertWithWhereUniqueWithoutUserInput = {
@@ -7564,14 +10425,13 @@ export namespace Prisma {
     AND?: UserTaskScalarWhereInput | UserTaskScalarWhereInput[]
     OR?: UserTaskScalarWhereInput[]
     NOT?: UserTaskScalarWhereInput | UserTaskScalarWhereInput[]
-    id?: StringFilter<"UserTask"> | string
-    userId?: StringFilter<"UserTask"> | string
-    taskId?: StringFilter<"UserTask"> | string
+    id?: IntFilter<"UserTask"> | number
+    userId?: IntFilter<"UserTask"> | number
+    taskId?: IntFilter<"UserTask"> | number
     status?: EnumTaskStatusFilter<"UserTask"> | $Enums.TaskStatus
     startedAt?: DateTimeFilter<"UserTask"> | Date | string
     solvedAt?: DateTimeNullableFilter<"UserTask"> | Date | string | null
     code?: StringNullableFilter<"UserTask"> | string | null
-    rating?: IntNullableFilter<"UserTask"> | number | null
   }
 
   export type CommentUpsertWithWhereUniqueWithoutUserInput = {
@@ -7594,32 +10454,45 @@ export namespace Prisma {
     AND?: CommentScalarWhereInput | CommentScalarWhereInput[]
     OR?: CommentScalarWhereInput[]
     NOT?: CommentScalarWhereInput | CommentScalarWhereInput[]
-    id?: StringFilter<"Comment"> | string
+    id?: IntFilter<"Comment"> | number
     content?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     updatedAt?: DateTimeFilter<"Comment"> | Date | string
-    userId?: StringFilter<"Comment"> | string
-    taskId?: StringFilter<"Comment"> | string
+    userId?: IntFilter<"Comment"> | number
+    taskId?: IntFilter<"Comment"> | number
+  }
+
+  export type LanguageCreateWithoutTaskInput = {
+    name: string
+    icon: string
+  }
+
+  export type LanguageUncheckedCreateWithoutTaskInput = {
+    id?: number
+    name: string
+    icon: string
+  }
+
+  export type LanguageCreateOrConnectWithoutTaskInput = {
+    where: LanguageWhereUniqueInput
+    create: XOR<LanguageCreateWithoutTaskInput, LanguageUncheckedCreateWithoutTaskInput>
   }
 
   export type UserTaskCreateWithoutTaskInput = {
-    id?: string
     status?: $Enums.TaskStatus
     startedAt?: Date | string
     solvedAt?: Date | string | null
     code?: string | null
-    rating?: number | null
     user: UserCreateNestedOneWithoutSolvedTasksInput
   }
 
   export type UserTaskUncheckedCreateWithoutTaskInput = {
-    id?: string
-    userId: string
+    id?: number
+    userId: number
     status?: $Enums.TaskStatus
     startedAt?: Date | string
     solvedAt?: Date | string | null
     code?: string | null
-    rating?: number | null
   }
 
   export type UserTaskCreateOrConnectWithoutTaskInput = {
@@ -7629,11 +10502,9 @@ export namespace Prisma {
 
   export type UserTaskCreateManyTaskInputEnvelope = {
     data: UserTaskCreateManyTaskInput | UserTaskCreateManyTaskInput[]
-    skipDuplicates?: boolean
   }
 
   export type CommentCreateWithoutTaskInput = {
-    id?: string
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7641,11 +10512,11 @@ export namespace Prisma {
   }
 
   export type CommentUncheckedCreateWithoutTaskInput = {
-    id?: string
+    id?: number
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId: string
+    userId: number
   }
 
   export type CommentCreateOrConnectWithoutTaskInput = {
@@ -7655,7 +10526,46 @@ export namespace Prisma {
 
   export type CommentCreateManyTaskInputEnvelope = {
     data: CommentCreateManyTaskInput | CommentCreateManyTaskInput[]
-    skipDuplicates?: boolean
+  }
+
+  export type SolutinCreateWithoutTaskInput = {
+    solutinCode: string
+  }
+
+  export type SolutinUncheckedCreateWithoutTaskInput = {
+    id?: number
+    solutinCode: string
+  }
+
+  export type SolutinCreateOrConnectWithoutTaskInput = {
+    where: SolutinWhereUniqueInput
+    create: XOR<SolutinCreateWithoutTaskInput, SolutinUncheckedCreateWithoutTaskInput>
+  }
+
+  export type SolutinCreateManyTaskInputEnvelope = {
+    data: SolutinCreateManyTaskInput | SolutinCreateManyTaskInput[]
+  }
+
+  export type LanguageUpsertWithoutTaskInput = {
+    update: XOR<LanguageUpdateWithoutTaskInput, LanguageUncheckedUpdateWithoutTaskInput>
+    create: XOR<LanguageCreateWithoutTaskInput, LanguageUncheckedCreateWithoutTaskInput>
+    where?: LanguageWhereInput
+  }
+
+  export type LanguageUpdateToOneWithWhereWithoutTaskInput = {
+    where?: LanguageWhereInput
+    data: XOR<LanguageUpdateWithoutTaskInput, LanguageUncheckedUpdateWithoutTaskInput>
+  }
+
+  export type LanguageUpdateWithoutTaskInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LanguageUncheckedUpdateWithoutTaskInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserTaskUpsertWithWhereUniqueWithoutTaskInput = {
@@ -7690,8 +10600,32 @@ export namespace Prisma {
     data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutTaskInput>
   }
 
+  export type SolutinUpsertWithWhereUniqueWithoutTaskInput = {
+    where: SolutinWhereUniqueInput
+    update: XOR<SolutinUpdateWithoutTaskInput, SolutinUncheckedUpdateWithoutTaskInput>
+    create: XOR<SolutinCreateWithoutTaskInput, SolutinUncheckedCreateWithoutTaskInput>
+  }
+
+  export type SolutinUpdateWithWhereUniqueWithoutTaskInput = {
+    where: SolutinWhereUniqueInput
+    data: XOR<SolutinUpdateWithoutTaskInput, SolutinUncheckedUpdateWithoutTaskInput>
+  }
+
+  export type SolutinUpdateManyWithWhereWithoutTaskInput = {
+    where: SolutinScalarWhereInput
+    data: XOR<SolutinUpdateManyMutationInput, SolutinUncheckedUpdateManyWithoutTaskInput>
+  }
+
+  export type SolutinScalarWhereInput = {
+    AND?: SolutinScalarWhereInput | SolutinScalarWhereInput[]
+    OR?: SolutinScalarWhereInput[]
+    NOT?: SolutinScalarWhereInput | SolutinScalarWhereInput[]
+    id?: IntFilter<"Solutin"> | number
+    solutinCode?: StringFilter<"Solutin"> | string
+    taskId?: IntFilter<"Solutin"> | number
+  }
+
   export type UserCreateWithoutSolvedTasksInput = {
-    id?: string
     email: string
     username: string
     password: string
@@ -7699,11 +10633,12 @@ export namespace Prisma {
     rating?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: $Enums.Role
     comments?: CommentCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSolvedTasksInput = {
-    id?: string
+    id?: number
     email: string
     username: string
     password: string
@@ -7711,6 +10646,7 @@ export namespace Prisma {
     rating?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: $Enums.Role
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7720,29 +10656,34 @@ export namespace Prisma {
   }
 
   export type TaskCreateWithoutSolutionsInput = {
-    id?: string
     title: string
     shortDescription: string
     fullDescription: string
     difficulty: $Enums.TaskDifficulty
     price: number
     preview?: string | null
+    startCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    language: LanguageCreateNestedOneWithoutTaskInput
     comments?: CommentCreateNestedManyWithoutTaskInput
+    Solutin?: SolutinCreateNestedManyWithoutTaskInput
   }
 
   export type TaskUncheckedCreateWithoutSolutionsInput = {
-    id?: string
+    id?: number
     title: string
     shortDescription: string
     fullDescription: string
     difficulty: $Enums.TaskDifficulty
     price: number
     preview?: string | null
+    languageId: number
+    startCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
+    Solutin?: SolutinUncheckedCreateNestedManyWithoutTaskInput
   }
 
   export type TaskCreateOrConnectWithoutSolutionsInput = {
@@ -7762,7 +10703,6 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutSolvedTasksInput = {
-    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -7770,11 +10710,12 @@ export namespace Prisma {
     rating?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     comments?: CommentUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSolvedTasksInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -7782,6 +10723,7 @@ export namespace Prisma {
     rating?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -7797,33 +10739,37 @@ export namespace Prisma {
   }
 
   export type TaskUpdateWithoutSolutionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     shortDescription?: StringFieldUpdateOperationsInput | string
     fullDescription?: StringFieldUpdateOperationsInput | string
     difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
     price?: IntFieldUpdateOperationsInput | number
     preview?: NullableStringFieldUpdateOperationsInput | string | null
+    startCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: LanguageUpdateOneRequiredWithoutTaskNestedInput
     comments?: CommentUpdateManyWithoutTaskNestedInput
+    Solutin?: SolutinUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutSolutionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     shortDescription?: StringFieldUpdateOperationsInput | string
     fullDescription?: StringFieldUpdateOperationsInput | string
     difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
     price?: IntFieldUpdateOperationsInput | number
     preview?: NullableStringFieldUpdateOperationsInput | string | null
+    languageId?: IntFieldUpdateOperationsInput | number
+    startCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
+    Solutin?: SolutinUncheckedUpdateManyWithoutTaskNestedInput
   }
 
   export type UserCreateWithoutCommentsInput = {
-    id?: string
     email: string
     username: string
     password: string
@@ -7831,11 +10777,12 @@ export namespace Prisma {
     rating?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: $Enums.Role
     solvedTasks?: UserTaskCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
-    id?: string
+    id?: number
     email: string
     username: string
     password: string
@@ -7843,6 +10790,7 @@ export namespace Prisma {
     rating?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    role?: $Enums.Role
     solvedTasks?: UserTaskUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7852,29 +10800,34 @@ export namespace Prisma {
   }
 
   export type TaskCreateWithoutCommentsInput = {
-    id?: string
     title: string
     shortDescription: string
     fullDescription: string
     difficulty: $Enums.TaskDifficulty
     price: number
     preview?: string | null
+    startCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    language: LanguageCreateNestedOneWithoutTaskInput
     solutions?: UserTaskCreateNestedManyWithoutTaskInput
+    Solutin?: SolutinCreateNestedManyWithoutTaskInput
   }
 
   export type TaskUncheckedCreateWithoutCommentsInput = {
-    id?: string
+    id?: number
     title: string
     shortDescription: string
     fullDescription: string
     difficulty: $Enums.TaskDifficulty
     price: number
     preview?: string | null
+    languageId: number
+    startCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
     solutions?: UserTaskUncheckedCreateNestedManyWithoutTaskInput
+    Solutin?: SolutinUncheckedCreateNestedManyWithoutTaskInput
   }
 
   export type TaskCreateOrConnectWithoutCommentsInput = {
@@ -7894,7 +10847,6 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -7902,11 +10854,12 @@ export namespace Prisma {
     rating?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solvedTasks?: UserTaskUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -7914,6 +10867,7 @@ export namespace Prisma {
     rating?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solvedTasks?: UserTaskUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -7929,81 +10883,231 @@ export namespace Prisma {
   }
 
   export type TaskUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     shortDescription?: StringFieldUpdateOperationsInput | string
     fullDescription?: StringFieldUpdateOperationsInput | string
     difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
     price?: IntFieldUpdateOperationsInput | number
     preview?: NullableStringFieldUpdateOperationsInput | string | null
+    startCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: LanguageUpdateOneRequiredWithoutTaskNestedInput
     solutions?: UserTaskUpdateManyWithoutTaskNestedInput
+    Solutin?: SolutinUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     shortDescription?: StringFieldUpdateOperationsInput | string
     fullDescription?: StringFieldUpdateOperationsInput | string
     difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
     price?: IntFieldUpdateOperationsInput | number
     preview?: NullableStringFieldUpdateOperationsInput | string | null
+    languageId?: IntFieldUpdateOperationsInput | number
+    startCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solutions?: UserTaskUncheckedUpdateManyWithoutTaskNestedInput
+    Solutin?: SolutinUncheckedUpdateManyWithoutTaskNestedInput
+  }
+
+  export type TaskCreateWithoutSolutinInput = {
+    title: string
+    shortDescription: string
+    fullDescription: string
+    difficulty: $Enums.TaskDifficulty
+    price: number
+    preview?: string | null
+    startCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    language: LanguageCreateNestedOneWithoutTaskInput
+    solutions?: UserTaskCreateNestedManyWithoutTaskInput
+    comments?: CommentCreateNestedManyWithoutTaskInput
+  }
+
+  export type TaskUncheckedCreateWithoutSolutinInput = {
+    id?: number
+    title: string
+    shortDescription: string
+    fullDescription: string
+    difficulty: $Enums.TaskDifficulty
+    price: number
+    preview?: string | null
+    languageId: number
+    startCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    solutions?: UserTaskUncheckedCreateNestedManyWithoutTaskInput
+    comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
+  }
+
+  export type TaskCreateOrConnectWithoutSolutinInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutSolutinInput, TaskUncheckedCreateWithoutSolutinInput>
+  }
+
+  export type TaskUpsertWithoutSolutinInput = {
+    update: XOR<TaskUpdateWithoutSolutinInput, TaskUncheckedUpdateWithoutSolutinInput>
+    create: XOR<TaskCreateWithoutSolutinInput, TaskUncheckedCreateWithoutSolutinInput>
+    where?: TaskWhereInput
+  }
+
+  export type TaskUpdateToOneWithWhereWithoutSolutinInput = {
+    where?: TaskWhereInput
+    data: XOR<TaskUpdateWithoutSolutinInput, TaskUncheckedUpdateWithoutSolutinInput>
+  }
+
+  export type TaskUpdateWithoutSolutinInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    shortDescription?: StringFieldUpdateOperationsInput | string
+    fullDescription?: StringFieldUpdateOperationsInput | string
+    difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
+    price?: IntFieldUpdateOperationsInput | number
+    preview?: NullableStringFieldUpdateOperationsInput | string | null
+    startCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: LanguageUpdateOneRequiredWithoutTaskNestedInput
+    solutions?: UserTaskUpdateManyWithoutTaskNestedInput
+    comments?: CommentUpdateManyWithoutTaskNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutSolutinInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    shortDescription?: StringFieldUpdateOperationsInput | string
+    fullDescription?: StringFieldUpdateOperationsInput | string
+    difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
+    price?: IntFieldUpdateOperationsInput | number
+    preview?: NullableStringFieldUpdateOperationsInput | string | null
+    languageId?: IntFieldUpdateOperationsInput | number
+    startCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    solutions?: UserTaskUncheckedUpdateManyWithoutTaskNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
+  }
+
+  export type TaskCreateWithoutLanguageInput = {
+    title: string
+    shortDescription: string
+    fullDescription: string
+    difficulty: $Enums.TaskDifficulty
+    price: number
+    preview?: string | null
+    startCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    solutions?: UserTaskCreateNestedManyWithoutTaskInput
+    comments?: CommentCreateNestedManyWithoutTaskInput
+    Solutin?: SolutinCreateNestedManyWithoutTaskInput
+  }
+
+  export type TaskUncheckedCreateWithoutLanguageInput = {
+    id?: number
+    title: string
+    shortDescription: string
+    fullDescription: string
+    difficulty: $Enums.TaskDifficulty
+    price: number
+    preview?: string | null
+    startCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    solutions?: UserTaskUncheckedCreateNestedManyWithoutTaskInput
+    comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
+    Solutin?: SolutinUncheckedCreateNestedManyWithoutTaskInput
+  }
+
+  export type TaskCreateOrConnectWithoutLanguageInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutLanguageInput, TaskUncheckedCreateWithoutLanguageInput>
+  }
+
+  export type TaskCreateManyLanguageInputEnvelope = {
+    data: TaskCreateManyLanguageInput | TaskCreateManyLanguageInput[]
+  }
+
+  export type TaskUpsertWithWhereUniqueWithoutLanguageInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutLanguageInput, TaskUncheckedUpdateWithoutLanguageInput>
+    create: XOR<TaskCreateWithoutLanguageInput, TaskUncheckedCreateWithoutLanguageInput>
+  }
+
+  export type TaskUpdateWithWhereUniqueWithoutLanguageInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutLanguageInput, TaskUncheckedUpdateWithoutLanguageInput>
+  }
+
+  export type TaskUpdateManyWithWhereWithoutLanguageInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutLanguageInput>
+  }
+
+  export type TaskScalarWhereInput = {
+    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    OR?: TaskScalarWhereInput[]
+    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    id?: IntFilter<"Task"> | number
+    title?: StringFilter<"Task"> | string
+    shortDescription?: StringFilter<"Task"> | string
+    fullDescription?: StringFilter<"Task"> | string
+    difficulty?: EnumTaskDifficultyFilter<"Task"> | $Enums.TaskDifficulty
+    price?: IntFilter<"Task"> | number
+    preview?: StringNullableFilter<"Task"> | string | null
+    languageId?: IntFilter<"Task"> | number
+    startCode?: StringFilter<"Task"> | string
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    updatedAt?: DateTimeFilter<"Task"> | Date | string
   }
 
   export type UserTaskCreateManyUserInput = {
-    id?: string
-    taskId: string
+    id?: number
+    taskId: number
     status?: $Enums.TaskStatus
     startedAt?: Date | string
     solvedAt?: Date | string | null
     code?: string | null
-    rating?: number | null
   }
 
   export type CommentCreateManyUserInput = {
-    id?: string
+    id?: number
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    taskId: string
+    taskId: number
   }
 
   export type UserTaskUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
     task?: TaskUpdateOneRequiredWithoutSolutionsNestedInput
   }
 
   export type UserTaskUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    taskId?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    taskId?: IntFieldUpdateOperationsInput | number
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserTaskUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    taskId?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    taskId?: IntFieldUpdateOperationsInput | number
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CommentUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8011,71 +11115,70 @@ export namespace Prisma {
   }
 
   export type CommentUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskId?: StringFieldUpdateOperationsInput | string
+    taskId?: IntFieldUpdateOperationsInput | number
   }
 
   export type CommentUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    taskId?: StringFieldUpdateOperationsInput | string
+    taskId?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserTaskCreateManyTaskInput = {
-    id?: string
-    userId: string
+    id?: number
+    userId: number
     status?: $Enums.TaskStatus
     startedAt?: Date | string
     solvedAt?: Date | string | null
     code?: string | null
-    rating?: number | null
   }
 
   export type CommentCreateManyTaskInput = {
-    id?: string
+    id?: number
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId: string
+    userId: number
+  }
+
+  export type SolutinCreateManyTaskInput = {
+    id?: number
+    solutinCode: string
   }
 
   export type UserTaskUpdateWithoutTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
     user?: UserUpdateOneRequiredWithoutSolvedTasksNestedInput
   }
 
   export type UserTaskUncheckedUpdateWithoutTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserTaskUncheckedUpdateManyWithoutTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CommentUpdateWithoutTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8083,19 +11186,90 @@ export namespace Prisma {
   }
 
   export type CommentUncheckedUpdateWithoutTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type CommentUncheckedUpdateManyWithoutTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SolutinUpdateWithoutTaskInput = {
+    solutinCode?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SolutinUncheckedUpdateWithoutTaskInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    solutinCode?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SolutinUncheckedUpdateManyWithoutTaskInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    solutinCode?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TaskCreateManyLanguageInput = {
+    id?: number
+    title: string
+    shortDescription: string
+    fullDescription: string
+    difficulty: $Enums.TaskDifficulty
+    price: number
+    preview?: string | null
+    startCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TaskUpdateWithoutLanguageInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    shortDescription?: StringFieldUpdateOperationsInput | string
+    fullDescription?: StringFieldUpdateOperationsInput | string
+    difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
+    price?: IntFieldUpdateOperationsInput | number
+    preview?: NullableStringFieldUpdateOperationsInput | string | null
+    startCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    solutions?: UserTaskUpdateManyWithoutTaskNestedInput
+    comments?: CommentUpdateManyWithoutTaskNestedInput
+    Solutin?: SolutinUpdateManyWithoutTaskNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutLanguageInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    shortDescription?: StringFieldUpdateOperationsInput | string
+    fullDescription?: StringFieldUpdateOperationsInput | string
+    difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
+    price?: IntFieldUpdateOperationsInput | number
+    preview?: NullableStringFieldUpdateOperationsInput | string | null
+    startCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    solutions?: UserTaskUncheckedUpdateManyWithoutTaskNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
+    Solutin?: SolutinUncheckedUpdateManyWithoutTaskNestedInput
+  }
+
+  export type TaskUncheckedUpdateManyWithoutLanguageInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    shortDescription?: StringFieldUpdateOperationsInput | string
+    fullDescription?: StringFieldUpdateOperationsInput | string
+    difficulty?: EnumTaskDifficultyFieldUpdateOperationsInput | $Enums.TaskDifficulty
+    price?: IntFieldUpdateOperationsInput | number
+    preview?: NullableStringFieldUpdateOperationsInput | string | null
+    startCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
