@@ -83,7 +83,6 @@ export default function NavMenu() {
       lastScrollY = currentScrollY;
     };
 
-    // Троттлинг
     let ticking = false;
     const throttledScroll = () => {
       if (!ticking) {
