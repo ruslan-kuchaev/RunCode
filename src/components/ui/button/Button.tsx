@@ -18,12 +18,11 @@ const Button = memo(({
     flex items-center justify-center
     font-medium rounded-lg border-2
     transition-all duration-200
-    hover:scale-105 active:scale-95
     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
     cursor-pointer select-none
     w-full h-12
     bg-gray-800/50 border-gray-600
-    disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
+    disabled:opacity-50 disabled:cursor-not-allowed
   `.replace(/\s+/g, ' ').trim();
 
   return (

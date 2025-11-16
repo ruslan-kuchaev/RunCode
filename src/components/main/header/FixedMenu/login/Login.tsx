@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Ghost } from "lucide-react";
@@ -10,6 +10,12 @@ import Link from "next/link";
 export const Login = () => {
   const loginRef = useRef(null);
   const complete = useAnimationStore((state) => state.isHelloComplete);
+  const initializeHelloState = useAnimationStore((state) => state.initializeHelloState);
+
+  // Инициализируем состояние при монтировании
+  useEffect(() => {
+    initializeHelloState();
+  }, [initializeHelloState]);
 
   useGSAP(
     () => {
