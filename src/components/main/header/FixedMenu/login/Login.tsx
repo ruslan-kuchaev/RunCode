@@ -1,16 +1,21 @@
-"use client";
-import { useRef, useEffect } from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { Ghost } from "lucide-react";
+'use client';
+import { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { Ghost } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
-import useAnimationStore from "@/store/AnimationCenter";
-import Link from "next/link";
+import useAnimationStore from '@/store/AnimationCenter';
+import { useAuthStore } from '@/store/authStore';
 
 export const Login = () => {
   const loginRef = useRef(null);
   const complete = useAnimationStore((state) => state.isHelloComplete);
-  const initializeHelloState = useAnimationStore((state) => state.initializeHelloState);
+  const initializeHelloState = useAnimationStore(
+    (state) => state.initializeHelloState,
+  );
+  const openAuthModal = useAuthStore((state) => state.openAuthModal);
+  const { data: session } = useSession();
 
   // Инициализируем состояние при монтировании
   useEffect(() => {
@@ -38,23 +43,31 @@ export const Login = () => {
           opacity: 1,
           y: 0,
           duration: 1,
-          ease: "power3.inOut",
-        }
+          ease: 'power3.inOut',
+        },
       );
     },
-    { dependencies: [complete], scope: loginRef }
+    { dependencies: [complete], scope: loginRef },
   );
+
+  // Don't show login button if user is already logged in
+  if (session) {
+    return null;
+  }
 
   return (
     <div
       ref={loginRef}
-      className="fixed top-5 left-[2%] z-55 will-change-auto opacity-0"
+      className='fixed top-5 left-[2%] z-55 will-change-auto opacity-0'
     >
-      <Link href="/login">
-        <div className="rounded-full bg-amber-500 w-12 h-12 shadow-md shadow-amber-500/50 flex transform origin-center">
-          <Ghost size={35} className="m-auto transform origin-center" />
+      <button
+        onClick={() => openAuthModal('login')}
+        className='focus:outline-none'
+      >
+        <div className='rounded-full bg-amber-500 w-12 h-12 shadow-md shadow-amber-500/50 flex transform origin-center hover:scale-110 transition-transform'>
+          <Ghost size={35} className='m-auto transform origin-center' />
         </div>
-      </Link>
+      </button>
     </div>
   );
 };

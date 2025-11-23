@@ -37,6 +37,12 @@ export const ColorSchemes: Record<string, ColorScheme> = {
     textColor: "text-yellow-400",
     borderColor: "border-yellow-500",
   },
+  orange: {
+    bgColor: "bg-orange-500",
+    iconColor: "text-orange-400",
+    textColor: "text-orange-400",
+    borderColor: "border-orange-500",
+  },
 };
 
 

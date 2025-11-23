@@ -1,5 +1,6 @@
 import { useRef, useEffect, useCallback } from 'react';
-import gsap from 'gsap';
+import { gsap } from '@/lib/gsap';
+import { durations, easings } from '@/lib/gsap';
 
 interface GSAPConfig {
   duration?: number;
@@ -20,8 +21,8 @@ export const useOptimizedGSAP = () => {
     
     timelineRef.current = gsap.timeline({
       defaults: {
-        duration: config?.duration || 0.5,
-        ease: config?.ease || "power2.out"
+        duration: config?.duration || durations.normal,
+        ease: config?.ease || easings.smooth
       }
     });
     

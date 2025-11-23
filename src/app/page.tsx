@@ -1,17 +1,22 @@
 "use client";
 import HelloRunAnimate from "@/components/animate/HelloRunAnimate";
-import FpsCounter from "@/components/debug/FpsCounter";
 import ActionBar from "@/components/main/ActionBar/ActionBar";
-import { FixedMenu } from "@/components/main/header/FixedMenu/FixedMenu";
 import LightRays from "@/components/shared/LightRays";
-import TerminalInterface from "@/components/terminal/Terminalinterface";
+import { Terminal } from "@/components/features/terminal";
 
 export default function Home() {
   return (
     <>
       {/* <FpsCounter /> */}
       <HelloRunAnimate />
-      <div style={{ width: "100%", height: "1200px", position: "absolute" }}>
+      <div
+        style={{
+          width: "100%",
+          height: "1200px",
+          position: "absolute",
+          zIndex: -20,
+        }}
+      >
         <LightRays
           raysOrigin="right"
           raysColor="#00ffff"
@@ -22,14 +27,11 @@ export default function Home() {
           mouseInfluence={0.1}
           noiseAmount={0.1}
           distortion={0.05}
-          className="custom-rays"
+          className="custom-rays z-10"
         />
       </div>
 
-      <section
-        id="terminal-section"
-        className="w-full min-h-screen bg-gray-950 "
-      >
+      <section id="terminal-section" className="w-full min-h-screen ">
         <div className="container mx-auto px-4 py-16">
           {/* Заголовок секции */}
           <div className="text-center mb-12">
@@ -42,15 +44,15 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Терминал */}
+          
           <div className="max-w-6xl mx-auto">
-            <TerminalInterface />
+            <Terminal />
           </div>
 
           <ActionBar />
         </div>
 
-        {/* Footer */}
+        
         <footer className="border-t border-gray-800 mt-16">
           <div className="container mx-auto px-4 py-8">
             <div className="text-center text-gray-500">

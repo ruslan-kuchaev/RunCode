@@ -1,6 +1,6 @@
 import React from "react";
 import { ColorVariant, getColorScheme } from "@/config/ActionBarConfig";
-import Button from "@/components/ui/button/Button";
+import { Button } from "@/components/ui/Button";
 
 interface ButtonBarProps {
   title?: string;
@@ -30,19 +30,21 @@ export function ButtonBar({ title, description = [], color }: ButtonBarProps) {
         {buttons.map((label, index) => (
           <Button
             key={`btn-${index}`}
-            text={label}
             onClick={() => handleButtonClick(label)}
             className={`${colorScheme.borderColor} ${colorScheme.textColor} hover:${colorScheme.bgColor} hover:bg-opacity-20 transition-all duration-200`}
-          />
+          >
+            {label}
+          </Button>
         ))}
 
         {emptyButtons.map((label, index) => (
           <Button
             key={`empty-${index}`}
-            text={label}
             onClick={() => handleButtonClick(label)}
             className={`${colorScheme.borderColor} ${colorScheme.textColor} hover:${colorScheme.bgColor} hover:bg-opacity-20 transition-all duration-200 opacity-60`}
-          />
+          >
+            {label}
+          </Button>
         ))}
       </div>
     </div>
