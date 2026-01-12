@@ -49,16 +49,16 @@ export default function NavMenu() {
 
       tl.fromTo(
         navRef.current,
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.5 }
+        { autoAlpha: 0, y: -20, duration: 0.5, force3D: true },
+        { autoAlpha: 1, y: 0, duration: 0.5,  force3D: true }
       );
 
       itemsRef.current.forEach((item, index) => {
         if (item) {
           tl.fromTo(
             item,
-            { opacity: 0, y: -20 },
-            { opacity: 1, y: 0, duration: 0.5 },
+            { autoAlpha: 0, y: -20 },
+            { autoAlpha: 1, y: 0, duration: 0.5 },
             index * 0.1
           );
         }
@@ -106,10 +106,11 @@ export default function NavMenu() {
 
   return (
     <div
-      ref={navRef}
-      className="fixed top-0 left-[50%] transform -translate-x-1/2 z-50 opacity-0 will-change-auto"
+
+      className="fixed top-0 left-[50%] transform -translate-x-1/2 z-50  will-change-auto opacity-100"
     >
-      <nav className="flex flex-nowrap gap-8 mt-4 px-6 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10">
+      <nav className="flex flex-nowrap gap-8 mt-4 px-6 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10"
+           ref={navRef}>
         {navItems.map((item, index) => (
           <a
             key={item.id}

@@ -1,6 +1,0 @@
-export { UserRatingCard } from './UserRatingCard'
-export type { UserRatingCardProps } from './UserRatingCard'
-export { RatingFilters } from './RatingFilters'
-export type { RatingFiltersProps, RatingPeriod } from './RatingFilters'
-export { RatingTable } from './RatingTable'
-export type { RatingTableProps } from './RatingTable'

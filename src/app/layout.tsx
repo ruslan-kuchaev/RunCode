@@ -27,10 +27,9 @@ export default function RootLayout({
     <html lang="ru" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        id="body"
       >
-        <Providers>
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

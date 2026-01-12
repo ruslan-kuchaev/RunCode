@@ -6,7 +6,7 @@ export interface Arrayicon {
     icon: ReactNode; 
 }
 
-export const Arrayicon: Arrayicon[] = [
+export const Arrayicons: Arrayicon[] = [
     { id: "Arrayicon-0", icon: <Home size={18} /> },
     { id: "Arrayicon-1", icon: <Layers size={18} /> },
     { id: "Arrayicon-2", icon: <List size={18} /> },

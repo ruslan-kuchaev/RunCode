@@ -136,6 +136,11 @@
   animation: shine 5s linear infinite;
 }
 
+#terminal-input-scroll {
+  scrollbar-width: auto;
+  scrollbar-color: #374151 #101828;
+}
+
 @keyframes shine {
   0% {
     background-position: 100%;

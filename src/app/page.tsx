@@ -1,13 +1,14 @@
-"use client";
+'use client'
 import HelloRunAnimate from "@/components/animate/HelloRunAnimate";
 import ActionBar from "@/components/main/ActionBar/ActionBar";
 import LightRays from "@/components/shared/LightRays";
 import { Terminal } from "@/components/features/terminal";
+import FpsCounter from "@/components/debug/FpsCounter";
 
 export default function Home() {
   return (
     <>
-      {/* <FpsCounter /> */}
+      <FpsCounter />
       <HelloRunAnimate />
       <div
         style={{
@@ -44,7 +45,6 @@ export default function Home() {
             </p>
           </div>
 
-          
           <div className="max-w-6xl mx-auto">
             <Terminal />
           </div>
@@ -52,7 +52,6 @@ export default function Home() {
           <ActionBar />
         </div>
 
-        
         <footer className="border-t border-gray-800 mt-16">
           <div className="container mx-auto px-4 py-8">
             <div className="text-center text-gray-500">
