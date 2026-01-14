@@ -21,6 +21,9 @@ const TaskBoard3D = () => {
         { id: '6', title: 'Задача 6', color: '#00BCD4' },
         { id: '7', title: 'Задача 7', color: '#8BC34A' },
         { id: '8', title: 'Задача 8', color: '#FF9800' },
+        { id: '9', title: 'Задача 9', color: '#00BCD4' },
+        { id: '10', title: 'Задача 10', color: '#8BC34A' },
+        { id: '11', title: 'Задача 11', color: '#FF9800' },
     ];
 
     return <Level tasks={tasks} />;
@@ -32,9 +35,9 @@ export default function TasksBoardPage() {
     return (
         <div style={{ width: '100vw', height: '100vh' }}>
             <Canvas
-                orthographic // ВАЖНО: ортографическая камера для 2D
+                orthographic 
                 camera={{
-                    position: [0, 0, 100], // Z для ортографической камеры
+                    position: [0, 0, 100], 
                     zoom: 50,
                     near: 0.1,
                     far: 1000,
@@ -42,33 +45,32 @@ export default function TasksBoardPage() {
             >
                 <color attach="background" args={['#f8f9fa']} />
 
-                {/* Свет не нужен для 2D, но пусть будет */}
                 <ambientLight intensity={0} />
                 <DigitalRainBackground />
                 <TaskBoard3D />
 
-                {/* Ортографическая камера */}
+
                 <OrthographicCamera
                     makeDefault
                     position={[0, 0, 2]}
                     zoom={350}
                 />
 
-                {/* Контролы ТОЛЬКО для 2D навигации */}
+
                 <OrbitControls
 
-                    enableRotate={false} // ВАЖНО: отключаем вращение
-                    enableZoom={true}    // Можно зумировать
-                    enablePan={true}     // Можно перемещать
+                    enableRotate={false} 
+                    enableZoom={true}   
+                    enablePan={true}     
                     zoomSpeed={0.5}
                     panSpeed={0.8}
-                    minZoom={5}         // Минимальный зум
-                    maxZoom={350}        // Максимальный зум
-                    screenSpacePanning={true} // Панорамирование в экранных координатах
-                    maxPolarAngle={Math.PI / 2} // Не даем смотреть сверху/снизу
-                    minPolarAngle={Math.PI / 2} // Фиксируем угол сверху
-                    maxAzimuthAngle={Infinity}  // Бесконечный поворот по горизонтали
-                    minAzimuthAngle={-Infinity} // Бесконечный поворот по горизонтали
+                    minZoom={5}         
+                    maxZoom={350}       
+                    screenSpacePanning={true} 
+                    maxPolarAngle={Math.PI / 2} 
+                    minPolarAngle={Math.PI / 2} 
+                    maxAzimuthAngle={Infinity}  
+                    minAzimuthAngle={-Infinity} 
                 />
             </Canvas>
 

@@ -15,6 +15,7 @@ const SimpleBrick: React.FC<SimpleBrickProps> = ({ title, color = '#4f8ff7' }) =
             justifyContent: 'center',
             cursor: 'pointer',
             boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+            
 
         }}>
       <span style={{

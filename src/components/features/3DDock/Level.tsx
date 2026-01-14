@@ -14,21 +14,21 @@ interface LevelProps {
 }
 
 const Level = ({ tasks }: LevelProps) => {
-    // Параметры кирпичной кладки
-    const getBrickWallPosition = (index: number) => {
-        const brickWidth = 0;  // ширина кирпича в px
-        const brickHeight = -40; // высота кирпича в px
-        const mortar = 100;       // толщина "раствора" между кирпичами
 
-        // Количество кирпичей в четных и нечетных рядах
-        const bricksPerEvenRow = 4; // В четных рядах
-        const bricksPerOddRow = 3;  // В нечетных рядах (на 1 меньше из-за смещения)
+    const getBrickWallPosition = (index: number) => {
+        const brickWidth = 0;  
+        const brickHeight = -40; 
+        const mortar = 100;       
+
+        
+        const bricksPerEvenRow = 4; 
+        const bricksPerOddRow = 3;  
 
         let currentIndex = index;
         let row = 0;
         let col = 0;
 
-        // Находим ряд и колонку для кирпича
+        
         while (currentIndex >= 0) {
             const bricksInThisRow = (row % 2 === 0) ? bricksPerEvenRow : bricksPerOddRow;
 
@@ -41,10 +41,10 @@ const Level = ({ tasks }: LevelProps) => {
             row++;
         }
 
-        // Смещение нечетных рядов (шахматный порядок)
+      
         const rowOffset = (row % 2 === 1) ? (brickWidth + mortar) / 2 : 0;
 
-        // Рассчитываем позицию
+
         const x = (col * (brickWidth + mortar) + rowOffset) / 100;
         const y = (-row * (brickHeight + mortar)) / 100;
 
@@ -62,11 +62,12 @@ const Level = ({ tasks }: LevelProps) => {
                         position={[x, y, 0]}
                         transform
                         style={{
-                            transform: 'translate(-50%, -50%)',
+                            transform: 'translate(-50%, -50%)'
                         }}
                         distanceFactor={2}
                     >
                         <SimpleBrick
+                            
                             title={task.title}
                             color={task.color}
                         />

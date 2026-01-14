@@ -7,10 +7,10 @@ import {LoginModal} from "@/components/main/header/FixedMenu/login/LoginModal";
 export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <SessionProvider>
-        <LoginModal/>
+        <LoginModal />
         <FixedMenu />
         {children}
-            {/*keypress    authmodal*/}
+           
 
 
     </SessionProvider>
