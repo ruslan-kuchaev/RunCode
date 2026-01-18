@@ -124,9 +124,47 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   avatar: 'avatar',
   rating: 'rating',
+  totalPoints: 'totalPoints',
+  country: 'country',
+  bio: 'bio',
+  githubUrl: 'githubUrl',
+  linkedinUrl: 'linkedinUrl',
+  websiteUrl: 'websiteUrl',
+  isEmailVerified: 'isEmailVerified',
+  emailVerifiedAt: 'emailVerifiedAt',
+  lastLoginAt: 'lastLoginAt',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   role: 'role'
+};
+
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  refresh_token: 'refresh_token',
+  access_token: 'access_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state'
+};
+
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  sessionToken: 'sessionToken',
+  userId: 'userId',
+  expires: 'expires'
+};
+
+exports.Prisma.VerificationTokenScalarFieldEnum = {
+  identifier: 'identifier',
+  token: 'token',
+  expires: 'expires'
 };
 
 exports.Prisma.TaskScalarFieldEnum = {
@@ -139,8 +177,46 @@ exports.Prisma.TaskScalarFieldEnum = {
   preview: 'preview',
   languageId: 'languageId',
   startCode: 'startCode',
+  solutionCode: 'solutionCode',
+  testCases: 'testCases',
+  hints: 'hints',
+  tags: 'tags',
+  isActive: 'isActive',
+  viewCount: 'viewCount',
+  likeCount: 'likeCount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SubmissionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  taskId: 'taskId',
+  code: 'code',
+  status: 'status',
+  result: 'result',
+  executionTime: 'executionTime',
+  memoryUsage: 'memoryUsage',
+  score: 'score',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AchievementScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  icon: 'icon',
+  condition: 'condition',
+  points: 'points',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserAchievementScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  achievementId: 'achievementId',
+  unlockedAt: 'unlockedAt'
 };
 
 exports.Prisma.UserTaskScalarFieldEnum = {
@@ -162,16 +238,38 @@ exports.Prisma.CommentScalarFieldEnum = {
   taskId: 'taskId'
 };
 
-exports.Prisma.SolutinScalarFieldEnum = {
-  id: 'id',
-  solutinCode: 'solutinCode',
-  taskId: 'taskId'
-};
-
 exports.Prisma.LanguageScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  icon: 'icon'
+  icon: 'icon',
+  extension: 'extension',
+  monacoLanguage: 'monacoLanguage',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SystemSettingsScalarFieldEnum = {
+  id: 'id',
+  siteName: 'siteName',
+  siteDescription: 'siteDescription',
+  siteUrl: 'siteUrl',
+  adminEmail: 'adminEmail',
+  registrationEnabled: 'registrationEnabled',
+  emailVerificationRequired: 'emailVerificationRequired',
+  maxTasksPerUser: 'maxTasksPerUser',
+  defaultUserRating: 'defaultUserRating',
+  sessionTimeout: 'sessionTimeout',
+  maintenanceMode: 'maintenanceMode',
+  allowGuestViewing: 'allowGuestViewing',
+  maxFileUploadSize: 'maxFileUploadSize',
+  enableNotifications: 'enableNotifications',
+  smtpHost: 'smtpHost',
+  smtpPort: 'smtpPort',
+  smtpUser: 'smtpUser',
+  smtpPassword: 'smtpPassword',
+  enableSsl: 'enableSsl',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -183,8 +281,15 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.UserStatus = exports.$Enums.UserStatus = {
+  ACTIVE: 'ACTIVE',
+  BLOCKED: 'BLOCKED',
+  PENDING: 'PENDING'
+};
+
 exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN',
+  MODERATOR: 'MODERATOR',
   USER: 'USER'
 };
 
@@ -195,6 +300,17 @@ exports.TaskDifficulty = exports.$Enums.TaskDifficulty = {
   EXPERT: 'EXPERT'
 };
 
+exports.SubmissionStatus = exports.$Enums.SubmissionStatus = {
+  PENDING: 'PENDING',
+  RUNNING: 'RUNNING',
+  ACCEPTED: 'ACCEPTED',
+  WRONG_ANSWER: 'WRONG_ANSWER',
+  TIME_LIMIT_EXCEEDED: 'TIME_LIMIT_EXCEEDED',
+  MEMORY_LIMIT_EXCEEDED: 'MEMORY_LIMIT_EXCEEDED',
+  RUNTIME_ERROR: 'RUNTIME_ERROR',
+  COMPILATION_ERROR: 'COMPILATION_ERROR'
+};
+
 exports.TaskStatus = exports.$Enums.TaskStatus = {
   STARTED: 'STARTED',
   SOLVED: 'SOLVED',
@@ -203,11 +319,17 @@ exports.TaskStatus = exports.$Enums.TaskStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Account: 'Account',
+  Session: 'Session',
+  VerificationToken: 'VerificationToken',
   Task: 'Task',
+  Submission: 'Submission',
+  Achievement: 'Achievement',
+  UserAchievement: 'UserAchievement',
   UserTask: 'UserTask',
   Comment: 'Comment',
-  Solutin: 'Solutin',
-  Language: 'Language'
+  Language: 'Language',
+  SystemSettings: 'SystemSettings'
 };
 
 /**

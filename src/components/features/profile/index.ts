@@ -1,0 +1,9 @@
+export { default as ProfileHeader } from './ProfileHeader';
+export { default as ProfileTabs } from './ProfileTabs';
+export { default as ProfileStats } from './ProfileStats';
+export { default as LearningProgress } from './LearningProgress';
+export { default as ActivityCalendar } from './ActivityCalendar';
+export { default as AchievementsList } from './AchievementsList';
+export { default as ProfileSettings } from './ProfileSettings';
+export { default as RecentActivity } from './RecentActivity';
+export { default as SkillsChart } from './SkillsChart';

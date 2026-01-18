@@ -1,4 +1,3 @@
-// Определяем структуру цветовой схемы
 export interface ColorScheme {
   bgColor: string;
   iconColor: string;

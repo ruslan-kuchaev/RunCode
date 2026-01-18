@@ -2,8 +2,9 @@
 import {useRef, useEffect} from 'react';
 import {gsap} from 'gsap';
 import {useGSAP} from '@gsap/react';
-import {Ghost} from 'lucide-react';
+import {Ghost, User} from 'lucide-react';
 import {useSession} from 'next-auth/react';
+import {useRouter} from 'next/navigation';
 
 import useAnimationStore from '@/store/AnimationCenter';
 import {useAuthStore} from '@/store/authStore';
@@ -20,12 +21,21 @@ export const Login = () => {
     );
     const openAuthModal = useAuthStore((state) => state.openAuthModal);
     const {data: session} = useSession();
-
+    const router = useRouter();
 
     useEffect(() => {
         initializeHelloState();
     }, [initializeHelloState]);
 
+    const handleClick = () => {
+        if (session) {
+            // Если пользователь авторизован, перенаправляем на профиль
+            router.push('/profile');
+        } else {
+            // Если не авторизован, открываем модальное окно
+            openAuthModal();
+        }
+    };
 
     useGSAP(
         () => {
@@ -47,6 +57,7 @@ export const Login = () => {
         },
         {dependencies: [complete], scope: loginRef}
     );
+    
     useGSAP(
         () => {
             if (!complete || !loginRef.current) return;
@@ -82,27 +93,24 @@ export const Login = () => {
         { dependencies: [currentColor], scope: loginRef }
     );
 
-
-
-    if (session) {
-        return null;
-    }
-
     return (
         <div
             ref={loginRef}
             className='fixed top-5 left-[2%] z-55 will-change-auto opacity-0'
         >
             <button
-
-                onClick={() => openAuthModal()}
+                onClick={handleClick}
                 className='focus:outline-none'
+                title={session ? 'Перейти в профиль' : 'Войти или зарегистрироваться'}
             >
                 <div
                     ref={GhostDiv}
-                    // style={{backgroundColor: currentColor, boxShadow: `0 4px 15px ${currentColor}80`}}
-                    className={`rounded-full  w-12 h-12  flex transform origin-center`}>
-                    <Ghost size={35} className='m-auto transform origin-center'/>
+                    className={`rounded-full w-12 h-12 flex transform origin-center`}>
+                    {session ? (
+                        <User size={35} className='m-auto transform origin-center'/>
+                    ) : (
+                        <Ghost size={35} className='m-auto transform origin-center'/>
+                    )}
                 </div>
             </button>
         </div>
