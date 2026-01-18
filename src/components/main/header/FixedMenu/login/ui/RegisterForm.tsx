@@ -126,7 +126,7 @@ export const RegisterForm = forwardRef<HTMLDivElement, RegisterFormProps>(
 
                     <Divider text="Или зарегистрируйтесь через" />
 
-                    <SocialAuthButtons disabled={disabled} />
+                    <SocialAuthButtons />
 
 
                 </form>
