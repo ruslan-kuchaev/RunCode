@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
 import type { ColorKey } from "@/hooks/useColorCycle";
 
 interface AnimationStore {
@@ -16,36 +15,13 @@ const getInitialHelloState = () => {
     return localStorage.getItem("runcode-visited") === "true";
 };
 
-export const useAnimationStore = create<AnimationStore>()(
-    devtools(
-        persist(
-            (set) => ({
-                isHelloComplete: getInitialHelloState(),
-                completeHello: () => {
-                    if (typeof window !== "undefined") {
-                        localStorage.setItem("runcode-visited", "true");
-                    }
-                    set({ isHelloComplete: true }, false, "completeHello");
-                },
+export const useAnimationStore = create<AnimationStore>((set) => ({
+    isHelloComplete: getInitialHelloState(),
+    completeHello: () => set({ isHelloComplete: true }),
+    initializeHelloState: () => set({ isHelloComplete: getInitialHelloState() }),
 
-                initializeHelloState: () =>
-                    set({ isHelloComplete: getInitialHelloState() }, false, "initializeHelloState"),
-
-                currentLoginColor: 'yellow' as ColorKey,
-                setColor: (color) =>
-                    set({ currentLoginColor: color }, false, "setColor"),
-            }),
-            {
-                name: "animation-storage", // ключ для localStorage
-                partialize: (state) => ({
-                    currentLoginColor: state.currentLoginColor
-                }), // сохраняем только цвет
-            }
-        ),
-        {
-            name: "AnimationStore",
-        }
-    )
-);
+    currentLoginColor: 'yellow',
+    setColor: (color) => set({ currentLoginColor: color }),
+}));
 
 export default useAnimationStore;

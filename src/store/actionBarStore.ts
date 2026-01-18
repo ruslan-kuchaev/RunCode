@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { useTerminalStore } from "./terminalStore";
-import { devtools } from "zustand/middleware";
 
 export type ActionBarSection =
     | "about"
@@ -17,43 +16,33 @@ interface ActionBarState {
     addOpenedSection: (section: ActionBarSection) => void;
 }
 
-export const useActionBarStore = create<ActionBarState>()(
-    devtools(
-        (set, get) => ({
-            activeSection: null,
-            openedSections: [],
+export const useActionBarStore = create<ActionBarState>((set, get) => ({
+    activeSection: null,
+    openedSections: [],
 
-            setActiveSection: (section) =>
-                set({ activeSection: section }, false, "setActiveSection"),
+    setActiveSection: (section) => set({ activeSection: section }),
 
-            toggleSection: (section) => {
-                const currentSection = get().activeSection;
-                const newSection = currentSection === section ? null : section;
+    toggleSection: (section) => {
+        const currentSection = get().activeSection;
+        const newSection = currentSection === section ? null : section;
 
-                set({ activeSection: newSection }, false, "setActiveSection/toggle");
+        set({ activeSection: newSection });
 
-                if (newSection) {
-                    get().addOpenedSection(newSection);
+        if (newSection) {
+            get().addOpenedSection(newSection);
 
-                    const { executeCommand } = useTerminalStore.getState();
-                    executeCommand(`cd ${newSection}`);
-                }
-            },
-
-            addOpenedSection: (section) => {
-                const state = get();
-                const currentSections = [...state.openedSections];
-                const filteredSections = currentSections.filter((s) => s !== section);
-
-                set(
-                    { openedSections: [section, ...filteredSections] },
-                    false,
-                    "addOpenedSection"
-                );
-            },
-        }),
-        {
-            name: "ActionBarStore", // Название для DevTools
+            const { executeCommand } = useTerminalStore.getState();
+            executeCommand(`cd ${newSection}`);
         }
-    )
-);
+    },
+
+    addOpenedSection: (section) => {
+        const state = get();
+        const currentSections = [...state.openedSections];
+
+        const filteredSections = currentSections.filter((s) => s !== section);
+
+        set({ openedSections: [section, ...filteredSections] });
+
+    },
+}));

@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 
 interface FormData {
     email: string;
@@ -20,53 +19,35 @@ interface AuthModalState {
     clearFormData: () => void;
 }
 
-export const useAuthStore = create<AuthModalState>()(
-    devtools(
-        (set, get) => ({
-            isAuthModalOpen: false,
-            defaultTab: 'login',
-            loginFormData: {
-                email: '',
-                password: '',
-            },
-            registerFormData: {
-                email: '',
-                password: '',
-                username: '',
-                confirmPassword: '',
-            },
-            openAuthModal: (tab) => {
-                const currentTab = tab ?? get().defaultTab ?? 'login';
-                set({ isAuthModalOpen: true, defaultTab: currentTab }, false, 'auth/openModal');
-            },
-            closeAuthModal: () => set({ isAuthModalOpen: false }, false, 'auth/closeModal'),
-            updateLoginFormData: (data) =>
-                set(
-                    (state) => ({
-                        loginFormData: { ...state.loginFormData, ...data },
-                    }),
-                    false,
-                    'auth/updateLoginForm'
-                ),
-            updateRegisterFormData: (data) =>
-                set(
-                    (state) => ({
-                        registerFormData: { ...state.registerFormData, ...data },
-                    }),
-                    false,
-                    'auth/updateRegisterForm'
-                ),
-            clearFormData: () =>
-                set({
-                    loginFormData: { email: '', password: '' },
-                    registerFormData: { email: '', password: '', username: '', confirmPassword: '' },
-                }, false, 'auth/clearForms'),
+export const useAuthStore = create<AuthModalState>((set, get) => ({
+    isAuthModalOpen: false,
+    defaultTab: 'login',
+    loginFormData: {
+        email: '',
+        password: '',
+    },
+    registerFormData: {
+        email: '',
+        password: '',
+        username: '',
+        confirmPassword: '',
+    },
+    openAuthModal: (tab) => {
+        const currentTab = tab ?? get().defaultTab ?? 'login';
+        set({ isAuthModalOpen: true, defaultTab: currentTab });
+    },
+    closeAuthModal: () => set({ isAuthModalOpen: false }),
+    updateLoginFormData: (data) =>
+        set((state) => ({
+            loginFormData: { ...state.loginFormData, ...data },
+        })),
+    updateRegisterFormData: (data) =>
+        set((state) => ({
+            registerFormData: { ...state.registerFormData, ...data },
+        })),
+    clearFormData: () =>
+        set({
+            loginFormData: { email: '', password: '' },
+            registerFormData: { email: '', password: '', username: '', confirmPassword: '' },
         }),
-        {
-            name: 'AuthStore',
-            // Дополнительные опции для DevTools
-            // enabled: process.env.NODE_ENV !== 'production',
-            // anonymousActionType: 'AUTH_ACTION',
-        }
-    )
-);
+}));
