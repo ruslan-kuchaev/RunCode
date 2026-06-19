@@ -1,3 +1,3 @@
 export { default as ActionBar } from './ActionBar';
 export { ActionButton } from './ActionButton';
-export { ActionContent } from './ActionContent';
+export { default as ActionContent } from './ActionContent';

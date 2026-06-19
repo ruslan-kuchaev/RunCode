@@ -29,9 +29,11 @@ export function UiMenu() {
             return;
         }
 
+        const webgl = gl;
+
         // Настройка WebGL
-        gl.clearColor(0, 0.1, 0.15, 1.0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
+        webgl.clearColor(0, 0.1, 0.15, 1.0);
+        webgl.clear(webgl.COLOR_BUFFER_BIT);
 
         // ОБНОВЛЕННЫЙ вершинный шейдер с поддержкой камеры
         const vertexShaderSource = `
@@ -61,37 +63,37 @@ export function UiMenu() {
 
         // Функция компиляции шейдеров
         function compileShader(source: string, type: number): WebGLShader | null {
-            const shader = gl.createShader(type);
+            const shader = webgl.createShader(type);
             if (!shader) return null;
-            gl.shaderSource(shader, source);
-            gl.compileShader(shader);
-            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-                console.error('Shader error:', gl.getShaderInfoLog(shader));
+            webgl.shaderSource(shader, source);
+            webgl.compileShader(shader);
+            if (!webgl.getShaderParameter(shader, webgl.COMPILE_STATUS)) {
+                console.error('Shader error:', webgl.getShaderInfoLog(shader));
                 return null;
             }
             return shader;
         }
 
-        const vertexShader = compileShader(vertexShaderSource, gl.VERTEX_SHADER);
-        const fragmentShader = compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
+        const vertexShader = compileShader(vertexShaderSource, webgl.VERTEX_SHADER);
+        const fragmentShader = compileShader(fragmentShaderSource, webgl.FRAGMENT_SHADER);
         if (!vertexShader || !fragmentShader) return;
 
-        const program = gl.createProgram();
+        const program = webgl.createProgram();
         if (!program) return;
-        gl.attachShader(program, vertexShader);
-        gl.attachShader(program, fragmentShader);
-        gl.linkProgram(program);
-        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-            console.error('Program error:', gl.getProgramInfoLog(program));
+        webgl.attachShader(program, vertexShader);
+        webgl.attachShader(program, fragmentShader);
+        webgl.linkProgram(program);
+        if (!webgl.getProgramParameter(program, webgl.LINK_STATUS)) {
+            console.error('Program error:', webgl.getProgramInfoLog(program));
             return;
         }
-        gl.useProgram(program);
+        webgl.useProgram(program);
 
         // Получаем расположение атрибутов и юниформов
-        const aPosition = gl.getAttribLocation(program, 'aPosition');
-        const aColor = gl.getAttribLocation(program, 'aColor');
-        const uCameraPosition = gl.getUniformLocation(program, 'uCameraPosition');
-        const uZoom = gl.getUniformLocation(program, 'uZoom');
+        const aPosition = webgl.getAttribLocation(program, 'aPosition');
+        const aColor = webgl.getAttribLocation(program, 'aColor');
+        const uCameraPosition = webgl.getUniformLocation(program, 'uCameraPosition');
+        const uZoom = webgl.getUniformLocation(program, 'uZoom');
 
         // Создаем сетку с выделенным прямоугольником
         function create2DGrid(cellsX: number, cellsY: number, selectedX: number, selectedY: number) {
@@ -201,18 +203,18 @@ export function UiMenu() {
         setSelectedCell([initialSelectedX, initialSelectedY]);
 
         // Создаем буферы
-        const vertexBuffer = gl.createBuffer();
-        const colorBuffer = gl.createBuffer();
+        const vertexBuffer = webgl.createBuffer();
+        const colorBuffer = webgl.createBuffer();
 
         // Функция обновления буферов
         function updateGrid(selectedX: number, selectedY: number) {
             grid = create2DGrid(cellsX, cellsY, selectedX, selectedY);
 
-            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, grid.vertices, gl.STATIC_DRAW);
+            webgl.bindBuffer(webgl.ARRAY_BUFFER, vertexBuffer);
+            webgl.bufferData(webgl.ARRAY_BUFFER, grid.vertices, webgl.STATIC_DRAW);
 
-            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, grid.colors, gl.STATIC_DRAW);
+            webgl.bindBuffer(webgl.ARRAY_BUFFER, colorBuffer);
+            webgl.bufferData(webgl.ARRAY_BUFFER, grid.colors, webgl.STATIC_DRAW);
         }
 
         updateGrid(initialSelectedX, initialSelectedY);
@@ -227,8 +229,8 @@ export function UiMenu() {
             camera.zoom += (camera.targetZoom - camera.zoom) * smoothing;
 
             // Обновляем юниформы камеры
-            gl.uniform2f(uCameraPosition, camera.x, camera.y);
-            gl.uniform1f(uZoom, camera.zoom);
+            webgl.uniform2f(uCameraPosition, camera.x, camera.y);
+            webgl.uniform1f(uZoom, camera.zoom);
 
             render();
             requestAnimationFrame(animateCamera);
@@ -276,18 +278,18 @@ export function UiMenu() {
         }
 
         function render() {
-            gl.clear(gl.COLOR_BUFFER_BIT);
+            webgl.clear(webgl.COLOR_BUFFER_BIT);
 
             // Настраиваем атрибуты
-            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-            gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
-            gl.enableVertexAttribArray(aPosition);
+            webgl.bindBuffer(webgl.ARRAY_BUFFER, vertexBuffer);
+            webgl.vertexAttribPointer(aPosition, 2, webgl.FLOAT, false, 0, 0);
+            webgl.enableVertexAttribArray(aPosition);
 
-            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-            gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, 0, 0);
-            gl.enableVertexAttribArray(aColor);
+            webgl.bindBuffer(webgl.ARRAY_BUFFER, colorBuffer);
+            webgl.vertexAttribPointer(aColor, 3, webgl.FLOAT, false, 0, 0);
+            webgl.enableVertexAttribArray(aColor);
 
-            gl.drawArrays(gl.LINES, 0, grid.vertexCount);
+            webgl.drawArrays(webgl.LINES, 0, grid.vertexCount);
         }
 
         function handleResize() {
@@ -299,15 +301,15 @@ export function UiMenu() {
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
 
-            gl.viewport(0, 0, canvas.width, canvas.height);
+            webgl.viewport(0, 0, canvas.width, canvas.height);
         }
 
         // Инициализация
         handleResize();
 
         // Устанавливаем начальные значения камеры
-        gl.uniform2f(uCameraPosition, cameraRef.current.x, cameraRef.current.y);
-        gl.uniform1f(uZoom, cameraRef.current.zoom);
+        webgl.uniform2f(uCameraPosition, cameraRef.current.x, cameraRef.current.y);
+        webgl.uniform1f(uZoom, cameraRef.current.zoom);
 
         // Запускаем анимацию камеры
         const animationId = requestAnimationFrame(animateCamera);
@@ -326,9 +328,9 @@ export function UiMenu() {
             canvas.removeEventListener('mousemove', handleMouseMove);
             canvas.removeEventListener('wheel', handleWheel);
 
-            gl.deleteProgram(program);
-            gl.deleteBuffer(vertexBuffer);
-            gl.deleteBuffer(colorBuffer);
+            webgl.deleteProgram(program);
+            webgl.deleteBuffer(vertexBuffer);
+            webgl.deleteBuffer(colorBuffer);
         };
 
     }, []);
