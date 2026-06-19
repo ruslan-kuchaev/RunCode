@@ -1,60 +1,60 @@
 import React from 'react';
 
-export function FeaturesContent() {
-  const features = [
+const features = [
     {
-      icon: '💻',
-      title: 'Интерактивный редактор кода',
-      description: 'Пишите и тестируйте код прямо в браузере с подсветкой синтаксиса'
+        tag: 'editor',
+        title: 'Редактор прямо в браузере',
+        description: 'Подсветка синтаксиса, автодополнение, горячие клавиши. Не нужно ничего устанавливать.',
     },
     {
-      icon: '🎮',
-      title: 'Геймификация',
-      description: 'Зарабатывайте баллы, достижения и поднимайтесь в рейтинге'
+        tag: 'streaks',
+        title: 'Стрики и привычка',
+        description: 'Каждый день — новая задача. Пропустил — стрик сгорает. Жёстко, но работает.',
     },
     {
-      icon: '📊',
-      title: 'Отслеживание прогресса',
-      description: 'Визуализация вашей активности и статистики решенных задач'
+        tag: 'leaderboard',
+        title: 'Таблица лидеров',
+        description: 'Видишь, где ты среди других. Мотивирует лучше любого курса.',
     },
     {
-      icon: '🔥',
-      title: 'Система стриков',
-      description: 'Поддерживайте ежедневную практику и развивайте привычку кодить'
+        tag: 'difficulty',
+        title: 'От «Hello World» до алгоритмов',
+        description: 'Начни с простого. Дойди до сложного. Уровни подбираются под тебя.',
     },
     {
-      icon: '🏆',
-      title: 'Рейтинговая система',
-      description: 'Соревнуйтесь с другими программистами и отслеживайте свой рост'
+        tag: 'feedback',
+        title: 'Мгновенная проверка',
+        description: 'Нажал «Запустить» — сразу видишь, что прошло, что нет и почему.',
     },
     {
-      icon: '🎯',
-      title: 'Разные уровни сложности',
-      description: 'От простых задач для новичков до экспертных алгоритмических задач'
-    }
-  ];
+        tag: 'points',
+        title: 'Очки за решения',
+        description: 'Сложнее задача — больше очков. Честная система без накруток.',
+    },
+];
 
-  return (
-    <div className="space-y-6">
-      <div className="text-center">
-        <h3 className="text-3xl font-bold text-white mb-4">Возможности платформы</h3>
-        <p className="text-gray-300 text-lg max-w-3xl mx-auto">
-          Все инструменты, необходимые для эффективного обучения программированию
-        </p>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        {features.map((feature, index) => (
-          <div 
-            key={index}
-            className="animate-item bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:scale-105"
-          >
-            <div className="text-4xl mb-3">{feature.icon}</div>
-            <h4 className="text-xl font-semibold text-white mb-2">{feature.title}</h4>
-            <p className="text-gray-400">{feature.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+export function FeaturesContent() {
+    return (
+        <div className="space-y-6">
+            <div>
+                <h3 className="text-2xl font-bold text-white mb-1">Что внутри</h3>
+                <p className="text-gray-500 text-sm">Без маркетинга — просто список того, что реально есть.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {features.map((f) => (
+                    <div
+                        key={f.tag}
+                        className="group bg-white/5 border border-white/10 rounded-xl p-5 hover:border-purple-500/40 transition-colors duration-300"
+                    >
+                        <span className="inline-block text-xs font-mono text-purple-400/70 mb-3 bg-purple-500/10 px-2 py-0.5 rounded">
+                            #{f.tag}
+                        </span>
+                        <h4 className="text-white font-semibold mb-1.5">{f.title}</h4>
+                        <p className="text-gray-500 text-sm leading-relaxed">{f.description}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 }

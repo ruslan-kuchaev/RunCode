@@ -1,60 +1,68 @@
-
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import {useActionBarStore} from "@/store";
+
+type AnimationOrigin = 'left' | 'right' | 'top' | 'bottom';
 
 interface AnimatedSectionProps {
     children: React.ReactNode;
     isVisible: boolean;
-    animationOrigin?: 'left' | 'right' | 'top' | 'bottom';
+    animationOrigin?: AnimationOrigin;
     delay?: number;
 }
 
+const ORIGINS: AnimationOrigin[] = ['left', 'right', 'top', 'bottom'];
+
+function getRandomOrigin(): AnimationOrigin {
+    return ORIGINS[Math.floor(Math.random() * ORIGINS.length)];
+}
+
+function getInitialValues(origin: AnimationOrigin) {
+    const distance = 50;
+    switch (origin) {
+        case 'left':  return { x: -distance, y: 0, opacity: 0 };
+        case 'right': return { x: distance,  y: 0, opacity: 0 };
+        case 'top':   return { x: 0, y: -distance, opacity: 0 };
+        case 'bottom':
+        default:      return { x: 0, y: distance,  opacity: 0 };
+    }
+}
+
 export const AnimatedSection = ({
-                                    children,
-                                    isVisible,
-                                    animationOrigin = 'bottom',
-                                    delay = 0
-                                }: AnimatedSectionProps) => {
+    children,
+    isVisible,
+    animationOrigin,
+    delay = 0,
+}: AnimatedSectionProps) => {
     const sectionRef = useRef<HTMLDivElement>(null);
-    const hasAnimatedRef = useRef(false);
-    const { activeSection, openedSections } = useActionBarStore();
+    // каждый раз при монтировании выбираем рандомное направление
+    const originRef = useRef<AnimationOrigin>(animationOrigin ?? getRandomOrigin());
 
     useEffect(() => {
         if (!sectionRef.current || !isVisible) return;
 
-        const getInitialValues = () => {
-            const distance = 40;
-            switch (animationOrigin) {
-                case 'left': return { x: -distance, opacity: 0 };
-                case 'right': return { x: distance, opacity: 0 };
-                case 'top': return { y: -distance, opacity: 0 };
-                case 'bottom':
-                default: return { y: distance, opacity: 0 };
-            }
-        };
-
-        if (!hasAnimatedRef.current || (activeSection == openedSections[1])) {
-            const initial = getInitialValues();
-            gsap.fromTo(sectionRef.current,
-                initial,
-                {
-                    x: 0,
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.6,
-                    delay,
-                    ease: "power2.out",
-                    onComplete: () => {
-                        hasAnimatedRef.current = true;
-                    }
-                }
-            );
+        // при каждом появлении — новое рандомное направление
+        if (!animationOrigin) {
+            originRef.current = getRandomOrigin();
         }
-    }, [isVisible, animationOrigin, delay, activeSection, openedSections]);
+
+        const initial = getInitialValues(originRef.current);
+
+        gsap.fromTo(
+            sectionRef.current,
+            { ...initial },
+            {
+                x: 0,
+                y: 0,
+                opacity: 1,
+                duration: 0.55,
+                delay,
+                ease: 'power3.out',
+            }
+        );
+    }, [isVisible, delay, animationOrigin]);
 
     return (
-        <div ref={sectionRef} className="opacity-0">
+        <div ref={sectionRef} style={{ opacity: 0 }}>
             {children}
         </div>
     );

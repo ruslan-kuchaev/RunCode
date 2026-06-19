@@ -1,137 +1,179 @@
-"use client";
-import { useRef, useState, useEffect } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { cn } from "@/lib/utils";
-import { useAnimationStore } from "@/store/AnimationCenter";
-import { ActivedPoint } from "./ActivedPoint";
+'use client';
+
+import { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { cn } from '@/lib/utils';
+import { useAnimationStore } from '@/store/AnimationCenter';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface NavItem {
-  label: string;
-  href: string;
-  id: string;
+    label: string;
+    href: string;
+    id: string;
 }
 
+const navItems: NavItem[] = [
+    { label: 'Главная', href: '/', id: 'home' },
+    { label: 'Задачи', href: '/tasks', id: 'tasks' },
+    { label: 'Рейтинг', href: '/rating', id: 'rating' },
+];
+
 export default function NavMenu() {
-  const navRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const complete = useAnimationStore((state) => state.isHelloComplete);
-  const initializeHelloState = useAnimationStore(
-    (state) => state.initializeHelloState
-  );
-  const [activeId, setActiveId] = useState("home");
+    const navRef = useRef<HTMLDivElement>(null);
+    const itemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
+    const indicatorRef = useRef<HTMLDivElement>(null);
+    const complete = useAnimationStore((state) => state.isHelloComplete);
+    const initializeHelloState = useAnimationStore((state) => state.initializeHelloState);
+    const pathname = usePathname();
+    const router = useRouter();
 
-  useEffect(() => {
-    initializeHelloState();
-  }, [initializeHelloState]);
+    // derive active id from current pathname
+    const getActiveId = (path: string) => {
+        if (path === '/') return 'home';
+        const match = navItems.find((item) => item.href !== '/' && path.startsWith(item.href));
+        return match ? match.id : 'home';
+    };
 
-  const handleClicked = (id: string) => {
-    setActiveId(id);
-  };
+    const [activeId, setActiveId] = useState(() => getActiveId(pathname));
 
-  const navItems: NavItem[] = [
-    { label: "Главная", href: "/", id: "home" },
-    { label: "Задачи", href: "/tasks", id: "tasks" },
-    { label: "Рейтинг", href: "/rating", id: "rating" },
-  ];
+    useEffect(() => {
+        initializeHelloState();
+    }, [initializeHelloState]);
 
-  useGSAP(
-    () => {
-      if (!complete) return;
+    // sync active id when pathname changes (back/forward navigation)
+    useEffect(() => {
+        setActiveId(getActiveId(pathname));
+    }, [pathname]);
 
-      const tl = gsap.timeline({
-        defaults: {
-          ease: "power3.inOut",
-          duration: 0.5,
-        },
-        paused: true,
-      });
+    // move the sliding indicator to the active item
+    const moveIndicator = (targetEl: HTMLAnchorElement | null) => {
+        if (!targetEl || !indicatorRef.current || !navRef.current) return;
+        const navRect = navRef.current.getBoundingClientRect();
+        const itemRect = targetEl.getBoundingClientRect();
+        const left = itemRect.left - navRect.left + itemRect.width / 2;
 
-      tl.fromTo(
-        navRef.current,
-        { autoAlpha: 0, y: -20, duration: 0.5, force3D: true },
-        { autoAlpha: 1, y: 0, duration: 0.5,  force3D: true }
-      );
+        gsap.to(indicatorRef.current, {
+            x: left,
+            width: itemRect.width * 0.6,
+            opacity: 1,
+            duration: 0.35,
+            ease: 'power3.out',
+        });
+    };
 
-      itemsRef.current.forEach((item, index) => {
-        if (item) {
-          tl.fromTo(
-            item,
-            { autoAlpha: 0, y: -20 },
-            { autoAlpha: 1, y: 0, duration: 0.5 },
-            index * 0.1
-          );
+    // position indicator after layout / active change
+    useLayoutEffect(() => {
+        const idx = navItems.findIndex((item) => item.id === activeId);
+        const el = itemsRef.current[idx] ?? null;
+        // small delay so the nav is visible before we measure
+        const raf = requestAnimationFrame(() => moveIndicator(el));
+        return () => cancelAnimationFrame(raf);
+    }, [activeId, complete]);
+
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
+        e.preventDefault();
+        if (item.id === activeId) return;
+
+        setActiveId(item.id);
+
+        // View Transition API for smooth page change
+        if ('startViewTransition' in document) {
+            (document as Document & { startViewTransition: (cb: () => void) => void })
+                .startViewTransition(() => {
+                    router.push(item.href);
+                });
+        } else {
+            router.push(item.href);
         }
-      });
+    };
 
-      tl.play();
+    useGSAP(
+        () => {
+            if (!complete) return;
 
-      let lastScrollY = 0;
+            const tl = gsap.timeline({
+                defaults: { ease: 'power3.inOut', duration: 0.5 },
+                paused: true,
+            });
 
-      const handleScroll = () => {
-        const currentScrollY = window.scrollY;
+            tl.fromTo(
+                navRef.current,
+                { autoAlpha: 0, y: -20 },
+                { autoAlpha: 1, y: 0 }
+            );
 
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          if (tl.progress() > 0) {
-            tl.reverse();
-          }
-        } else if (currentScrollY < lastScrollY || currentScrollY <= 50) {
-          if (tl.progress() < 1) {
+            itemsRef.current.forEach((item, index) => {
+                if (item) {
+                    tl.fromTo(
+                        item,
+                        { autoAlpha: 0, y: -20 },
+                        { autoAlpha: 1, y: 0, duration: 0.5 },
+                        index * 0.1
+                    );
+                }
+            });
+
             tl.play();
-          }
-        }
 
-        lastScrollY = currentScrollY;
-      };
+            let lastScrollY = 0;
+            const handleScroll = () => {
+                const currentScrollY = window.scrollY;
+                if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                    if (tl.progress() > 0) tl.reverse();
+                } else if (currentScrollY < lastScrollY || currentScrollY <= 50) {
+                    if (tl.progress() < 1) tl.play();
+                }
+                lastScrollY = currentScrollY;
+            };
 
-      let ticking = false;
-      const throttledScroll = () => {
-        if (!ticking) {
-          requestAnimationFrame(() => {
-            handleScroll();
-            ticking = false;
-          });
-          ticking = true;
-        }
-      };
+            let ticking = false;
+            const throttledScroll = () => {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        handleScroll();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            };
 
-      window.addEventListener("scroll", throttledScroll);
+            window.addEventListener('scroll', throttledScroll);
+            return () => window.removeEventListener('scroll', throttledScroll);
+        },
+        { dependencies: [complete], revertOnUpdate: true }
+    );
 
-      return () => {
-        window.removeEventListener("scroll", throttledScroll);
-      };
-    },
-    { dependencies: [complete], revertOnUpdate: true }
-  );
+    return (
+        <div className="fixed top-0 left-[50%] transform -translate-x-1/2 z-50 will-change-auto opacity-100">
+            <nav
+                ref={navRef}
+                className="relative flex flex-nowrap gap-8 mt-4 px-6 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10"
+            >
+                {navItems.map((item, index) => (
+                    <a
+                        key={item.id}
+                        ref={(el) => { itemsRef.current[index] = el; }}
+                        className={cn(
+                            'relative px-4 py-2 font-medium text-sm tracking-wide opacity-0',
+                            'transition-colors duration-200 ease-out',
+                            'hover:cursor-pointer select-none rounded-lg',
+                            activeId === item.id ? 'text-white' : 'text-white/60 hover:text-white/90'
+                        )}
+                        href={item.href}
+                        onClick={(e) => handleClick(e, item)}
+                    >
+                        {item.label}
+                    </a>
+                ))}
 
-  return (
-    <div
-
-      className="fixed top-0 left-[50%] transform -translate-x-1/2 z-50  will-change-auto opacity-100"
-    >
-      <nav className="flex flex-nowrap gap-8 mt-4 px-6 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10"
-           ref={navRef}>
-        {navItems.map((item, index) => (
-          <a
-            key={item.id}
-            ref={(el) => {
-              itemsRef.current[index] = el;
-            }}
-            className={cn(
-              "relative px-4 py-2 text-white font-medium text-sm tracking-wide opacity-0",
-              "transition-all duration-300 ease-out",
-              "hover:cursor-pointer select-none",
-              "rounded-lg"
-            )}
-            href={item.href}
-            onClick={() => handleClicked(item.id)}
-          >
-            {item.label}
-
-            {activeId === item.id && <ActivedPoint />}
-          </a>
-        ))}
-      </nav>
-    </div>
-  );
+                {/* sliding underline indicator */}
+                <div
+                    ref={indicatorRef}
+                    className="pointer-events-none absolute bottom-1.5 h-[2px] rounded-full bg-white/80"
+                    style={{ opacity: 0, width: 0, transform: 'translateX(0px) translateX(-50%)' }}
+                />
+            </nav>
+        </div>
+    );
 }

@@ -1,0 +1,11 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+// Redirect old /about/* routes to home page
+export function middleware(request: NextRequest) {
+  return NextResponse.redirect(new URL("/", request.url));
+}
+
+export const config = {
+  matcher: "/about/:path*",
+};
