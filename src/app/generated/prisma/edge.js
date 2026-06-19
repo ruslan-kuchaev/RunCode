@@ -192,7 +192,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/kuc/workspace/диплоная/RunCodeMy/RunCode/src/app/generated/prisma",
+      "value": "/home/billy/WebstormProjects/RunCode/src/app/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -206,7 +206,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/kuc/workspace/диплоная/RunCodeMy/RunCode/prisma/schema.prisma",
+    "sourceFilePath": "/home/billy/WebstormProjects/RunCode/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -220,7 +220,6 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
-  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { cn } from '@/lib/utils';
@@ -22,7 +22,6 @@ const navItems: NavItem[] = [
 export default function NavMenu() {
     const navRef = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
-    const indicatorRef = useRef<HTMLDivElement>(null);
     const complete = useAnimationStore((state) => state.isHelloComplete);
     const initializeHelloState = useAnimationStore((state) => state.initializeHelloState);
     const pathname = usePathname();
@@ -45,31 +44,6 @@ export default function NavMenu() {
     useEffect(() => {
         setActiveId(getActiveId(pathname));
     }, [pathname]);
-
-    // move the sliding indicator to the active item
-    const moveIndicator = (targetEl: HTMLAnchorElement | null) => {
-        if (!targetEl || !indicatorRef.current || !navRef.current) return;
-        const navRect = navRef.current.getBoundingClientRect();
-        const itemRect = targetEl.getBoundingClientRect();
-        const left = itemRect.left - navRect.left + itemRect.width / 2;
-
-        gsap.to(indicatorRef.current, {
-            x: left,
-            width: itemRect.width * 0.6,
-            opacity: 1,
-            duration: 0.35,
-            ease: 'power3.out',
-        });
-    };
-
-    // position indicator after layout / active change
-    useLayoutEffect(() => {
-        const idx = navItems.findIndex((item) => item.id === activeId);
-        const el = itemsRef.current[idx] ?? null;
-        // small delay so the nav is visible before we measure
-        const raf = requestAnimationFrame(() => moveIndicator(el));
-        return () => cancelAnimationFrame(raf);
-    }, [activeId, complete]);
 
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
         e.preventDefault();
@@ -166,13 +140,6 @@ export default function NavMenu() {
                         {item.label}
                     </a>
                 ))}
-
-                {/* sliding underline indicator */}
-                <div
-                    ref={indicatorRef}
-                    className="pointer-events-none absolute bottom-1.5 h-[2px] rounded-full bg-white/80"
-                    style={{ opacity: 0, width: 0, transform: 'translateX(0px) translateX(-50%)' }}
-                />
             </nav>
         </div>
     );

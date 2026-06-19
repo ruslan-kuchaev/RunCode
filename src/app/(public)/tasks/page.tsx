@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import LightRays from '@/components/shared/LightRays';
-import FPSCounter from '@/components/debug/FpsCounter';
-import { LayoutDashboard, LayoutGrid, Menu } from 'lucide-react';
+import { LayoutDashboard, LayoutGrid, Menu, Loader2 } from 'lucide-react';
 
 type TaskDifficulty = 'EASY' | 'MEDIUM' | 'HARD' | 'EXPERT';
 type TaskStatus = 'STARTED' | 'SOLVED' | 'UNFINISHED';
@@ -22,36 +22,11 @@ interface Task {
     shortDescription: string;
     difficulty: TaskDifficulty;
     price: number;
+    preview?: string;
     languageId: number;
     language: Language;
     userTask?: { status: TaskStatus };
 }
-
-const languages: Language[] = [
-    { id: 1, name: 'JavaScript', icon: '🟨' },
-    { id: 2, name: 'TypeScript', icon: '📘' },
-    { id: 3, name: 'Python',     icon: '🐍' },
-    { id: 4, name: 'Java',       icon: '☕' },
-    { id: 5, name: 'C++',        icon: '⚙️' },
-    { id: 6, name: 'React',      icon: '⚛️' },
-    { id: 7, name: 'Next.js',    icon: '▲' },
-    { id: 8, name: 'Node.js',    icon: '🟢' },
-];
-
-const mockTasks: Task[] = [
-    { id: 1,  title: 'Создание React компонента',      shortDescription: 'Создайте переиспользуемый компонент кнопки с поддержкой разных состояний',  difficulty: 'EASY',   price: 100,  languageId: 6, language: languages[5], userTask: { status: 'SOLVED' } },
-    { id: 2,  title: 'Анимации с GSAP',                shortDescription: 'Реализуйте плавные анимации для модального окна',                            difficulty: 'MEDIUM', price: 250,  languageId: 2, language: languages[1], userTask: { status: 'STARTED' } },
-    { id: 3,  title: 'Оптимизация загрузки',           shortDescription: 'Сократите время загрузки страницы с помощью кэширования',                    difficulty: 'HARD',   price: 500,  languageId: 7, language: languages[6] },
-    { id: 4,  title: 'Алгоритм сортировки',            shortDescription: 'Реализуйте алгоритм быстрой сортировки (Quick Sort)',                        difficulty: 'MEDIUM', price: 300,  languageId: 1, language: languages[0], userTask: { status: 'UNFINISHED' } },
-    { id: 5,  title: 'Работа с API',                   shortDescription: 'Создайте клиент для работы с REST API',                                      difficulty: 'MEDIUM', price: 350,  languageId: 2, language: languages[1] },
-    { id: 6,  title: 'Система аутентификации',         shortDescription: 'Реализуйте полный цикл аутентификации с JWT',                                difficulty: 'HARD',   price: 600,  languageId: 8, language: languages[7] },
-    { id: 7,  title: 'Hello World',                    shortDescription: 'Выведите "Hello, World!" в консоль',                                         difficulty: 'EASY',   price: 50,   languageId: 3, language: languages[2], userTask: { status: 'SOLVED' } },
-    { id: 8,  title: 'Микросервисная архитектура',     shortDescription: 'Спроектируйте и реализуйте микросервисную архитектуру',                      difficulty: 'EXPERT', price: 1000, languageId: 4, language: languages[3] },
-    { id: 9,  title: 'Работа с базой данных',          shortDescription: 'Создайте CRUD операции для работы с базой данных',                           difficulty: 'HARD',   price: 550,  languageId: 2, language: languages[1] },
-    { id: 10, title: 'Валидация форм',                 shortDescription: 'Реализуйте систему валидации для форм',                                      difficulty: 'MEDIUM', price: 280,  languageId: 6, language: languages[5] },
-    { id: 11, title: 'Тестирование компонентов',       shortDescription: 'Напишите unit тесты для React компонентов',                                  difficulty: 'MEDIUM', price: 320,  languageId: 6, language: languages[5] },
-    { id: 12, title: 'Оптимизация производительности', shortDescription: 'Оптимизируйте рендеринг большого списка элементов',                          difficulty: 'HARD',   price: 650,  languageId: 6, language: languages[5] },
-];
 
 const difficultyColor: Record<TaskDifficulty, string> = {
     EASY:   'bg-green-500/20 text-green-400 border-green-500/50',
@@ -62,7 +37,6 @@ const difficultyColor: Record<TaskDifficulty, string> = {
 const difficultyLabel: Record<TaskDifficulty, string> = {
     EASY: 'Легко', MEDIUM: 'Средне', HARD: 'Сложно', EXPERT: 'Эксперт',
 };
-
 const statusColor: Record<TaskStatus, string> = {
     SOLVED:     'bg-green-500/20 text-green-400 border-green-500/50',
     STARTED:    'bg-blue-500/20 text-blue-400 border-blue-500/50',
@@ -73,29 +47,55 @@ const statusLabel: Record<TaskStatus, string> = {
 };
 
 export default function TasksPage() {
+    const router = useRouter();
+
+    const [tasks, setTasks]                           = useState<Task[]>([]);
+    const [languages, setLanguages]                   = useState<Language[]>([]);
+    const [loading, setLoading]                       = useState(true);
+    const [error, setError]                           = useState<string | null>(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState<TaskDifficulty | 'ALL'>('ALL');
     const [selectedLanguage, setSelectedLanguage]     = useState<number | 'ALL'>('ALL');
     const [searchQuery, setSearchQuery]               = useState('');
     const [layout, setLayout]                         = useState<'grid' | 'list'>('grid');
 
-    const titleRef    = useRef<HTMLHeadingElement>(null);
-    const subtitleRef = useRef<HTMLParagraphElement>(null);
+    const titleRef     = useRef<HTMLHeadingElement>(null);
+    const subtitleRef  = useRef<HTMLParagraphElement>(null);
     const tasksGridRef = useRef<HTMLDivElement>(null);
     const tasksListRef = useRef<HTMLDivElement>(null);
-    const statsRef    = useRef<HTMLDivElement>(null);
+    const statsRef     = useRef<HTMLDivElement>(null);
 
-    const filteredTasks = mockTasks.filter((task) => {
-        const matchesDifficulty = selectedDifficulty === 'ALL' || task.difficulty === selectedDifficulty;
-        const matchesLanguage   = selectedLanguage === 'ALL' || task.languageId === selectedLanguage;
-        const matchesSearch     =
-            searchQuery === '' ||
-            task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            task.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            task.language.name.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesDifficulty && matchesLanguage && matchesSearch;
-    });
+    // Load tasks from API
+    const fetchTasks = useCallback(async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const params = new URLSearchParams();
+            if (selectedDifficulty !== 'ALL') params.set('difficulty', selectedDifficulty);
+            if (selectedLanguage !== 'ALL') params.set('languageId', String(selectedLanguage));
+            if (searchQuery) params.set('search', searchQuery);
 
-    // entrance animation for header
+            const res = await fetch(`/api/tasks?${params.toString()}`);
+            if (!res.ok) throw new Error('Ошибка загрузки');
+            const data: Task[] = await res.json();
+            setTasks(data);
+
+            // Build unique language list from loaded tasks
+            const langMap = new Map<number, Language>();
+            data.forEach((t) => langMap.set(t.language.id, t.language));
+            setLanguages(Array.from(langMap.values()));
+        } catch {
+            setError('Не удалось загрузить задачи');
+        } finally {
+            setLoading(false);
+        }
+    }, [selectedDifficulty, selectedLanguage, searchQuery]);
+
+    useEffect(() => {
+        const t = setTimeout(fetchTasks, searchQuery ? 400 : 0);
+        return () => clearTimeout(t);
+    }, [fetchTasks, searchQuery]);
+
+    // Entrance animation
     useGSAP(() => {
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
         if (titleRef.current && subtitleRef.current) {
@@ -110,8 +110,9 @@ export default function TasksPage() {
         }
     }, []);
 
-    // animate task cards when list changes or layout switches
+    // Animate task cards when list or layout changes
     useGSAP(() => {
+        if (loading) return;
         const ref = layout === 'grid' ? tasksGridRef.current : tasksListRef.current;
         if (!ref) return;
         const items = Array.from(ref.children) as HTMLElement[];
@@ -119,14 +120,28 @@ export default function TasksPage() {
         gsap.fromTo(
             items,
             { opacity: 0, y: 12 },
-            { opacity: 1, y: 0, duration: 0.25, stagger: 0.02, ease: 'power2.out' }
+            { opacity: 1, y: 0, duration: 0.25, stagger: 0.03, ease: 'power2.out' }
         );
-    }, { dependencies: [filteredTasks, layout] });
+    }, { dependencies: [tasks, layout, loading] });
+
+    const handleTaskClick = (taskId: number) => {
+        if ('startViewTransition' in document) {
+            (document as any).startViewTransition(() => router.push(`/tasks/${taskId}`));
+        } else {
+            router.push(`/tasks/${taskId}`);
+        }
+    };
+
+    const stats = [
+        { value: tasks.length, label: 'Всего заданий' },
+        { value: tasks.filter((t) => t.userTask?.status === 'SOLVED').length, label: 'Решено' },
+        { value: tasks.filter((t) => t.userTask?.status === 'STARTED').length, label: 'В процессе' },
+        { value: tasks.filter((t) => t.userTask?.status === 'SOLVED').reduce((s, t) => s + t.price, 0), label: 'Заработано очков' },
+    ];
 
     return (
         <>
             <div className="fixed inset-0 z-[-20]">
-                <FPSCounter />
                 <LightRays
                     raysOrigin="top-center"
                     raysColor="#00ffff"
@@ -159,7 +174,7 @@ export default function TasksPage() {
                         <div className="relative">
                             <input
                                 type="text"
-                                placeholder="Поиск по названию, описанию или языку..."
+                                placeholder="Поиск по названию или описанию..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="w-full px-6 py-4 pl-12 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300"
@@ -182,41 +197,29 @@ export default function TasksPage() {
                         </div>
                     </div>
 
-                    {/* Filters — no entrance animation, just static */}
+                    {/* Filters */}
                     <div className="max-w-6xl mx-auto mb-8">
                         <div className="flex flex-wrap gap-6 justify-center">
                             {/* Layout toggle */}
                             <div className="flex gap-2 items-center">
                                 <button
                                     onClick={() => setLayout('grid')}
-                                    className={`p-2 rounded-lg border transition-colors duration-200 ${
-                                        layout === 'grid'
-                                            ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50'
-                                            : 'bg-gray-800/50 text-gray-400 border-gray-700/50 hover:border-gray-600/50'
-                                    }`}
+                                    className={`p-2 rounded-lg border transition-colors duration-200 ${layout === 'grid' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50' : 'bg-gray-800/50 text-gray-400 border-gray-700/50 hover:border-gray-600/50'}`}
                                 >
                                     <LayoutGrid size={18} />
                                 </button>
                                 <button
                                     onClick={() => setLayout('list')}
-                                    className={`p-2 rounded-lg border transition-colors duration-200 ${
-                                        layout === 'list'
-                                            ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50'
-                                            : 'bg-gray-800/50 text-gray-400 border-gray-700/50 hover:border-gray-600/50'
-                                    }`}
+                                    className={`p-2 rounded-lg border transition-colors duration-200 ${layout === 'list' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50' : 'bg-gray-800/50 text-gray-400 border-gray-700/50 hover:border-gray-600/50'}`}
                                 >
                                     <Menu size={18} />
                                 </button>
-                                <button
-                                    disabled
-                                    className="p-2 rounded-lg border bg-gray-900/50 text-gray-600 border-gray-800/50 cursor-not-allowed opacity-40"
-                                    title="В разработке"
-                                >
+                                <button disabled className="p-2 rounded-lg border bg-gray-900/50 text-gray-600 border-gray-800/50 cursor-not-allowed opacity-40" title="В разработке">
                                     <LayoutDashboard size={18} />
                                 </button>
                             </div>
 
-                            {/* Difficulty */}
+                            {/* Difficulty filter */}
                             <div className="flex flex-wrap gap-2">
                                 {(['ALL', 'EASY', 'MEDIUM', 'HARD', 'EXPERT'] as const).map((d) => (
                                     <button
@@ -224,9 +227,7 @@ export default function TasksPage() {
                                         onClick={() => setSelectedDifficulty(d)}
                                         className={`px-4 py-2 rounded-lg font-medium text-sm border transition-colors duration-200 ${
                                             selectedDifficulty === d
-                                                ? d === 'ALL'
-                                                    ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50'
-                                                    : `${difficultyColor[d as TaskDifficulty]}`
+                                                ? d === 'ALL' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50' : difficultyColor[d as TaskDifficulty]
                                                 : 'bg-gray-800/50 text-gray-400 border-gray-700/50 hover:border-gray-600/50'
                                         }`}
                                     >
@@ -235,66 +236,71 @@ export default function TasksPage() {
                                 ))}
                             </div>
 
-                            {/* Language */}
-                            <div className="flex flex-wrap gap-2">
-                                <button
-                                    onClick={() => setSelectedLanguage('ALL')}
-                                    className={`px-4 py-2 rounded-lg font-medium text-sm border transition-colors duration-200 ${
-                                        selectedLanguage === 'ALL'
-                                            ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50'
-                                            : 'bg-gray-800/50 text-gray-400 border-gray-700/50 hover:border-gray-600/50'
-                                    }`}
-                                >
-                                    Все языки
-                                </button>
-                                {languages.map((lang) => (
+                            {/* Language filter */}
+                            {languages.length > 0 && (
+                                <div className="flex flex-wrap gap-2">
                                     <button
-                                        key={lang.id}
-                                        onClick={() => setSelectedLanguage(lang.id)}
-                                        className={`px-4 py-2 rounded-lg font-medium text-sm border flex items-center gap-1.5 transition-colors duration-200 ${
-                                            selectedLanguage === lang.id
-                                                ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50'
-                                                : 'bg-gray-800/50 text-gray-400 border-gray-700/50 hover:border-gray-600/50'
-                                        }`}
+                                        onClick={() => setSelectedLanguage('ALL')}
+                                        className={`px-4 py-2 rounded-lg font-medium text-sm border transition-colors duration-200 ${selectedLanguage === 'ALL' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50' : 'bg-gray-800/50 text-gray-400 border-gray-700/50 hover:border-gray-600/50'}`}
                                     >
-                                        <span>{lang.icon}</span>
-                                        <span>{lang.name}</span>
+                                        Все языки
                                     </button>
-                                ))}
-                            </div>
+                                    {languages.map((lang) => (
+                                        <button
+                                            key={lang.id}
+                                            onClick={() => setSelectedLanguage(lang.id)}
+                                            className={`px-4 py-2 rounded-lg font-medium text-sm border flex items-center gap-1.5 transition-colors duration-200 ${selectedLanguage === lang.id ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50' : 'bg-gray-800/50 text-gray-400 border-gray-700/50 hover:border-gray-600/50'}`}
+                                        >
+                                            <span>{lang.icon}</span>
+                                            <span>{lang.name}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
 
                     {/* Task list */}
                     <div className="max-w-7xl mx-auto">
-                        {filteredTasks.length === 0 ? (
+                        {loading ? (
+                            <div className="flex justify-center py-24">
+                                <Loader2 className="w-10 h-10 text-cyan-400 animate-spin" />
+                            </div>
+                        ) : error ? (
+                            <div className="text-center py-16">
+                                <p className="text-red-400 text-xl mb-4">{error}</p>
+                                <button
+                                    onClick={fetchTasks}
+                                    className="px-6 py-2 bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 rounded-lg hover:bg-cyan-500/30 transition-colors"
+                                >
+                                    Попробовать снова
+                                </button>
+                            </div>
+                        ) : tasks.length === 0 ? (
                             <div className="text-center py-16">
                                 <p className="text-gray-400 text-xl">Задания не найдены</p>
                             </div>
                         ) : layout === 'grid' ? (
                             <div ref={tasksGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {filteredTasks.map((task) => (
+                                {tasks.map((task) => (
                                     <div
                                         key={task.id}
+                                        onClick={() => handleTaskClick(task.id)}
                                         className="group relative flex flex-col bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-colors duration-300 cursor-pointer"
                                         style={{ opacity: 0 }}
                                     >
-                                        {/* top row */}
                                         <div className="flex justify-between items-start mb-3">
                                             <h3 className="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors duration-200 flex-1 pr-2 leading-snug">
+                                                {task.preview && <span className="mr-2">{task.preview}</span>}
                                                 {task.title}
                                             </h3>
                                             <span className={`${difficultyColor[task.difficulty]} text-xs font-semibold px-2.5 py-1 rounded-full border whitespace-nowrap flex-shrink-0`}>
                                                 {difficultyLabel[task.difficulty]}
                                             </span>
                                         </div>
-
-                                        {/* description — grows to fill space */}
                                         <p className="text-gray-400 text-sm leading-relaxed flex-1 mb-4">
                                             {task.shortDescription}
                                         </p>
-
-                                        {/* meta row */}
                                         <div className="flex items-center justify-between mb-3">
                                             <div className="flex items-center gap-2">
                                                 <span className="text-xl">{task.language.icon}</span>
@@ -304,8 +310,6 @@ export default function TasksPage() {
                                                 {task.price} <span className="text-xs text-gray-500 font-normal">очков</span>
                                             </div>
                                         </div>
-
-                                        {/* status badge */}
                                         {task.userTask && (
                                             <div className="mb-3">
                                                 <span className={`${statusColor[task.userTask.status]} text-xs font-medium px-2.5 py-1 rounded-full border inline-block`}>
@@ -313,8 +317,6 @@ export default function TasksPage() {
                                                 </span>
                                             </div>
                                         )}
-
-                                        {/* button always at bottom */}
                                         <button className="mt-auto w-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-400 font-semibold py-2.5 rounded-lg border border-cyan-500/50 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-500 transition-colors duration-200 text-sm">
                                             {task.userTask?.status === 'STARTED' ? 'Продолжить →' : 'Начать задание'}
                                         </button>
@@ -323,15 +325,17 @@ export default function TasksPage() {
                             </div>
                         ) : (
                             <div ref={tasksListRef} className="space-y-3">
-                                {filteredTasks.map((task) => (
+                                {tasks.map((task) => (
                                     <div
                                         key={task.id}
+                                        onClick={() => handleTaskClick(task.id)}
                                         className="group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 hover:border-cyan-500/50 transition-colors duration-300 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4"
                                         style={{ opacity: 0 }}
                                     >
                                         <div className="flex-1 min-w-0">
                                             <div className="flex flex-wrap items-center gap-3 mb-1.5">
                                                 <h3 className="text-base font-bold text-white group-hover:text-cyan-400 transition-colors duration-200">
+                                                    {task.preview && <span className="mr-1">{task.preview}</span>}
                                                     {task.title}
                                                 </h3>
                                                 <span className={`${difficultyColor[task.difficulty]} text-xs font-semibold px-2.5 py-0.5 rounded-full border`}>
@@ -364,25 +368,22 @@ export default function TasksPage() {
                     </div>
 
                     {/* Stats */}
-                    <div ref={statsRef} className="max-w-6xl mx-auto mt-16" style={{ opacity: 0 }}>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {[
-                                { value: mockTasks.length, label: 'Всего заданий' },
-                                { value: mockTasks.filter((t) => t.userTask?.status === 'SOLVED').length, label: 'Решено' },
-                                { value: mockTasks.filter((t) => t.userTask?.status === 'STARTED').length, label: 'В процессе' },
-                                { value: mockTasks.reduce((s, t) => s + (t.userTask?.status === 'SOLVED' ? t.price : 0), 0), label: 'Заработано очков' },
-                            ].map((stat) => (
-                                <div key={stat.label} className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 text-center hover:border-cyan-500/50 transition-colors duration-300">
-                                    <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
-                                    <div className="text-xs text-gray-500">{stat.label}</div>
-                                </div>
-                            ))}
+                    {!loading && !error && (
+                        <div ref={statsRef} className="max-w-6xl mx-auto mt-16" style={{ opacity: 0 }}>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                {stats.map((stat) => (
+                                    <div key={stat.label} className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 text-center hover:border-cyan-500/50 transition-colors duration-300">
+                                        <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
+                                        <div className="text-xs text-gray-500">{stat.label}</div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     <footer className="border-t border-gray-800 mt-16">
                         <div className="container mx-auto px-4 py-8 text-center text-gray-600 text-sm">
-                            &copy; 2025 RunCode. Interactive programming trainer platform.
+                            &copy; {new Date().getFullYear()} RunCode. Interactive programming trainer platform.
                         </div>
                     </footer>
                 </div>

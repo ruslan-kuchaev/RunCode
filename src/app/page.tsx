@@ -3,12 +3,10 @@ import HelloRunAnimate from "@/components/animate/HelloRunAnimate";
 import ActionBar from "@/components/main/ActionBar/ActionBar";
 import LightRays from "@/components/shared/LightRays";
 import { Terminal } from "@/components/features/terminal";
-import FpsCounter from "@/components/debug/FpsCounter";
 
 export default function Home() {
   return (
     <>
-      <FpsCounter />
       <HelloRunAnimate />
       <div
         style={{

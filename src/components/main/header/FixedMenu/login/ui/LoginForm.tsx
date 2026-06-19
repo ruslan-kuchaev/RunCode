@@ -1,5 +1,6 @@
 import {LogIn} from "lucide-react";
 import React, {forwardRef, useActionState, useRef} from "react";
+import {signIn} from "next-auth/react";
 import {useAuthStore} from "@/store/authStore";
 import {ModalHeader} from "./ModalHeader";
 import {AuthButton} from "./AuthButton";
@@ -11,9 +12,26 @@ interface LoginFormProps {
     colorRgb: string,
     onClose: () => void,
 }
-// unknown
+
 async function loginAction(prevState: unknown, formData: FormData) {
-    return {success: true};
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    if (!email || !password) {
+        return { success: false, error: 'Заполните все поля' };
+    }
+
+    const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+    });
+
+    if (result?.error) {
+        return { success: false, error: 'Неверный email или пароль' };
+    }
+
+    return { success: true };
 }
 
 export const LoginForm = forwardRef<HTMLDivElement, LoginFormProps>((
@@ -24,6 +42,14 @@ export const LoginForm = forwardRef<HTMLDivElement, LoginFormProps>((
     const {loginFormData, updateLoginFormData} = useAuthStore();
     const [state, formAction, isPending] = useActionState(loginAction, null);
     const formRef = useRef<HTMLFormElement>(null);
+
+    // Close modal and reload page on successful login
+    React.useEffect(() => {
+        if ((state as any)?.success) {
+            onClose();
+            window.location.reload();
+        }
+    }, [state, onClose]);
 
     const icon = (
         <div
@@ -52,8 +78,7 @@ export const LoginForm = forwardRef<HTMLDivElement, LoginFormProps>((
                     <input
                         type="email"
                         name="email"
-                        value={loginFormData.email}
-                        onChange={(e) => updateLoginFormData({email: e.target.value})}
+                        defaultValue={loginFormData.email}
                         className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 focus:border-white focus:ring-1 focus:outline-none transition-all"
                         placeholder="your@email.com"
                         aria-label="Email"
@@ -65,8 +90,7 @@ export const LoginForm = forwardRef<HTMLDivElement, LoginFormProps>((
                     <input
                         type="password"
                         name="password"
-                        value={loginFormData.password}
-                        onChange={(e) => updateLoginFormData({password: e.target.value})}
+                        defaultValue={loginFormData.password}
                         className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700 text-white placeholder-gray-500 focus:border-white focus:ring-1 focus:outline-none transition-all"
                         placeholder="••••••••"
                         aria-label="Password"
@@ -77,6 +101,10 @@ export const LoginForm = forwardRef<HTMLDivElement, LoginFormProps>((
                         </button>
                     </div>
                 </div>
+
+                {(state as any)?.error && (
+                    <p className="text-red-400 text-sm text-center">{(state as any).error}</p>
+                )}
 
                 <button
                     type="submit"

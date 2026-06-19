@@ -1,5 +1,6 @@
 import { UserPlus } from "lucide-react";
-import { forwardRef, useActionState, useRef } from "react";
+import { forwardRef, useActionState, useRef, useEffect } from "react";
+import { signIn } from "next-auth/react";
 import { useAuthStore } from "@/store/authStore";
 import { ModalHeader } from "./ModalHeader";
 import { AuthButton } from "./AuthButton";
@@ -15,7 +16,39 @@ interface RegisterFormProps {
     disabled?: boolean;
 }
 
-async function registerAction(prevState: any, formData: FormData) {
+async function registerAction(prevState: unknown, formData: FormData) {
+    const username = formData.get('username') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const confirmPassword = formData.get('confirmPassword') as string;
+
+    if (!username || !email || !password || !confirmPassword) {
+        return { success: false, error: 'Заполните все поля' };
+    }
+
+    if (password !== confirmPassword) {
+        return { success: false, error: 'Пароли не совпадают' };
+    }
+
+    if (password.length < 6) {
+        return { success: false, error: 'Пароль минимум 6 символов' };
+    }
+
+    const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        return { success: false, error: data.error || 'Ошибка регистрации' };
+    }
+
+    // Auto login after register
+    await signIn('credentials', { email, password, redirect: false });
+
     return { success: true };
 }
 
@@ -24,6 +57,13 @@ export const RegisterForm = forwardRef<HTMLDivElement, RegisterFormProps>(
         const { registerFormData, updateRegisterFormData } = useAuthStore();
         const [state, formAction, isPending] = useActionState(registerAction, null);
         const formRef = useRef<HTMLFormElement>(null);
+
+        useEffect(() => {
+            if ((state as any)?.success) {
+                onClose();
+                window.location.reload();
+            }
+        }, [state, onClose]);
 
         const icon = (
             <div
@@ -104,14 +144,17 @@ export const RegisterForm = forwardRef<HTMLDivElement, RegisterFormProps>(
                         />
                     </div>
 
+                    {(state as any)?.error && (
+                        <p className="text-red-400 text-sm text-center">{(state as any).error}</p>
+                    )}
+
                     <button
                         type="submit"
                         disabled={disabled || isPending}
                         style={{
                             boxShadow: "none",
                         }}
-                        className="w-full py-3.5 mt-4 bg-gray-800/60 backdrop-blur-xs text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:opacity-90 hover:bg-gray-800 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] group disabled:opacity-50 disabled:cursor-not-allowed"
-                        onMouseEnter={(e) => {
+                        className="w-full py-3.5 mt-4 bg-gray-800/60 backdrop-blur-xs text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:opacity-90 hover:bg-gray-800 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] group disabled:opacity-50 disabled:cursor-not-allowed"                        onMouseEnter={(e) => {
                             if (!disabled && !isPending) {
                                 e.currentTarget.style.boxShadow = `0 10px 25px ${colorHex}40`;
                             }
@@ -126,9 +169,7 @@ export const RegisterForm = forwardRef<HTMLDivElement, RegisterFormProps>(
 
                     <Divider text="Или зарегистрируйтесь через" />
 
-                    <SocialAuthButtons disabled={disabled} />
-
-
+                    <SocialAuthButtons />
                 </form>
             </div>
         );

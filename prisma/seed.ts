@@ -1,4 +1,5 @@
 import { PrismaClient, TaskDifficulty, TaskStatus, Role } from '../src/app/generated/prisma'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
@@ -50,12 +51,14 @@ async function main() {
   console.log('✅ Создано языков:', languages.length)
 
   // Создание пользователей
+  const hashedPassword = await bcrypt.hash('password123', 10)
+  
   const users = await Promise.all([
     prisma.user.create({
       data: {
         email: 'admin@runcode.com',
         username: 'admin',
-        password: 'hashed_password_admin', // В реальности используй bcrypt
+        password: hashedPassword,
         role: Role.ADMIN,
         rating: 5000,
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin'
@@ -65,7 +68,7 @@ async function main() {
       data: {
         email: 'john@example.com',
         username: 'john_coder',
-        password: 'hashed_password_john',
+        password: hashedPassword,
         role: Role.USER,
         rating: 1250,
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=john'
@@ -75,7 +78,7 @@ async function main() {
       data: {
         email: 'alice@example.com',
         username: 'alice_dev',
-        password: 'hashed_password_alice',
+        password: hashedPassword,
         role: Role.USER,
         rating: 2100,
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=alice'
@@ -85,7 +88,7 @@ async function main() {
       data: {
         email: 'bob@example.com',
         username: 'bob_ninja',
-        password: 'hashed_password_bob',
+        password: hashedPassword,
         role: Role.USER,
         rating: 850,
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=bob'

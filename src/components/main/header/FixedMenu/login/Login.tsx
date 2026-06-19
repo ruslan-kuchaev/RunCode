@@ -1,9 +1,10 @@
 'use client';
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, useState} from 'react';
 import {gsap} from 'gsap';
 import {useGSAP} from '@gsap/react';
-import {Ghost} from 'lucide-react';
-import {useSession} from 'next-auth/react';
+import {Ghost, User, LogOut, Shield, ChevronDown} from 'lucide-react';
+import {useSession, signOut} from 'next-auth/react';
+import {useRouter} from 'next/navigation';
 
 import useAnimationStore from '@/store/AnimationCenter';
 import {useAuthStore} from '@/store/authStore';
@@ -20,16 +21,30 @@ export const Login = () => {
     );
     const openAuthModal = useAuthStore((state) => state.openAuthModal);
     const {data: session} = useSession();
-
+    const router = useRouter();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         initializeHelloState();
     }, [initializeHelloState]);
 
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        if (dropdownOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => document.removeEventListener('mousedown', handleClickOutside);
+        }
+    }, [dropdownOpen]);
 
     useGSAP(
         () => {
-            //TODO
             if (!complete) return;
 
             gsap.fromTo(
@@ -47,13 +62,14 @@ export const Login = () => {
         },
         {dependencies: [complete], scope: loginRef}
     );
+
     useGSAP(
         () => {
             if (!complete || !loginRef.current) return;
 
             const tl = gsap.timeline({ overwrite: true });
 
-            if (!ModalOpen) {
+            if (!ModalOpen && !dropdownOpen) {
                 tl.to(GhostDiv.current, {
                     x: gsap.utils.wrap([-2, 2]),
                     scale: 1,
@@ -61,16 +77,14 @@ export const Login = () => {
                     repeat: 6,
                     ease: 'none',
                 })
-
-                    .to(GhostDiv.current, {
-                        backgroundColor: currentColor[0],
-                        boxShadow: `0 4px 15px ${currentColor[0]}80`,
-                        x: 0,
-                        scale: 1,
-                        duration: 0.8,
-                        ease: 'bounce.out',
-                    })
-
+                .to(GhostDiv.current, {
+                    backgroundColor: currentColor[0],
+                    boxShadow: `0 4px 15px ${currentColor[0]}80`,
+                    x: 0,
+                    scale: 1,
+                    duration: 0.8,
+                    ease: 'bounce.out',
+                })
             } else {
                 tl.to(GhostDiv.current, {
                     backgroundColor: currentColor[0],
@@ -79,32 +93,90 @@ export const Login = () => {
             }
             return () => tl.kill();
         },
-        { dependencies: [currentColor], scope: loginRef }
+        { dependencies: [currentColor, ModalOpen, dropdownOpen], scope: loginRef }
     );
 
+    const handleLogout = async () => {
+        setDropdownOpen(false);
+        await signOut({ redirect: false });
+        router.push('/');
+    };
 
+    const handleProfileClick = () => {
+        setDropdownOpen(false);
+        router.push('/profile');
+    };
 
-    if (session) {
-        return null;
-    }
+    const handleAdminClick = () => {
+        setDropdownOpen(false);
+        router.push('/admin');
+    };
+
+    // Check if user is admin
+    const isAdmin = (session?.user as any)?.role === 'ADMIN';
 
     return (
         <div
             ref={loginRef}
             className='fixed top-5 left-[2%] z-55 will-change-auto opacity-0'
         >
-            <button
+            <div ref={dropdownRef} className="relative">
+                <button
+                    onClick={() => session ? setDropdownOpen(!dropdownOpen) : openAuthModal()}
+                    className='focus:outline-none'
+                >
+                    <div
+                        ref={GhostDiv}
+                        className={`rounded-full w-12 h-12 flex transform origin-center ${session ? 'ring-2 ring-cyan-400/50' : ''}`}
+                    >
+                        <Ghost size={35} className='m-auto transform origin-center'/>
+                    </div>
+                </button>
 
-                onClick={() => openAuthModal()}
-                className='focus:outline-none'
-            >
-                <div
-                    ref={GhostDiv}
-                    // style={{backgroundColor: currentColor, boxShadow: `0 4px 15px ${currentColor}80`}}
-                    className={`rounded-full  w-12 h-12  flex transform origin-center`}>
-                    <Ghost size={35} className='m-auto transform origin-center'/>
-                </div>
-            </button>
+                {/* Dropdown menu for logged in users */}
+                {session && dropdownOpen && (
+                    <div className="absolute top-full left-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-md border border-gray-700/50 rounded-xl shadow-2xl overflow-hidden">
+                        {/* User info */}
+                        <div className="px-4 py-3 border-b border-gray-700/50">
+                            <p className="text-white font-semibold text-sm truncate">
+                                {session.user?.name || 'Пользователь'}
+                            </p>
+                            <p className="text-gray-400 text-xs truncate">
+                                {session.user?.email}
+                            </p>
+                        </div>
+
+                        {/* Menu items */}
+                        <div className="py-2">
+                            {isAdmin && (
+                                <button
+                                    onClick={handleAdminClick}
+                                    className="w-full px-4 py-2 text-left text-white hover:bg-purple-500/20 transition-colors flex items-center gap-3"
+                                >
+                                    <Shield size={18} className="text-purple-400" />
+                                    <span className="text-sm">Admin Panel</span>
+                                </button>
+                            )}
+                            
+                            <button
+                                onClick={handleProfileClick}
+                                className="w-full px-4 py-2 text-left text-white hover:bg-cyan-500/20 transition-colors flex items-center gap-3"
+                            >
+                                <User size={18} className="text-cyan-400" />
+                                <span className="text-sm">Профиль</span>
+                            </button>
+
+                            <button
+                                onClick={handleLogout}
+                                className="w-full px-4 py-2 text-left text-red-400 hover:bg-red-500/20 transition-colors flex items-center gap-3"
+                            >
+                                <LogOut size={18} />
+                                <span className="text-sm">Выйти</span>
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
